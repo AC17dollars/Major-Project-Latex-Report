@@ -1,0 +1,266 @@
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\section*{Forward Propagation with Sine Activation in All Layers}
+
+\subsection*{Step 1: Input to Input Layer}
+\begin{itemize}
+  \item Input Vector $\mathbf{x}$: Dimension $2 \times 1$
+  \item Weight Matrix $\mathbf{W}^{(in)}$: Dimension $2 \times 2$
+  \item Bias Vector $\mathbf{b}^{(in)}$: Dimension $2 \times 1$
+  \item Calculation:
+  \[
+  \mathbf{z}^{(in)} = \mathbf{W}^{(in)} \mathbf{x} + \mathbf{b}^{(in)}
+  \]
+  \[
+  \mathbf{a}^{(in)} = \mathbf{z}^{(in)}
+  \]
+  Where $\mathbf{z}^{(in)}$ and $\mathbf{a}^{(in)}$ both have dimensions $2 \times 1$.
+\end{itemize}
+
+
+\subsection*{Step 2: Input Layer to Hidden Layer 1}
+\begin{itemize}
+  \item Input Vector $\mathbf{x}$: Dimension $2 \times 1$
+  \item Weight Matrix $\mathbf{W}^{(1)}$: Dimension $25 \times 2$
+  \item Bias Vector $\mathbf{b}^{(1)}$: Dimension $25 \times 1$
+  \item Calculation:
+  \[
+  \mathbf{z}^{(1)} = \mathbf{W}^{(1)} \mathbf{x} + \mathbf{b}^{(1)}
+  \]
+  \[
+  \mathbf{a}^{(1)} = \sin(\mathbf{z}^{(1)})
+  \]
+  Where $\mathbf{z}^{(1)}$ and $\mathbf{a}^{(1)}$ both have dimensions $25 \times 1$.
+\end{itemize}
+
+\subsection*{Step 3: Hidden Layer 1 to Hidden Layer 2}
+\begin{itemize}
+  \item Weight Matrix $\mathbf{W}^{(2)}$: Dimension $25 \times 25$
+  \item Bias Vector $\mathbf{b}^{(2)}$: Dimension $25 \times 1$
+  \item Calculation:
+  \[
+  \mathbf{z}^{(2)} = \mathbf{W}^{(2)} \mathbf{a}^{(1)} + \mathbf{b}^{(2)}
+  \]
+  \[
+  \mathbf{a}^{(2)} = \sin(\mathbf{z}^{(2)})
+  \]
+  Both $\mathbf{z}^{(2)}$ and $\mathbf{a}^{(2)}$ are $25 \times 1$.
+\end{itemize}
+
+\subsection*{Step 4: Hidden Layer 2 to Output Layer}
+\begin{itemize}
+  \item Weight Matrix $\mathbf{W}^{(3)}$: Dimension $3 \times 25$
+  \item Bias Vector $\mathbf{b}^{(3)}$: Dimension $3 \times 1$
+  \item Calculation:
+  \[
+  \mathbf{z}^{(3)} = \mathbf{W}^{(3)} \mathbf{a}^{(2)} + \mathbf{b}^{(3)}
+  \]
+  \[
+  \mathbf{a}^{(3)} = \sin(\mathbf{z}^{(3)})
+  \]
+  Where $\mathbf{z}^{(3)}$ and $\mathbf{a}^{(3)}$ both have dimensions $3 \times 1$.
+\end{itemize}
+
+
+\section*{Backpropagation with Sine Activation in the Output Layer}
+
+\subsection*{Step 1: Output Layer to Hidden Layer 2}
+
+\subsubsection*{Calculate Gradients at Output Layer}
+\begin{enumerate}
+  \item \textbf{Gradient of Loss with respect to output activations} $(\mathbf{a}^{(3)})$:
+  
+  Given the Mean Squared Error (MSE) loss function:
+  \[
+  \text{Loss} = \frac{1}{2} \sum_{i=1}^{3} (y_i - a^{(3)}_i)^2
+  \]
+  Differentiate Loss w.r.t. $\mathbf{a}^{(3)}$:
+  \[
+  \frac{\partial \text{Loss}}{\partial a^{(3)}_i} = a^{(3)}_i - y_i
+  \]
+  This will result in a vector $\mathbf{a}^{(3)} - \mathbf{y}$.
+
+  \item \textbf{Gradient with respect to} $\mathbf{z}^{(3)}$ (using chain rule and recognizing $\mathbf{a}^{(3)} = \sin(\mathbf{z}^{(3)})$):
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}} = \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(3)}} \odot \frac{\partial \mathbf{a}^{(3)}}{\partial \mathbf{z}^{(3)}}
+  \]
+  Since $\frac{\partial a^{(3)}_i}{\partial z^{(3)}_i} = \cos(z^{(3)}_i)$, the gradient becomes:
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}} = (\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})
+  \]
+
+  \item \textbf{Gradient with respect to weights} $\mathbf{W}^{(3)}$ \textbf{and biases} $\mathbf{b}^{(3)}$:
+  
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(3)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}} \odot \frac{\partial \mathbf{z}^{(3)}}{\partial \mathbf{W}^{(3)}}
+  \]
+  
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(3)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}} \mathbf{a}^{(2)T}
+  \]
+  
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(3)}} = \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right) \mathbf{a}^{(2)T}
+  \]
+
+
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(3)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}} \odot \frac{\partial \mathbf{z}^{(3)}}{\partial \mathbf{b}^{(3)}}
+  \]
+
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(3)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}}
+  \]
+
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(3)}} = (\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})
+  \]
+  
+\end{enumerate}
+
+\subsection*{Step 2: Hidden Layer 2 to Hidden Layer 1}
+\begin{enumerate}
+  \item \textbf{Gradient with respect to activations} $\mathbf{a}^{(2)}$:
+    \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(2)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}} \odot \frac{\partial \mathbf{z}^{(3)}}{\partial \mathbf{a}^{(2)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(2)}} = \mathbf{W}^{(3)T} \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(3)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(2)}} = \mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)
+  \]
+
+  \item \textbf{Gradient with respect to} $\mathbf{z}^{(2)}$:
+    \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}} = \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(2)}} \odot \frac{\partial \mathbf{a}^{(2)}}{\partial \mathbf{z}^{(2)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}} = \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(2)}} \odot \cos(\mathbf{z}^{(2)})
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}} = \left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})
+  \]
+
+  \item \textbf{Gradient with respect to weights} $\mathbf{W}^{(2)}$ \textbf{and biases} $\mathbf{b}^{(2)}$:
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(2)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}} \odot \frac{\partial \mathbf{z}^{(2)}}{\partial \mathbf{W}^{(2)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(2)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}} \mathbf{a}^{(1)T}
+  \]
+
+\[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(2)}} = \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right) \mathbf{a}^{(1)T}
+  \]
+ 
+
+   \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(2)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}} \odot \frac{\partial \mathbf{z}^{(2)}}{\partial \mathbf{b}^{(2)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(2)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}}
+  \]
+
+   \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(2)}} = \left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})
+  \]
+\end{enumerate}
+
+\subsection*{Step 3: Hidden Layer 1 to Input Layer}
+\begin{enumerate}
+  \item \textbf{Gradient with respect to activations} $\mathbf{a}^{(1)}$:
+      \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(1)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}} \odot \frac{\partial \mathbf{z}^{(2)}}{\partial \mathbf{a}^{(1)}}
+  \]
+  
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(1)}} = \mathbf{W}^{(2)T} \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(2)}}
+  \]
+      \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(1)}} = \mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)
+  \]
+
+  \item \textbf{Gradient with respect to} $\mathbf{z}^{(1)}$:
+    \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}} = \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(1)}} \odot \frac{\partial \mathbf{a}^{(1)}}{\partial \mathbf{z}^{(1)}}
+  \]
+
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}} = \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(1)}} \odot \cos(\mathbf{z}^{(1)})
+  \]
+    \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}} = \left(\mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)\right) \odot \cos(\mathbf{z}^{(1)})
+  \]
+
+  \item \textbf{Gradient with respect to weights} $\mathbf{W}^{(1)}$ \textbf{and biases} $\mathbf{b}^{(1)}$:
+       \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(1)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}} \odot \frac{\partial \mathbf{z}^{(1)}}{\partial \mathbf{W}^{(1)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(1)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}} \mathbf{x}^T
+  \]
+    \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(1)}} = \left(\left(\mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)\right) \odot \cos(\mathbf{z}^{(1)})\right) \mathbf{x}^T
+  \]
+
+  
+         \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(1)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}} \odot \frac{\partial \mathbf{z}^{(1)}}{\partial \mathbf{b}^{(1)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(1)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}}
+  \]
+\[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(1)}} = \left(\mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)\right) \odot \cos(\mathbf{z}^{(1)})
+  \]
+\end{enumerate}
+\subsection*{Step 4: Input Layer to Input}
+\begin{enumerate}
+  \item \textbf{Gradient with respect to activations} $\mathbf{a}^{(in)}$:
+      \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(in)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}} \odot \frac{\partial \mathbf{z}^{(1)}}{\partial \mathbf{a}^{(in)}}
+  \]
+  
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(in)}} = \mathbf{W}^{(1)T} \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(1)}}
+  \]
+      \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(in)}} =\mathbf{W}^{(1)T}\left(\left(\mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)\right) \odot \cos(\mathbf{z}^{(1)})\right) 
+  \]
+
+  \item \textbf{Gradient with respect to} $\mathbf{z}^{(in)}$:
+    \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(in)}} = \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(in)}} \odot \frac{\partial \mathbf{a}^{(in)}}{\partial \mathbf{z}^{(in)}}
+  \]
+
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(in)}} = \frac{\partial \text{Loss}}{\partial \mathbf{a}^{(in)}} \odot \cos(\mathbf{z}^{(in)})
+  \]
+    \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(in)}} = \mathbf{W}^{(1)T}\left(\left(\mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)\right) \odot \cos(\mathbf{z}^{(1)})\right)  \odot \cos(\mathbf{z}^{(in)})
+  \]
+
+  \item \textbf{Gradient with respect to weights} $\mathbf{W}^{(in)}$ \textbf{and biases} $\mathbf{b}^{(in)}$:
+       \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(in)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(in)}} \odot \frac{\partial \mathbf{z}^{(in)}}{\partial \mathbf{W}^{(in)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(in)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(in)}} \mathbf{x}^T
+  \]
+  %   \[
+  % \frac{\partial \text{Loss}}{\partial \mathbf{W}^{(in)}} = \mathbf{W}^{(1)T}\left(\left(\mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)\right) \odot \cos(\mathbf{z}^{(1)})\right)  \odot \cos(\mathbf{z}^{(in)}) \mathbf{x}^T
+  % \]
+
+         \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(in)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(in)}} \odot \frac{\partial \mathbf{z}^{(in)}}{\partial \mathbf{b}^{(in)}}
+  \]
+  \[
+  \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(in)}} = \frac{\partial \text{Loss}}{\partial \mathbf{z}^{(in)}}
+  \]
+% \[
+%   \frac{\partial \text{Loss}}{\partial \mathbf{b}^{(in)}} = \mathbf{W}^{(1)T}\left(\left(\mathbf{W}^{(2)T} \left(\left(\mathbf{W}^{(3)T} \left((\mathbf{a}^{(3)} - \mathbf{y}) \odot \cos(\mathbf{z}^{(3)})\right)\right) \odot \cos(\mathbf{z}^{(2)})\right)\right) \odot \cos(\mathbf{z}^{(1)})\right)  \odot \cos(\mathbf{z}^{(in)})
+%   \]
+\end{enumerate}
+\end{document}
