@@ -244,21 +244,6 @@ The feasibility analysis for the project includes technical feasibility, economi
     \end{equation}
     
     where \( x_{i+1} \) is the output of the \(i\)-th layer, serving as the input to the next layer, \( \sin \) is the sinusoidal activation function applied to each layer, \( W_i \) is the weight matrix of the \(i\)-th layer, \( x_i \) is the input to the \(i\)-th layer, and \( b_i \) is the bias vector of the \(i\)-th layer.
-
-   
-    
-    \subsection{Mathematical Modeling in SIRENs}
-    \gls{siren} excel in tasks requiring the modeling of periodic and smooth phenomena, which are common in audio and video signals. The continuous nature of the function modeled by \gls{siren} makes them ideal for compressing these signals efficiently. The typical loss function used for training \gls{siren} in the context of compression is the \gls{mse}, which ensures the fidelity of the reconstructed signal:
-    \begin{equation}
-        L = \frac{1}{N} \sum_{n=1}^N (\Phi(\mathbf{x}_n) - y_n)^2 
-    \end{equation}
-    Additionally, to capture temporal dynamics in video and audio, derivatives of the function are often included in the training objective:
-    \begin{equation}
-        L = \frac{1}{N} \sum_{n=1}^N \left((\Phi(\mathbf{x}_n) - y_n)^2 + \lambda (\nabla\Phi(\mathbf{x}_n) - \nabla y_n)^2\right) 
-    \end{equation}
-    where \( N \) is the total number of sampled points, \( \Phi \) is the SIREN model, \( \mathbf{x}_n \) are the input coordinates for the \(n\)-th data point, \( y_n \) are the actual output values at the \(n\)-th data point, \( \lambda \) is a regularization parameter, \( \nabla\Phi(\mathbf{x}_n) \) is the derivative of the \gls{siren} output with respect to the input at \( \mathbf{x}_n \), and \( \nabla y_n \) is the derivative of the true output values with respect to the input at \( \mathbf{x}_n \).
-
-
     
     \subsection{Initialization Scheme for Sinusoidal Representation Networks (SIRENs)}
     Sinusoidal Representation Networks uses the sine function as an activation, which introduces sensitivity to input distributions due to its periodic nature. An effective initialization scheme is crucial to prevent the degradation of the network's performance with increasing depth. This report proposes a principled approach to initialization that preserves the distribution of activations across layers, ensuring that the output at initialization does not vary with the number of layers.
@@ -380,6 +365,56 @@ The feasibility analysis for the project includes technical feasibility, economi
     where $D_{KL}$ denotes the KL divergence, promoting effective learning of the latent space distribution.
 
 \pagebreak
+
+
+
+\section{\MakeUppercase{Mathematical Formulation}}
+
+\subsection{Mathematical Modeling in SIRENs}
+\gls{siren} excel in tasks requiring the modeling of periodic and smooth phenomena, which are common in audio and video signals. The continuous nature of the function modeled by \gls{siren} makes them ideal for compressing these signals efficiently. The typical loss function used for training \gls{siren} in the context of compression is the \gls{mse}, which ensures the fidelity of the reconstructed signal:
+\begin{equation}
+    L = \frac{1}{N} \sum_{n=1}^N (\Phi(\mathbf{x}_n) - y_n)^2 
+\end{equation}
+Additionally, to capture temporal dynamics in video and audio, derivatives of the function are often included in the training objective:
+\begin{equation}
+    L = \frac{1}{N} \sum_{n=1}^N \left((\Phi(\mathbf{x}_n) - y_n)^2 + \lambda (\nabla\Phi(\mathbf{x}_n) - \nabla y_n)^2\right) 
+\end{equation}
+where \( N \) is the total number of sampled points, \( \Phi \) is the SIREN model, \( \mathbf{x}_n \) are the input coordinates for the \(n\)-th data point, \( y_n \) are the actual output values at the \(n\)-th data point, \( \lambda \) is a regularization parameter, \( \nabla\Phi(\mathbf{x}_n) \) is the derivative of the \gls{siren} output with respect to the input at \( \mathbf{x}_n \), and \( \nabla y_n \) is the derivative of the true output values with respect to the input at \( \mathbf{x}_n \).
+
+
+\subsection{\MakeUppercase{
+    Forward and Backward propagation in SIREN network
+}}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/Propagation concept figure Major Project.png}
+    \caption{Forward and Backward Propopagation in SIREN network}
+    \label{fig:propagation-diagram}
+\end{figure}
+
+The figure provides a illustration of the forward and backward propagation processes in a siren neural network. In the forward propagation section, the input \( \mathbf{X} \) is passed through the input layer, then sequentially through hidden layers 1 and 2, and finally through the output layer to compute the activations \( \mathbf{a}^{(1)} \), \( \mathbf{a}^{(2)} \), and \( \mathbf{a}^{(3)} \). The error \( \mathbf{E} \) is calculated based on the difference between the predicted output \( \mathbf{a}^{(3)} \) and the actual output \( \mathbf{y}_i \). 
+
+The backward propagation section shows the gradient calculation needed to update the network's weights. It starts with the error gradient \( \frac{\partial \mathbf{E}}{\partial \mathbf{a}^{(3)}} \) at the output layer and propagates backwards through hidden layers 2 and 1, and finally to the input layer. This involves computing the gradients \( \frac{\partial \mathbf{a}^{(3)}}{\partial \mathbf{a}^{(2)}} \), \( \frac{\partial \mathbf{a}^{(2)}}{\partial \mathbf{a}^{(1)}} \), and \( \frac{\partial \mathbf{a}^{(1)}}{\partial \mathbf{a}_{(in)}} \).
+The weights and biases are updated as per the following equations:
+\begin{equation}
+    W^{(l)} \leftarrow W^{(l)} - \eta \frac{\partial E}{\partial W^{(l)}}  
+\end{equation}
+\begin{equation}
+    b^{(l)} \leftarrow b^{(l)} - \eta \frac{\partial E}{\partial b^{(l)}}  
+\end{equation}
+
+
+
+Where:
+\begin{itemize}
+    \item \( W^{(l)} \) represents the weights of the \( l \)-th layer.
+    \item \( b^{(l)} \) represents the weights of the \( l \)-th layer.
+    \item \( \eta \) is the learning rate.
+    \item \( \frac{\partial E}{\partial W^{(l)}} \) is the gradient of the error with respect to the weights of the \( l \)-th layer.
+    \item \( \frac{\partial E}{\partial b^{(l)}} \) is the gradient of the error with respect to the biases of the \( l \)-th layer.
+\end{itemize}
+The detailed forward and backward propagation equations and the gradients of error with respect to weight and bias matrices are provided in \autoref{app:forward-backward-eqn}
+
 
 \section{\MakeUppercase{System Architecture and Methodology}}   
 This section provides an overview of the system architecture and the methodology used in video \gls{codec} with a implicit neural network-based approach.
@@ -1899,6 +1934,7 @@ In conclusion, while the evaluation metrics demonstrate the architecture's stren
 \pagebreak
 
 \subsection*{Appendix B: Forward and Backward Propagation}
+\label{app:forward-backward-eqn}
 \addcontentsline{toc}{subsection}{Appendix B: Forward and Backward Propagation}
 
 \subsubsection*{\MakeUppercase{Forward Propagation}}
