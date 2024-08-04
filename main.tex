@@ -382,9 +382,7 @@ Additionally, to capture temporal dynamics in video and audio, derivatives of th
 where \( N \) is the total number of sampled points, \( \Phi \) is the SIREN model, \( \mathbf{x}_n \) are the input coordinates for the \(n\)-th data point, \( y_n \) are the actual output values at the \(n\)-th data point, \( \lambda \) is a regularization parameter, \( \nabla\Phi(\mathbf{x}_n) \) is the derivative of the \gls{siren} output with respect to the input at \( \mathbf{x}_n \), and \( \nabla y_n \) is the derivative of the true output values with respect to the input at \( \mathbf{x}_n \).
 
 
-\subsection{\MakeUppercase{
-    Forward and Backward propagation in SIREN network
-}}
+\subsection{\MakeUppercase{Forward and Backward propagation in SIREN network}}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/Propagation concept figure Major Project.png}
@@ -414,6 +412,26 @@ Where:
     \item \( \frac{\partial E}{\partial b^{(l)}} \) is the gradient of the error with respect to the biases of the \( l \)-th layer.
 \end{itemize}
 The detailed forward and backward propagation equations and the gradients of error with respect to weight and bias matrices are provided in \autoref{app:forward-backward-eqn}
+
+
+
+\subsection{KL Divergence and Earth Mover's Distance}
+
+\subsubsection{KL Divergence}
+\gls{kld} is a measure of how one probability distribution diverges from a second, expected probability distribution. It quantifies the difference between two distributions \( P \) and \( Q \).
+
+\begin{equation}
+    D_{KL}(P \parallel Q) = \sum_{i} P(i) \log \frac{P(i)}{Q(i)}
+\end{equation}
+
+\subsubsection{Earth Mover's Distance (EMD)}
+\gls{emd} is a measure of the distance between two probability distributions over a region \( D \). It is the minimum cost to transform one distribution into the other, viewed as the "work" needed to move the distribution mass.
+
+\begin{equation}
+    \text{EMD}(P, Q) = \inf_{\gamma \in \Gamma(P,Q)} \int_{D \times D} d(x, y) \, d\gamma(x, y)
+\end{equation}
+
+where \( \Gamma(P, Q) \) is the set of all possible joint distributions whose marginals are \( P \) and \( Q \), and \( d(x, y) \) is the ground distance between elements \( x \) and \( y \).
 
 \pagebreak
 
@@ -774,6 +792,24 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
 
     \pagebreak
 
+    \subsection*{KL Divergence and Earth Mover's Distance}
+
+    \subsubsection*{KL Divergence}
+    KL Divergence (Kullback-Leibler Divergence) is a measure of how one probability distribution diverges from a second, expected probability distribution. It quantifies the difference between two distributions \( P \) and \( Q \).
+    
+    \begin{equation}
+        D_{KL}(P \parallel Q) = \sum_{i} P(i) \log \frac{P(i)}{Q(i)}
+    \end{equation}
+    
+    \subsubsection*{Earth Mover's Distance (EMD)}
+    Earth Mover's Distance is a measure of the distance between two probability distributions over a region \( D \). It is the minimum cost to transform one distribution into the other, viewed as the "work" needed to move the distribution mass.
+    
+    \begin{equation}
+        \text{EMD}(P, Q) = \inf_{\gamma \in \Gamma(P,Q)} \int_{D \times D} d(x, y) \, d\gamma(x, y)
+    \end{equation}
+    
+    where \( \Gamma(P, Q) \) is the set of all possible joint distributions whose marginals are \( P \) and \( Q \), and \( d(x, y) \) is the ground distance between elements \( x \) and \( y \).
+    
 
 \section{\MakeUppercase{Dataset Exploration}}
 \autoref{tab:audio_files} provides a summary of various audio files, detailing their serial numbers (SN), file names, sampling rates, file sizes in \gls{kib}, and durations in seconds. A brief description of the audio is mentioned after the table.
