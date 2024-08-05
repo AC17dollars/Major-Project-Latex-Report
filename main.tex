@@ -1493,6 +1493,8 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \caption{Cross Correlation Between Ground Truth and Predicted Audio 1}
         \label{fig:cross-correlation-1}
     \end{figure}
+    
+    The waveforms for ground truth and predicted Audio 1 are nearly identical. The cross-correlation plot features a strong peak at zero lag, indicating precise temporal alignment. The high correlation coefficient above the confidence interval confirms this. However, the presence of high-frequency noise in the predicted audio is evident as a slight hiss, suggesting that while the timing is accurate, there are some issues with noise reduction.
 
     \begin{figure}[H]
         \centering
@@ -1501,12 +1503,16 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \label{fig:cross-correlation-2}
     \end{figure}
 
+    For ground truth and predicted Audio 2, the cross-correlation plot shows a pronounced peak at zero lag, indicating strong temporal alignment. The correlation coefficient, well above the confidence interval, confirms the accuracy of the predicted audio. Despite this, the high-frequency noise in the predicted signal, heard as a faint buzzing, indicates some inaccuracies in amplitude reproduction.
+
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone1000hz.wav_puretone1000hzpred.wav.png}
         \caption{Cross Correlation Between Ground Truth and Predicted Audio 3}
         \label{fig:cross-correlation-3}
     \end{figure}
+
+    The cross-correlation analysis for ground truth and predicted Audio 3 reveals a sharp peak at zero lag, indicating precise temporal alignment. The high correlation coefficient above the confidence interval validates this alignment. However, background noise in the predicted audio, heard as slight static, points to minor inaccuracies in the signal reproduction process.
 
     \begin{figure}[H]
         \centering
@@ -1515,12 +1521,16 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \label{fig:cross-correlation-4}
     \end{figure}
 
+    The cross-correlation plot for ground truth and predicted Audio 4 shows the highest correlation at zero lag, but the values are close to the confidence interval, indicating a weaker match. The predicted audio has significant noise, leading to a noticeable drop in volume and clarity, as reflected in the lower amplitude of the predicted waveform.
+
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_sweeping_tone200-500hz.wav_sweeping_tone200-500hzpred.wav.png}
         \caption{Cross Correlation Between Ground Truth and Predicted Audio 5}
         \label{fig:cross-correlation-5}
     \end{figure}
+    
+    For ground truth and predicted Audio 5, the highest correlation at zero lag indicates good temporal alignment. The high correlation coefficient above the confidence interval confirms this. However, the predicted audio introduces noise, particularly at higher frequencies, heard as a faint hiss, affecting the signal's clarity.
 
     \begin{figure}[H]
         \centering
@@ -1529,12 +1539,16 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \label{fig:cross-correlation-6}
     \end{figure}
 
+    The cross-correlation plot for ground truth and predicted Audio 6 displays a clear peak at zero lag, indicating minimal time shift. The strong correlation values significantly above the 5\% confidence interval confirm the alignment. However, slight deviations in amplitude can be observed, contributing to minor noise when listening to the predicted audio. These discrepancies indicate that while the prediction model accurately captures the periodic fluctuations, it introduces some noise into the signal.
+
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_multitoneA4E4.wav_multitoneA4E4pred.wav.png}
         \caption{Cross Correlation Between Ground Truth and Predicted Audio 7}
         \label{fig:cross-correlation-7}
     \end{figure}
+
+    The waveforms for ground truth and predicted Audio 7 exhibit similar periodic patterns. The cross-correlation plot shows a prominent peak at zero lag, indicating strong temporal alignment. The correlation coefficient, well above the confidence interval, confirms the alignment. However, the predicted audio introduces noise, especially during amplitude fluctuations, which can be heard as slight distortions. This suggests that while the timing is accurate, the model struggles with precise amplitude replication.
 
     \begin{figure}[H]
         \centering
@@ -1543,12 +1557,16 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \label{fig:cross-correlation-8}
     \end{figure}
 
+    In the case of ground truth and predicted Audio 8, the cross-correlation plot shows a distinct peak at zero lag, suggesting strong temporal alignment. The correlation value is significantly above the confidence interval, confirming the model's effectiveness in capturing the beat pattern. However, the predicted audio's slightly lower amplitude and noticeable background noise slightly reduce the clarity of the beats, indicating room for improvement in noise reduction.
+
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_06seconds_06secondspred.png}
         \caption{Cross Correlation Between Ground Truth and Predicted Audio 9}
         \label{fig:cross-correlation-9}
     \end{figure}
+
+    The highest correlation for ground truth and predicted Audio 9 is found near zero lag, indicating minimal time shift. Several smaller peaks around the main peak suggest minor noise and variability in the predicted audio. These discrepancies contribute to slight distortions and background noise when listening to the predicted signal.
 
     \begin{figure}[H]
         \centering
@@ -1557,6 +1575,8 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \label{fig:cross-correlation-10}
     \end{figure}
 
+    For ground truth and predicted Audio 10, the highest correlation occurs at zero lag, demonstrating strong alignment. The waveform comparison reveals added noise in the quieter sections of the predicted audio, masking the finer details of the ground truth, which is audible as slight background noise.
+
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_24seconds_24secondspred.png}
@@ -1564,12 +1584,16 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \label{fig:cross-correlation-11}
     \end{figure}
 
+    The highest correlation for ground truth and predicted Audio 11 is observed at zero lag, indicating significant alignment. The predicted audio contains noticeable noise in the mid-sections, leading to a less clean reproduction of the ground truth, which affects the clarity during playback.
+
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_music_musicpred.png}
         \caption{Cross Correlation Between Ground Truth and Predicted Audio 12}
         \label{fig:cross-correlation-12}
     \end{figure}
+
+    For ground truth and predicted Audio 12, the highest correlation near zero lag indicates good temporal alignment. However, the multiple peaks suggest some variability in the predicted signal. The predicted audio's substantial background noise interferes with the music's clarity, as heard during playback.
 
     \subsubsection{Evaluation Metrics}
     \begin{table}[H]
