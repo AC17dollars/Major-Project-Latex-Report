@@ -1552,86 +1552,86 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
     \end{figure}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{KL Divergence (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000006 & 0.000000 & 0.000000 \\
-    input layer - hidden layer 1 & 1.556353 & 0.124401 & 0.090967 \\
-    hidden layer 1 - hidden layer 2 & 0.420411 & 0.042276 & 0.035750 \\
-    hidden layer 2 - hidden layer 3 & 0.210519 & 0.018601 & 0.013199 \\
-    hidden layer 3 - hidden layer 4 & 0.244147 & 0.009357 & 0.006045 \\
-    hidden layer 4 - output layer & 0.155492 & 0.000728 & 0.000372 \\
-    \hline
-    \end{tabular}
     \caption{KL Divergence for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{KL Divergence (Weights) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000006 & 0.000000 & 0.000000 \\
+    input layer & hidden layer 1 & 1.556353 & 0.124401 & 0.090967 \\
+    hidden layer 1 & hidden layer 2 & 0.420411 & 0.042276 & 0.035750 \\
+    hidden layer 2 & hidden layer 3 & 0.210519 & 0.018601 & 0.013199 \\
+    hidden layer 3 & hidden layer 4 & 0.244147 & 0.009357 & 0.006045 \\
+    hidden layer 4 & output layer & 0.155492 & 0.000728 & 0.000372 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{Earth Mover's Distance (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000192 & 0.000010 & 0.000009 \\
-    input layer - hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
-    hidden layer 1 - hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
-    hidden layer 2 - hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
-    hidden layer 3 - hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
-    hidden layer 4 - output layer & 0.000953 & 0.000258 & 0.000170 \\
-    \hline
-    \end{tabular}
     \caption{Earth Mover's Distance for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{Earth Mover's Dist. (Weights) in Epochs}} \\
+    \cline{2-4}
+    & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000192 & 0.000010 & 0.000009 \\
+    input layer & hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
+    hidden layer 1 & hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
+    hidden layer 2 & hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
+    hidden layer 3 & hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
+    hidden layer 4 & output layer & 0.000953 & 0.000258 & 0.000170 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{Earth Mover's Distance (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000192 & 0.000010 & 0.000009 \\
-    input layer - hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
-    hidden layer 1 - hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
-    hidden layer 2 - hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
-    hidden layer 3 - hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
-    hidden layer 4 - output layer & 0.000953 & 0.000258 & 0.000170 \\
-    \hline
-    \end{tabular}
     \caption{Earth Mover's Distance for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{Earth Mover's Dist. (Weights) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000192 & 0.000010 & 0.000009 \\
+    input layer & hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
+    hidden layer 1 & hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
+    hidden layer 2 & hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
+    hidden layer 3 & hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
+    hidden layer 4 & output layer & 0.000953 & 0.000258 & 0.000170 \\
+    \hline
+    \end{tabular}
     \end{table}
 
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{KL Divergence (Biases)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000015 & 0.000001 & 0.000001 \\
-    input layer - hidden layer 1 & 0.001897 & 0.000149 & 0.000110 \\
-    hidden layer 1 - hidden layer 2 & 0.000474 & 0.000036 & 0.000019 \\
-    hidden layer 2 - hidden layer 3 & 0.001169 & 0.000007 & 0.000004 \\
-    hidden layer 3 - hidden layer 4 & 0.000371 & 0.000003 & 0.000004 \\
-    hidden layer 4 - output layer & 0.000000 & 0.000000 & 0.000000 \\
-    \hline
-    \end{tabular}
     \caption{KL Divergence for Biases}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{KL Divergence (Biases) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000015 & 0.000001 & 0.000001 \\
+    input layer & hidden layer 1 & 0.001897 & 0.000149 & 0.000110 \\
+    hidden layer 1 & hidden layer 2 & 0.000474 & 0.000036 & 0.000019 \\
+    hidden layer 2 & hidden layer 3 & 0.001169 & 0.000007 & 0.000004 \\
+    hidden layer 3 & hidden layer 4 & 0.000371 & 0.000003 & 0.000004 \\
+    hidden layer 4 & output layer & 0.000000 & 0.000000 & 0.000000 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     
-    The KL Divergence (Kullback-Leibler Divergence) for weights shows a decreasing trend across the epochs for each layer. Initially, the KL Divergence values are highest in the earlier epochs (0-300) and reduce significantly as the training progresses (300-600 and 600-999 epochs). For instance, the KL Divergence between the input layer and hidden layer 1 starts at 1.556353 in the initial epoch range, dropping to 0.124401 and further to 0.090967 in the later epochs. This consistent reduction indicates that the model's weights are becoming more stable and optimized as training progresses, suggesting a successful learning process and effective weight adjustment towards minimizing the divergence between the distributions.
+    The \gls{kld} for weights shows a decreasing trend across the epochs for each layer. Initially, the KL Divergence values are highest in the earlier epochs (0-300) and reduce significantly as the training progresses (300-600 and 600-999 epochs). For instance, the KL Divergence between the input layer and hidden layer 1 starts at 1.556353 in the initial epoch range, dropping to 0.124401 and further to 0.090967 in the later epochs. This consistent reduction indicates that the model's weights are becoming more stable and optimized as training progresses, suggesting a successful learning process and effective weight adjustment towards minimizing the divergence between the distributions.
 
-    The Earth Mover's Distance (EMD) for weights also exhibits a similar downward trend, reflecting the efficiency of the training process. For instance, the EMD between the input layer and hidden layer 1 starts at 0.001151 in the initial epoch range and decreases to 0.000205 and 0.000113 in the subsequent epochs. This reduction in EMD indicates that the distribution of weights between layers is converging and becoming more consistent over time. The trend is consistent across other layers as well, with the initial high values indicating more significant adjustments in the early training phases and lower values in later epochs demonstrating fine-tuning and stabilization of the weights. This overall decrease in both KL Divergence and EMD supports the model's effective training and improved representation learning over time.
+    The \gls{emd} for weights also exhibits a similar downward trend, reflecting the efficiency of the training process. For instance, the EMD between the input layer and hidden layer 1 starts at 0.001151 in the initial epoch range and decreases to 0.000205 and 0.000113 in the subsequent epochs. This reduction in \gls{emd} indicates that the distribution of weights between layers is converging and becoming more consistent over time. The trend is consistent across other layers as well, with the initial high values indicating more significant adjustments in the early training phases and lower values in later epochs demonstrating fine-tuning and stabilization of the weights. This overall decrease in both KL Divergence and EMD supports the model's effective training and improved representation learning over time.
 
 
 
