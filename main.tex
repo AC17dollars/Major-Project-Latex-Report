@@ -10,7 +10,7 @@
 
 \input{acronyms} % input acronyms.tex file
 
-\titlepreamble{A Major Project : Part 'A' Report\\On}
+\titlepreamble{Major Project Final Report (Part-A)\\On}
 \projecttitle{Data-driven Video Codec with Implicit Neural Representations}
 \addauthor{Abhinav Chalise}{THA077BEI003}
 \addauthor{Nimesh Gopal Pradhan}{THA077BEI026}
@@ -685,7 +685,9 @@ This section provides an overview of the system architecture and the methodology
         \label{fig:architecture-neural-network}
     \end{figure}
     The neural network model is designed to process spatio-temporal coordinates and generate corresponding \gls{rgb} pixel values and audio amplitude. The network features an input layer with 3 neurons, which takes in the space-time coordinates $(x, y, t)$ where $x$ and $y$ are spatial coordinates and $t$ is the temporal coordinate. The output layer consists of 4 neurons that produce the RGB values of a pixel and the amplitude value of audio, specifically the Red ($r$), Green ($g$), and Blue ($b$) color values, along with the audio amplitude ($A$). Between the input and output layers, the model includes $n$ fully connected hidden layers, each containing $m$ neurons. Each of these layers employs the \gls{siren} activation function, which uses the sine function to effectively model periodic signals and fine-grained details, making it particularly suitable for handling the intricate relationships inherent in audio and visual data. This architecture uses the SIREN activation function to enable high-quality signal representation, capturing both spatial and temporal dynamics to generate detailed multimedia outputs.
-    
+    \\
+    To rigorously evaluate the performance of our model on video and audio data separately, we employ two distinct SIREN architectures tailored to each modality. For video processing, the video-specific architecture features an input layer with three neurons corresponding to the pixel coordinates \((x, y)\) and the frame index \((t)\), which together determine the spatial and temporal aspects of the video frames. The output of this video network is a triplet of neurons, each representing the RGB values \((r, g, b)\) of each pixel. This allows the model to accurately reconstruct the visual information for each frame. In contrast, the audio-specific architecture is streamlined to focus solely on temporal data, with a single input neuron for the time coordinate \((t)\). The output is a single neuron that produces the amplitude \((A)\) of the audio signal at each time point. This separation of architectures enables focused training and optimization for each modality, ensuring that the intricacies of both video and audio signals are effectively captured and reproduced with high fidelity.
+
     \subsection{Loss Function}
     To effectively generate \gls{inr} for audio-video data, it is essential to define appropriate loss functions that guide the learning process. Below, the specific loss functions for audio and video are introduced, followed by the formulation of a combined loss function that integrates both modalities.
 
@@ -1016,6 +1018,8 @@ The project is developed using Python, leveraging PyTorch as the primary deep le
             \hline
         \end{tabular}
     \end{table}
+    
+
 
 \subsection{Hardware Specifications}
 The project is trained on a system with the following specifications:
