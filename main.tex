@@ -806,7 +806,9 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     
     \item \textbf{Preference $\downarrow$:} Lower values are preferable, indicating lower spectral distortion.
     
-    \item \textbf{Formula:} LSD is computed as:
+    \item \textbf{Formula:}
+    
+    LSD is computed as:
     \begin{equation}
         \text{LSD} = \frac{1}{N} \sum_{n=1}^{N} \sqrt{\frac{1}{K} \sum_{k=1}^{K} \left[ \log |X(k,n)| - \log |Y(k,n)| \right]^2}
     \end{equation}
@@ -821,7 +823,9 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     
     \item \textbf{Preference $\uparrow$:} Higher values are preferable, indicating less noise and better signal reconstruction quality.
     
-    \item \textbf{Formula:} PSNR is calculated as:
+    \item \textbf{Formula:}
+    
+    PSNR is calculated as:
     \begin{equation}
         \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
     \end{equation}
@@ -855,7 +859,8 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     \end{equation}
     
     where \( \Gamma(P, Q) \) is the set of all possible joint distributions whose marginals are \( P \) and \( Q \), and \( d(x, y) \) is the ground distance between elements \( x \) and \( y \).
-    
+
+\pagebreak
 
 \section{\MakeUppercase{Dataset Exploration}}
 \autoref{tab:audio_files} provides a summary of various audio files, detailing their serial numbers (SN), file names, sampling rates, file sizes in \gls{kib}, and durations in seconds. A brief description of the audio is mentioned after the table.
