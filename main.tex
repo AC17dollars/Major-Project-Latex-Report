@@ -1484,6 +1484,93 @@ In the other cases, similar issues of spectral blurring and noise introduction a
     In all four comparisons across different durations of audio—6 seconds, 12 seconds, 24 seconds, and the music segment—the predicted audio consistently displays a reduction in detail and fidelity compared to the ground truth. The waveform of the predicted audio appears to mimic the general shape of the ground truth waveform which suggest the model has captured the overall temporal structure of the audio signal. However upon closer inspection, several differences become apparent. The predicted waveform shows slight discrepancies in amplitude variation compared to the ground truth, indicating that the model has not perfectly replicated the dynamic range of the original audio signal.The waveforms of the predicted audio are generally smoother and more compressed, lacking the dynamic amplitude variations evident in the ground truth, which show sharper peaks and deeper troughs. 
     
     Additionally, the predicted spectrogram exhibits noticeable variations in frequency content; while the general pattern of harmonics is present, some frequency bands appear less defined or slightly shifted compared to the ground truth. The intensity levels in the predicted spectrogram also differ, with certain areas showing reduced or heightened intensity, suggesting variations in loudness or timbre compared to the original. Spectrogram analysis further reveals that the predicted audio tends to have less vibrant colors and reduced frequency activity, particularly in the higher frequency ranges. This muted frequency response suggests a simplification in the audio's complexity and a loss of fine detail, indicating that the prediction models might be averaging or smoothing over nuances present in the original audio signals. The temporal alignment of frequency components in the predicted spectrogram shows minor deviations from the ground truth, indicating that the model may have introduced slight timing errors in reproducing the audio signal.
+
+    \subsubsection{Cross Correlation Between Ground Truth and Predicted Audio}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone100hz.wav_puretone100hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 1}
+        \label{fig:cross-correlation-1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone500hz.wav_puretone500hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 2}
+        \label{fig:cross-correlation-2}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone1000hz.wav_puretone1000hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 3}
+        \label{fig:cross-correlation-3}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone5000hz.wav_puretone5000hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 4}
+        \label{fig:cross-correlation-4}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_sweeping_tone200-500hz.wav_sweeping_tone200-500hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 5}
+        \label{fig:cross-correlation-5}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_fluctuating_tone400.wav_fluctuating_tone400pred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 6}
+        \label{fig:cross-correlation-6}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_multitoneA4E4.wav_multitoneA4E4pred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 7}
+        \label{fig:cross-correlation-7}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_multitoneBeats.wav_multitoneBeatspred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 8}
+        \label{fig:cross-correlation-8}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_06seconds_06secondspred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 9}
+        \label{fig:cross-correlation-9}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_12seconds_12secondspred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 10}
+        \label{fig:cross-correlation-10}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_24seconds_24secondspred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 11}
+        \label{fig:cross-correlation-11}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_music_musicpred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 12}
+        \label{fig:cross-correlation-12}
+    \end{figure}
+
     \subsubsection{Evaluation Metrics}
     \begin{table}[H]
     \caption{PSNR and LSD values for audio data}
