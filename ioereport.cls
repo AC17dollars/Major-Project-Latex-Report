@@ -21,6 +21,7 @@
 \RequirePackage{datetime}
 \RequirePackage{enumitem} % for list items 
 \RequirePackage{longtable} % for very large and long tables
+\RequirePackage{array} % for table formatting
 
 % Command for Title Preamble
 \newcommand{\titlepreamble}[1]{%

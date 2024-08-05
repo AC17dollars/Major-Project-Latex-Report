@@ -4,12 +4,13 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \providecommand*{\algorithmautorefname}{Algorithm}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \begin{document}
 
 \input{acronyms} % input acronyms.tex file
 
-\titlepreamble{A Major Porject : Part 'A' Final Report\\On}
+\titlepreamble{A Major Project : Part 'A' Report\\On}
 \projecttitle{Data-driven Video Codec with Implicit Neural Representations}
 \addauthor{Abhinav Chalise}{THA077BEI003}
 \addauthor{Nimesh Gopal Pradhan}{THA077BEI026}
@@ -65,9 +66,9 @@
     
 \section*{ABSTRACT}
 \addcontentsline{toc}{section}{ABSTRACT}
-    In response to the escalating demand for efficient media storage and streaming, this project explores a novel audio-video compression approach using Implicit Neural Representations (INR). We trained our model on five diverse video datasets and twelve distinct audio samples, achieving varied performance metrics across these media types. The video compression results indicated that our model could effectively compress and reconstruct videos with a reasonable balance of fidelity and compression, achieving Peak Signal-to-Noise Ratios (PSNR) ranging from 23.4656 to 29.0736, Structural Similarity Indices (SSIM) between 0.7924 and 0.8521, and Learned Perceptual Image Patch Similarity (LPIPS) scores from 0.0699 to 0.2386. Audio results varied more significantly, with PSNR values ranging from 3.0149 to 52.9438 and Log Spectral Distances (LSD) between 1.9508 and 15.9798. Notably, our model demonstrated limitations in accurately predicting high-frequency audio content, suggesting areas for future refinement. Furthermore, we implemented adaptive sampling strategies for video data, modulating the sample fraction based on temporal correlations within frames to optimize compression without sacrificing quality. These findings highlight the potential of INR-based models in multimedia compression while also delineating specific challenges in handling high-frequency components and dynamic content variations.
+    In response to the escalating demand for efficient media storage and streaming, this project explores a novel audio-video representation and compression approach using Sinusoidal Representation Network (SIREN) i.e. Implicit Neural Representation(INR) with sine activation function. We trained our model on five diverse video datasets and twelve distinct audio samples, achieving varied performance metrics across these media types. The video compression results indicated that our model could effectively compress and reconstruct videos with a reasonable balance of fidelity and compression, achieving Peak Signal-to-Noise Ratios (PSNR) ranging from 23.4656 to 29.0736, Structural Similarity Indices (SSIM) between 0.7924 and 0.8521, and Learned Perceptual Image Patch Similarity (LPIPS) scores from 0.0699 to 0.2386. Audio results varied more significantly, with PSNR values ranging from 3.0149 to 52.9438 and Log Spectral Distances (LSD) between 1.9508 and 15.9798. Notably, our model demonstrated limitations in accurately predicting high-frequency audio content, suggesting areas for future refinement. Furthermore, we implemented adaptive sampling strategies for video data, modulating the sample fraction based on temporal correlations within frames to optimize compression without sacrificing quality. These findings highlight the potential of INR-based models in multimedia compression while also delineating specific challenges in handling high-frequency components and dynamic content variations.
 
-    \textit{Keywords: Compression, Decode, Encode, Implicit neural representation, Neural networks, Video}
+    \textit{Keywords: Sinusoidal Representation Networks, Implicit neural representation, Sine activation}
 
     \pagebreak
     
@@ -189,14 +190,14 @@ The feasibility analysis for the project includes technical feasibility, economi
 
     \subsection{Differences in Implicit Neural Network over Traditional Neural Network}
 
+    The \autoref{fig:implicit-vs-traditional} provides a visual comparison between traditional neural networks and implicit neural networks like SIREN (Sinusoidal Representation Network). Traditional neural networks utilize a single set of shared weights and biases for all inputs, aiming to generalize across a dataset. This generalization allows the network to accurately classify or predict outcomes for new, unseen data based on its training. For instance, in the \autoref{fig:implicit-vs-traditional}, a traditional neural network trained on images of birds, reptiles, and mammals uses the same network architecture to classify any new image into these categories.
+
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.95\linewidth]{assets/why overfitting.png}
         \caption{Implicit Neural Network vs Traditional Neural Network}
         \label{fig:implicit-vs-traditional}
     \end{figure}
-
-    The \autoref{fig:implicit-vs-traditional} provides a visual comparison between traditional neural networks and implicit neural networks like SIREN (Sinusoidal Representation Network). Traditional neural networks utilize a single set of shared weights and biases for all inputs, aiming to generalize across a dataset. This generalization allows the network to accurately classify or predict outcomes for new, unseen data based on its training. For instance, in the \autoref{fig:implicit-vs-traditional}, a traditional neural network trained on images of birds, reptiles, and mammals uses the same network architecture to classify any new image into these categories.
 
     In contrast, implicit neural networks represent each piece of media with its own unique neural network, characterized by distinct weights and biases. This approach fundamentally changes the way these networks operate. Overfitting, typically seen as a drawback in traditional neural networks, becomes a beneficial feature in implicit neural networks. Overfitting allows the network to memorize and accurately reproduce the intricate details and nuances of the specific piece of media it represents. For example, in the image, each silent video and audio clip has its own dedicated neural network that predicts frame-wise RGB values per pixel or time-wise amplitude values, respectively.
 
@@ -733,7 +734,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: \gls{psnr} is commonly employed to measure the quality of reconstruction in lossy compression \gls{codec}s. It compares the similarity between the original and compressed video by measuring the ratio between the maximum possible power of a signal and the power of distorting noise.
                 \item \textbf{Value Range}: Typically expressed in \gls{db}, the higher the \gls{psnr}, the better the quality of the compressed video. A higher \gls{psnr} value indicates that the reconstruction is of higher quality.
                 \item \textbf{Preference} $\uparrow$: Values typically range from 20 to 50 \gls{db}, where higher values (around 40 \gls{db} or more) represent excellent quality.
-                \item \textbf{Formula} \\ 
+                \item \textbf{Formula}
                 \begin{equation}\label{eqn:PSNR}
                     \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
                 \end{equation}
@@ -752,7 +753,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: \gls{ssim} is used to measure the similarity between two images or videos. It considers attributes that are important to the human visual system such as luminance, contrast, and structure.
                 \item \textbf{Value Range}: \gls{ssim} values range from -1 to 1. A score of 1 indicates perfect similarity, meaning there is no loss of structural information.
                 \item \textbf{Preference} $\uparrow$: Higher \gls{ssim} values signify less visual distortion and better compression quality.
-                \item \textbf{Formula}\\ 
+                \item \textbf{Formula}
                 \begin{equation}\label{eqn:SSIM}
                     \text{SSIM}(x, y) = \frac{(2 \mu_x \mu_y + c_1)(2 \sigma_{xy} + c_2)}{(\mu_x^2 + \mu_y^2 + c_1)(\sigma_x^2 + \sigma_y^2 + c_2)}
                 \end{equation}
@@ -765,7 +766,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: L1 loss measures the average magnitude of errors between corresponding pixels in the original and compressed images or frames, without considering the direction of the errors.
                 \item \textbf{Value Range}: The value can range from 0 to $\infty$,  0 indicating no error (perfect compression).
                 \item \textbf{Preference} $\downarrow$: Lower L1 loss values indicate that the compressed video is more accurate in terms of raw pixel values.
-                \item \textbf{Formula}\\
+                \item \textbf{Formula}
                 \begin{equation}
                     \text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
                 \end{equation}
@@ -804,7 +805,9 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     
     \item \textbf{Preference $\downarrow$:} Lower values are preferable, indicating lower spectral distortion.
     
-    \item \textbf{Formula:} LSD is computed as:
+    \item \textbf{Formula:}
+    
+    LSD is computed as:
     \begin{equation}
         \text{LSD} = \frac{1}{N} \sum_{n=1}^{N} \sqrt{\frac{1}{K} \sum_{k=1}^{K} \left[ \log |X(k,n)| - \log |Y(k,n)| \right]^2}
     \end{equation}
@@ -819,7 +822,9 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     
     \item \textbf{Preference $\uparrow$:} Higher values are preferable, indicating less noise and better signal reconstruction quality.
     
-    \item \textbf{Formula:} PSNR is calculated as:
+    \item \textbf{Formula:}
+    
+    PSNR is calculated as:
     \begin{equation}
         \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
     \end{equation}
@@ -840,81 +845,67 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
 \autoref{tab:audio_files} provides a summary of various audio files, detailing their serial numbers (SN), file names, sampling rates, file sizes in \gls{kib}, and durations in seconds. A brief description of the audio is mentioned after the table.
 
 \subsection{Audio Dataset}
+All the audio files are of .wav extension.
 \begin{table}[H]
-\centering
-\caption{Audio Files Characteristics}
-\label{tab:audio_files}
-\begin{tabular}{|c|c|c|c|c|}
-    \hline
-    \textbf{SN} & \textbf{Audio File} & \textbf{Sampling Rate (Hz)} & \textbf{Size (KiB)} & \textbf{Duration(s)}\\
-    \hline
-    1 & puretone100hz & 44100 & 516.84 & 6 \\
-    \hline
-    2 & puretone500hz & 44100 & 516.84 & 6 \\
-    \hline
-    3 & puretone1000hz & 44100 & 516.84 & 6 \\
-    \hline
-    4 & puretone5000hz & 44100 & 516.84 & 6 \\
-    \hline
-    5 & sweeping\_tone200-500hz & 44100 & 516.83 & 6 \\
-    \hline
-    6 & fluctuating\_tone400 & 44100 & 516.84 & 6 \\
-    \hline
-    7 & multitoneA4E4 & 44100 & 430.7 & 5\\
-    \hline
-    8 & multitoneBeats & 44100 & 430.7 & 5\\ 
-    \hline
-    9 & 06seconds & 44100 & 1203.99 & 6\\
-    \hline
-    10 & 12seconds & 48000 & 1212.21 & 12\\
-    \hline
-    11 & 24seconds & 48000 & 4633.97 & 24  \\
-    \hline
-    12 & music & 44100 & 1033.63 & 6 \\
-    \hline
-\end{tabular}
-\end{table}
-
-    \begin{enumerate}
-        \item puretone100hz : Contains a pure tone of frequency 100 hertz.
-        \item puretone500hz : Contains a pure tone of frequency 500 hertz.
-        \item puretone100hz : Contains a pure tone of frequency 1000 hertz.
-        \item puretone5000hz : Contains a pure tone of frequency 5000 hertz. 
-        \item sweeping\_tone200-500hz: Contains a sweeping tone starting at 200 hertz and slowly increasing upto 500 hertz.
-        \item fluctuating\_tone400 : Contains a repeatedly fluctuating frequency around 400 hertz (\textpm 30 hertz).
-        \item multitoneA4E4 : Multitone consisting of frequencies 440 hertz and 660 hertz.
-        \item multitoneBeats : Multitone consisting of frequencies 400 and 403 hertz.
-        \item 06seconds : A melody played using a violin.
-        \item 12seconds : Female commentary with crowd chants in the background for first 4 seconds. For rest of the 7 seconds, a male voice narration with music effects in the background.
-        \item 24seconds : Instruments playing a melody for first 19 seconds. For rest of the 5 seconds, a male voice with music effects in the background.
-        \item music : A song with male vocalist and multiple instruments.
-        
-    \end{enumerate}
+    \centering
+    \caption{Audio Files Characteristics}
+    \label{tab:audio_files}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{SN} & \textbf{Audio File} & \textbf{Sampling} & \textbf{Size (KiB)} & \textbf{Duration} & \textbf{Description}\\
+        &  & \textbf{Rate (Hz)} &  & \textbf{(seconds)} & \\
+        \hline
+        1 & Audio 1 & \multirow{9}{*}{44100} & 516.84 & 6 & Pure tone of 100 Hz.\\
+        \cline{1-2} \cline{4-6}
+        2 & Audio 2 & & 516.84 & 6 & Pure tone of 500 Hz.\\
+        \cline{1-2} \cline{4-6}
+        3 & Audio 3 & & 516.84 & 6 & Pure tone of 1000 Hz.\\
+        \cline{1-2} \cline{4-6}
+        4 & Audio 4 & & 516.84 & 6 & Pure tone of 5000 Hz.\\
+        \cline{1-2} \cline{4-6}
+        5 & Audio 5 & & 516.83 & 6 & Sweeping tone 200 Hz to 500 Hz.\\
+        \cline{1-2} \cline{4-6}
+        6 & Audio 6 & & 516.84 & 6 & Fluctuating frequency around 400 Hz.\\
+        \cline{1-2} \cline{4-6}
+        7 & Audio 7 & & 430.7 & 5 & Multitone: 440 Hz and 660 Hz.\\
+        \cline{1-2} \cline{4-6}
+        8 & Audio 8 & & 430.7 & 5 & Multitone: 400 Hz and 403 Hz.\\
+        \cline{1-2} \cline{4-6}
+        9 & Audio 9 & & 1203.99 & 6 & Melody played using a violin.\\
+        \hline
+        10 & Audio 10 & \multirow{2}{*}{48000} & 1212.21 & 12 & Female voice, Male voice, Crowd chants, Music effects.\\
+        \cline{1-2} \cline{4-6}
+        11 & Audio 11 & & 4633.97 & 24 & Instrumental melody, Male voice, Music effects. \\
+        \hline
+        12 & Audio 12 & 44100 & 1033.63 & 6 & Multiple instruments, male vocalist.\\
+        \hline
+    \end{tabular}
+    \end{table}    
 
 \subsection{Video Dataset}
 
 \autoref{tab:video_files} provides a summary of various video files, detailing their serial numbers (SN), file names, resolution, frames per second (fps), file size in \gls{mib} and video duration in seconds.
 
 \begin{table}[H]
-\centering
-\caption{Video Files Characteristics}
-\label{tab:video_files}
-\begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    \textbf{SN} & \textbf{Video File} & \textbf{Resolution} & \textbf{FPS} & \textbf{Size (MiB)} & \textbf{Duration(s)}\\ 
-    \hline 
-    1 & very\_very\_short\_video & 448 x 256 & 1 & 1.29 & 5\\ 
-    \hline 
-    2 & very\_short\_video &448 x 256 & 1 & 1.56 & 10\\ 
-    \hline 
-    3 & short\_video & 448 x 256 & 1 & 4.69 & 30 \\ 
-    \hline 
-    4 & medium\_video & 448 x 256 & 5.6 & 8.7 & 10\\ 
-    \hline 
-    5 & long\_video & 448 x 256 & 7 & 10.78 & 10\\ 
-    \hline
-\end{tabular}
-\end{table}
+    \centering
+    \caption{Video Files Characteristics}
+    \label{tab:video_files}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{SN} & \textbf{Video File} & \textbf{Resolution} & \textbf{FPS} & \textbf{Size (MiB)} & \textbf{Duration(s)}\\ 
+        \hline 
+        1 & Video 1 & \multirow{5}{*}{448 x 256} & 1 & 1.29 & 5\\ 
+        \cline{2-2} \cline{4-6}
+        2 & Video 2 & & 1 & 1.56 & 10\\ 
+        \cline{2-2} \cline{4-6}
+        3 & Video 3 & & 1 & 4.69 & 30 \\ 
+        \cline{2-2} \cline{4-6}
+        4 & Video 4 & & 5.6 & 8.7 & 10\\ 
+        \cline{2-2} \cline{4-6}
+        5 & Video 5 & & 7 & 10.78 & 10\\ 
+        \hline
+    \end{tabular}
+    \end{table}
 
 Among the five silent videos, three videos (very\_very\_short\_video, very\_short\_video, and short\_video) have frames without any temporal relationship meaning it is a slideshow video of unrelated images, while the other two videos include some frames that do have a temporal connection.
 
@@ -1005,18 +996,19 @@ By comparing these two images, we gain insight into the different types of conte
 The project is developed using Python, leveraging PyTorch as the primary deep learning framework. Interactive Python sessions are utilized for testing and rapid prototyping. Jupyter Notebooks are employed for exploratory data analysis and iterative experimentation, allowing for an interactive and visual approach to model development. TensorBoard is used to visualize training metrics and monitor the performance of the \gls{siren} network during training. Visual Studio Code serves as the main \gls{ide} for code writing and debugging.
 
 \subsection{Instrumentation}
-    The software and hardware used for this project are listed below: \\
+    The software and hardware used for this project are listed below:
     \begin{table}[H]
         \caption{Instrumentation Table}
         \label{table:instrumentation-table}
         \centering
-        \begin{tabular}{|p{0.2\linewidth}|p{0.3\linewidth}|p{0.4\linewidth}|}
+        \begin{tabular}{|L{0.2\linewidth}|L{0.3\linewidth}|L{0.4\linewidth}|}
             \hline
             \textbf{Requirement} & \textbf{Solution} & \textbf{Reason} \\
             \hline
             High-Performance Computing & NVIDIA RTX 4090 & Overfitting the video to the model \\
             \hline
-            Deep Learning Frameworks & PyTorch & Developing and implementing neural network models \\
+            Deep Learning Frameworks & PyTorch &
+            Developing and implementing neural network models \\
             \hline
             Development Environment & Visual Studio Code with Notebook extensions & Running and Debugging Code\\
             \hline
