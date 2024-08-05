@@ -860,11 +860,12 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
 \autoref{tab:audio_files} provides a summary of various audio files, detailing their serial numbers (SN), file names, sampling rates, file sizes in \gls{kib}, and durations in seconds. A brief description of the audio is mentioned after the table.
 
 \subsection{Audio Dataset}
+All the audio files are of .wav extension.
 \begin{table}[H]
     \centering
     \caption{Audio Files Characteristics}
     \label{tab:audio_files}
-    \begin{tabular}{|c|c|c|c|c|c|X|}
+    \begin{tabular}{|c|c|c|c|c|c|}
         \hline
         \textbf{SN} & \textbf{Audio File} & \textbf{Sampling} & \textbf{Size (KiB)} & \textbf{Duration} & \textbf{Description}\\
         &  & \textbf{Rate (Hz)} &  & \textbf{(seconds)} & \\
@@ -901,25 +902,25 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
 \autoref{tab:video_files} provides a summary of various video files, detailing their serial numbers (SN), file names, resolution, frames per second (fps), file size in \gls{mib} and video duration in seconds.
 
 \begin{table}[H]
-\centering
-\caption{Video Files Characteristics}
-\label{tab:video_files}
-\begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    \textbf{SN} & \textbf{Video File} & \textbf{Resolution} & \textbf{FPS} & \textbf{Size (MiB)} & \textbf{Duration(s)}\\ 
-    \hline 
-    1 & very\_very\_short\_video & 448 x 256 & 1 & 1.29 & 5\\ 
-    \hline 
-    2 & very\_short\_video &448 x 256 & 1 & 1.56 & 10\\ 
-    \hline 
-    3 & short\_video & 448 x 256 & 1 & 4.69 & 30 \\ 
-    \hline 
-    4 & medium\_video & 448 x 256 & 5.6 & 8.7 & 10\\ 
-    \hline 
-    5 & long\_video & 448 x 256 & 7 & 10.78 & 10\\ 
-    \hline
-\end{tabular}
-\end{table}
+    \centering
+    \caption{Video Files Characteristics}
+    \label{tab:video_files}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{SN} & \textbf{Video File} & \textbf{Resolution} & \textbf{FPS} & \textbf{Size (MiB)} & \textbf{Duration(s)}\\ 
+        \hline 
+        1 & Video 1 & \multirow{5}{*}{448 x 256} & 1 & 1.29 & 5\\ 
+        \cline{2-2} \cline{4-6}
+        2 & Video 2 & & 1 & 1.56 & 10\\ 
+        \cline{2-2} \cline{4-6}
+        3 & Video 3 & & 1 & 4.69 & 30 \\ 
+        \cline{2-2} \cline{4-6}
+        4 & Video 4 & & 5.6 & 8.7 & 10\\ 
+        \cline{2-2} \cline{4-6}
+        5 & Video 5 & & 7 & 10.78 & 10\\ 
+        \hline
+    \end{tabular}
+    \end{table}
 
 Among the five silent videos, three videos (very\_very\_short\_video, very\_short\_video, and short\_video) have frames without any temporal relationship meaning it is a slideshow video of unrelated images, while the other two videos include some frames that do have a temporal connection.
 
