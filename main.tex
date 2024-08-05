@@ -192,13 +192,6 @@ The feasibility analysis for the project includes technical feasibility, economi
 
     The \autoref{fig:implicit-vs-traditional} provides a visual comparison between traditional neural networks and implicit neural networks like SIREN (Sinusoidal Representation Network). Traditional neural networks utilize a single set of shared weights and biases for all inputs, aiming to generalize across a dataset. This generalization allows the network to accurately classify or predict outcomes for new, unseen data based on its training. For instance, in the \autoref{fig:implicit-vs-traditional}, a traditional neural network trained on images of birds, reptiles, and mammals uses the same network architecture to classify any new image into these categories.
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.95\linewidth]{assets/why overfitting.png}
-        \caption{Implicit Neural Network vs Traditional Neural Network}
-        \label{fig:implicit-vs-traditional}
-    \end{figure}
-
     In contrast, implicit neural networks represent each piece of media with its own unique neural network, characterized by distinct weights and biases. This approach fundamentally changes the way these networks operate. Overfitting, typically seen as a drawback in traditional neural networks, becomes a beneficial feature in implicit neural networks. Overfitting allows the network to memorize and accurately reproduce the intricate details and nuances of the specific piece of media it represents. For example, in the image, each silent video and audio clip has its own dedicated neural network that predicts frame-wise RGB values per pixel or time-wise amplitude values, respectively.
 
     The advantages of this approach are:
@@ -207,6 +200,13 @@ The feasibility analysis for the project includes technical feasibility, economi
         \item \textbf{Detail Preservation:} The overfitting ensures that the network captures and reproduces fine-grained details of the media.
         \item \textbf{Per-Media Specialization:} Each piece of media is encoded into its unique network, allowing for highly specialized and optimized representations.
     \end{itemize}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.95\linewidth]{assets/why overfitting.png}
+        \caption{Implicit Neural Network vs Traditional Neural Network}
+        \label{fig:implicit-vs-traditional}
+    \end{figure}
 
     Thus implicit neural networks like \gls{siren} create unique networks for each media piece, leveraging overfitting to capture detailed representations. This allows implicit neural networks to store intricate details within their parameters, making overfitting a beneficial feature.
     
@@ -353,7 +353,7 @@ where \( N \) is the total number of sampled points, \( \Phi \) is the SIREN mod
     \label{fig:propagation-diagram}
 \end{figure}
 
-The figure provides an illustration of the forward and backward propagation processes in a SIREN neural network. In the forward propagation section, the input \( \mathbf{X} \) is passed through the input layer, then sine activation is applied, and then sequentially through hidden layers 1 (with sine activation) and hidden layer 2 (with sine activation), and finally through the output layer. The forward propagation process can be described by the equations:
+The figure provides an illustration of the forward and backward propagation processes in a \gls{siren} neural network. In the forward propagation section, the input \( \mathbf{X} \) is passed through the input layer, then sine activation is applied, and then sequentially through hidden layers 1 (with sine activation) and hidden layer 2 (with sine activation), and finally through the output layer. The forward propagation process can be described by the equations:
 \begin{equation}
     \mathbf{Z}^{(l)} = \mathbf{W}^{(l)T} \mathbf{a}^{(l-1)} + \mathbf{b}^{(l)}
 \end{equation}
@@ -852,37 +852,37 @@ All the audio files are of .wav extension.
     \centering
     \caption{Audio Files Characteristics}
     \label{tab:audio_files}
-    \begin{tabular}{|c|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|L{4cm}|}
         \hline
-        \textbf{SN} & \textbf{Audio File} & \textbf{Sampling} & \textbf{Size (KiB)} & \textbf{Duration} & \textbf{Description}\\
-        &  & \textbf{Rate (Hz)} &  & \textbf{(seconds)} & \\
+        \multirow{2}{*}{\textbf{SN}} & \multirow{2}{*}{\textbf{Audio File}} & \textbf{Sampling} & \textbf{Duration} & \multirow{2}{*}{\textbf{Size(KiB)}} & \multirow{2}{*}{\textbf{Description}} \\
+        & & \textbf{Rate (Hz)} & \textbf{(seconds)} &  & \\
         \hline
-        1 & Audio 1 & \multirow{9}{*}{44100} & 516.84 & 6 & Pure tone of 100 Hz.\\
+        1 & Audio 1 & \multirow{9}{*}{44100} & 516.84 & 6 & Pure tone of 100 Hz. \\
         \cline{1-2} \cline{4-6}
-        2 & Audio 2 & & 516.84 & 6 & Pure tone of 500 Hz.\\
+        2 & Audio 2 & & 516.84 & 6 & Pure tone of 500 Hz. \\
         \cline{1-2} \cline{4-6}
-        3 & Audio 3 & & 516.84 & 6 & Pure tone of 1000 Hz.\\
+        3 & Audio 3 & & 516.84 & 6 & Pure tone of 1000 Hz. \\
         \cline{1-2} \cline{4-6}
-        4 & Audio 4 & & 516.84 & 6 & Pure tone of 5000 Hz.\\
+        4 & Audio 4 & & 516.84 & 6 & Pure tone of 5000 Hz. \\
         \cline{1-2} \cline{4-6}
-        5 & Audio 5 & & 516.83 & 6 & Sweeping tone 200 Hz to 500 Hz.\\
+        5 & Audio 5 & & 516.83 & 6 & Sweeping tone 200 Hz to 500 Hz. \\
         \cline{1-2} \cline{4-6}
-        6 & Audio 6 & & 516.84 & 6 & Fluctuating frequency around 400 Hz.\\
+        6 & Audio 6 & & 516.84 & 6 & Fluctuating frequency around 400 Hz. \\
         \cline{1-2} \cline{4-6}
-        7 & Audio 7 & & 430.7 & 5 & Multitone: 440 Hz and 660 Hz.\\
+        7 & Audio 7 & & 430.7 & 5 & Multitone: 440 Hz and 660 Hz. \\
         \cline{1-2} \cline{4-6}
-        8 & Audio 8 & & 430.7 & 5 & Multitone: 400 Hz and 403 Hz.\\
+        8 & Audio 8 & & 430.7 & 5 & Multitone: 400 Hz and 403 Hz. \\
         \cline{1-2} \cline{4-6}
-        9 & Audio 9 & & 1203.99 & 6 & Melody played using a violin.\\
+        9 & Audio 9 & & 1203.99 & 6 & Melody played using a violin. \\
         \hline
-        10 & Audio 10 & \multirow{2}{*}{48000} & 1212.21 & 12 & Female voice, Male voice, Crowd chants, Music effects.\\
+        10 & Audio 10 & \multirow{2}{*}{48000} & 1212.21 & 12 & Female voice, Male voice, Crowd chants, Music effects. \\
         \cline{1-2} \cline{4-6}
         11 & Audio 11 & & 4633.97 & 24 & Instrumental melody, Male voice, Music effects. \\
         \hline
-        12 & Audio 12 & 44100 & 1033.63 & 6 & Multiple instruments, male vocalist.\\
+        12 & Audio 12 & 44100 & 1033.63 & 6 & Multiple instruments, male vocalist. \\
         \hline
     \end{tabular}
-    \end{table}    
+\end{table} 
 
 \subsection{Video Dataset}
 
@@ -1139,39 +1139,18 @@ The total number of trainable parameters in the neural network is 3,155,983.
 \subsection{Hyperparameters}
  Below is a table summarizing the key hyperparameters used in our model:
 
-% \begin{table}[H]
-% \caption{Hyperparameters Used in Models}
-% \centering
-% \begin{tabular}{|c|c|p{7cm}|}
-% \hline
-% \textbf{Hyperparameter} & \textbf{Value} & \textbf{Description} \\
-% \hline
-% Learning Rate & \( 1 \times 10^{-4} \) & Controls the step size at each iteration while moving toward a minimum of the loss function. \\
-% \hline
-% Batch Size & 1 & Number of samples processed before the model is updated. \\
-% \hline
-% \( \omega_0 \) & 30 & Initial value for the first layer's weights, ensuring the sine function spans multiple periods over \([-1, 1]\). \\
-% \hline
-% Sample Fraction & \([0.5, 0.05,0.01,0.005]\) & Fraction of video pixels to sample in each batch. \\
-% \hline
-% Epochs & \([1000, 2000,3000, 1500]\) & Number of complete passes through the training dataset. \\
-% \hline
-% \end{tabular}
-% \label{tab:hyperparameters}
-% \end{table}
-
 \begin{table}[H]
     \caption{Hyperparameters Used in Models}
     \centering
-    \begin{tabular}{|c|p{11cm}|}
+    \begin{tabular}{|L{3.1cm}|p{10cm}|}
     \hline
     \textbf{Hyperparameter} & \textbf{Description} \\
     \hline
-    Learning Rate & Controls the step size at each iteration while moving toward a minimum of the loss function. \\
+    Learning Rate \textbf{(1e-4)} & Controls the step size at each iteration while moving toward a minimum of the loss function. \\
     \hline
-    Batch Size & Number of samples processed before the model is updated. \\
+    Batch Size \textbf{(1)} & Number of samples processed before the model is updated. \\
     \hline
-    \( \omega_0 \) & Initial value for the first layer's weights, ensuring the sine function spans multiple periods over \([-1, 1]\). \\
+    \( \omega_0 \) \textbf{(30)} & Initial value for the first layer's weights, ensuring the sine function spans multiple periods over \([-1, 1]\). \\
     \hline
     Sample Fraction & Fraction of video pixels to sample in each batch. \\
     \hline
@@ -1188,13 +1167,7 @@ The total number of trainable parameters in the neural network is 3,155,983.
     \hline
     \textbf{Hyperparameter} & \textbf{Values} \\
     \hline
-    Learning Rate & \( 1 \times 10^{-4} \) \\
-    \hline
-    Batch Size & 1 \\
-    \hline
     Epochs & 1000 \\
-    \hline
-    \( \omega_0 \) & 30 \\
     \hline
     \end{tabular}
     \label{tab:hyperparameters-audio}
@@ -1205,23 +1178,27 @@ The total number of trainable parameters in the neural network is 3,155,983.
 \begin{table}[H]
     \caption{Hyperparameters for Different Video Types}
     \centering
-    \begin{tabular}{|c|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|}
     \hline
-    \textbf{Video Name} & \textbf{Batch Size} & \textbf{Learning Rate} & \textbf{\( \omega_0 \)} & \textbf{Epochs} & \textbf{Sample Fraction} \\
+    \textbf{Video Name} & \textbf{Epochs} & \textbf{Sample Fraction} \\
     \hline
-    Very Very Short & 1 & \( 1 \times 10^{-4} \) & 30 & 1000 & 0.5 \\
+    Very Very Short & 1000 & 0.5 \\
     \hline
-    Very Short & 1 & \( 1 \times 10^{-4} \) & 30 & 3000 & 0.5 \\
+    Very Short & 3000 & 0.5 \\
     \hline
-    Short & 1 & \( 1 \times 10^{-4} \) & 30 & 2000 & 0.05 \\
+    Short & 2000 & 0.05 \\
     \hline
-    Medium & 1 & \( 1 \times 10^{-4} \) & 30 & 2000 & 0.01 \\
+    Medium & 2000 & 0.01 \\
     \hline
-    Long & 1 & \( 1 \times 10^{-4} \) & 30 & 1500 & 0.005 \\
+    Long & 1500 & 0.005 \\
     \hline
     \end{tabular}
     \label{tab:hyperparameters-video}
 \end{table}
+
+In \autoref{tab:hyperparameters-audio}, the choice of 1000 epochs reflects a compromise between training time and model performance for audio data. This value was chosen manually to ensure sufficient training without excessive computation time.
+
+The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tailored to various video sizes and types. Epochs and sample fractions are adjusted according to the video's length and complexity. For example, very short videos require fewer epochs (1000) and a higher sample fraction (0.5) to achieve optimal training results quickly. Conversely, longer videos, which are more complex, necessitates a reduced sample fraction (0.005) to maintain training efficiency. These adjustments were made based on empirical observations and manual tuning to achieve the best balance between training duration and model performance as evaluated by \gls{psnr} scores.
 
 
 
@@ -1654,78 +1631,78 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone100.png}
         \caption{Training Loss curve of Audio 1}
-        \label{fig:loss-curve-1}
+        \label{fig:audio-loss-curve-1}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone500.png}
         \caption{Training Loss curve of Audio 2}
-        \label{fig:loss-curve-2}
+        \label{fig:audio-loss-curve-2}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone1000.png}
         \caption{Training Loss curve of Audio 3}
-        \label{fig:loss-curve-3}
+        \label{fig:audio-loss-curve-3}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone5000.png}
         \caption{Training Loss curve of Audio 4}
-        \label{fig:loss-curve-4}
+        \label{fig:audio-loss-curve-4}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/sweepingtone200_500.png}
         \caption{Training Loss curve of Audio 5}
-        \label{fig:loss-curve-5}
+        \label{fig:audio-loss-curve-5}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/fluctuating_tone400.png}
         \caption{Training Loss curve of Audio 6}
-        \label{fig:loss-curve-6}
+        \label{fig:audio-loss-curve-6}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/multitone_a4e4.png}
         \caption{Training Loss curve of Audio 7}
-        \label{fig:loss-curve-7}
+        \label{fig:audio-loss-curve-7}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/multitone_beats.png}
         \caption{Training Loss curve of Audio 8}
-        \label{fig:loss-curve-8}
+        \label{fig:audio-loss-curve-8}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/06seconds.png}
         \caption{Training Loss curve of Audio 9}
-        \label{fig:loss-curve-9}
+        \label{fig:audio-loss-curve-9}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/12seconds.png}
         \caption{Training Loss curve of Audio 10}
-        \label{fig:loss-curve-10}
+        \label{fig:audio-loss-curve-10}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/24seconds.png}
         \caption{Training Loss curve of Audio 11}
-        \label{fig:loss-curve-11}
+        \label{fig:audio-loss-curve-11}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/music_with_instrument.png}
         \caption{Training Loss curve of Audio 12}
-        \label{fig:loss-curve-12}
+        \label{fig:audio-loss-curve-12}
     \end{figure}
 
-    The loss values initially start at a very low level and then experience a very steep decline, approaching zero. The loss then saturates and gradually encroaches near zero. Around epoch 300, the loss values are already near zero, but the training continues up to 1000 epochs. The reason for this extended training is that even minute improvements in the loss were positively impacting evaluation metrics like PSNR (Peak Signal-to-Noise Ratio) and log spectral distance.
+    The loss values initially start at a very low level and then experience a very steep decline, approaching zero. The loss then saturates and gradually encroaches near zero. Around epoch 300, the loss values are already near zero, but the training continues up to 1000 epochs. The reason for this extended training is that even minute improvements in the loss were positively impacting evaluation metrics like \gls{psnr} and log spectral distance.
 
-    An exception is observed in the loss curve for pure tone audio at 5000 Hz. Here, the loss value falls from 0.53 to 0.499 within the first 10 epochs and then remains constant. This plateau indicates the model's difficulty in learning high-frequency audio signals.
+    An exception is observed in the loss curve shown in \autoref{fig:audio-loss-curve-4}. Here, the loss value falls from 0.53 to 0.499 within the first 10 epochs and then remains constant. This is because audio 4 only contains high frequency of 5000Hz and the model is unable to learn high-frequency audio signals.
 
     \subsection{Video Dataset}
     Below are the grouth truth images and the predicted images of first video dataset.
@@ -2019,6 +1996,45 @@ In conclusion, while the evaluation metrics demonstrate the architecture's stren
 
     When sine activation is applied, the PDFs of the layers transform significantly. The histograms reveal peaks at the boundaries and fewer values in the center, resembling an arcsine distribution. This characteristic shift is evident in the distinctive shape of the CDFs for sine-activated layers. Each hidden layer follows this pattern, where linear activation maintains a near-normal distribution, and sine activation alters it to approximate an arcsine distribution. The output layer also exhibits a close-to-normal distribution, shown by the bell-shaped histogram and the corresponding CDF. 
 
+    \subsubsection{Loss Curves}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/very_very_short.png}
+        \caption{Training Loss curve of Video 1}
+        \label{fig:video-loss-curve-1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/very_short.png}
+        \caption{Training Loss curve of Video 2}
+        \label{fig:video-loss-curve-2}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/short.png}
+        \caption{Training Loss curve of Video 3}
+        \label{fig:video-loss-curve-3}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/medium.png}
+        \caption{Training Loss curve of Video 4}
+        \label{fig:video-loss-curve-4}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/long.png}
+        \caption{Training Loss curve of Video 5}
+        \label{fig:video-loss-curve-5}
+    \end{figure}
+
+
+    The loss values for the video representation model start at a low level and show a very steep decline, approaching nearly zero around epoch 100. After this point, the rate of decline in the loss slows down almost being linear. Although the loss value approaches zero, training continues beyond this point. This is because even though there were only minute improvements in the loss function the performance metrics such as \gls{psnr}, \gls{ssim}, and \gls{lpips} were improving. The continued training ensured that these evaluation metrics were optimized, further enhancing the quality of the video representation model.
+    
     \pagebreak
 
 
