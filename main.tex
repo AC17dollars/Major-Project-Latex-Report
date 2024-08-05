@@ -369,16 +369,15 @@ where:
     \item \( \mathbf{a}^{(l)} \) is the activation of the \( l \)-th layer after applying the sine function.
 \end{itemize}
 
-The error \( \mathbf{E} \) is calculated based on the difference between the predicted output \( \mathbf{a}^{(3)} \) and the actual output \( \mathbf{y}_i \). Specifically, we use the Mean Squared Error (MSE) loss function over the RGB channels:
+The error \( \mathbf{E} \) is calculated based on the difference between the predicted output \( \mathbf{a}^{(3)} \) and the actual output \( \mathbf{y}_i \). Specifically, we use the Mean Squared Error (MSE) loss function:
 \begin{equation}
-    \mathbf{E} = \frac{1}{3} \sum_{i=1}^{3} (\mathbf{a}^{(3)}_i - \mathbf{y}_i)^2
+    \mathbf{E} = \frac{1}{2} \sum_{i=1}^{N} (\mathbf{a}^{(3)}_i - \mathbf{y}_i)^2
 \end{equation}
 where:
 \begin{itemize}
     \item \( \mathbf{a}^{(3)}_i \) is the predicted output.
     \item \( \mathbf{y}_i \) is the actual output.
 \end{itemize}
-The loss equation has been written referencing \autoref{fig:32-32-neural} where the output is \gls{rgb} values of pixels, which is why the sum runs from 1 to 3.
 
 The backward propagation section shows the gradient calculation needed to update the network's weights. It starts with the error gradient \( \frac{\partial \mathbf{E}}{\partial \mathbf{a}^{(3)}} \) at the output layer and propagates backwards through hidden layers 2 and 1, and finally to the input layer. This involves computing the gradients \( \frac{\partial \mathbf{a}^{(3)}}{\partial \mathbf{a}^{(2)}} \), \( \frac{\partial \mathbf{a}^{(2)}}{\partial \mathbf{a}^{(1)}} \), and \( \frac{\partial \mathbf{a}^{(1)}}{\partial \mathbf{a}_{(in)}} \).
 
@@ -844,26 +843,6 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
 
     \pagebreak
 
-    \subsection*{KL Divergence and Earth Mover's Distance}
-
-    \subsubsection*{KL Divergence}
-    KL Divergence (Kullback-Leibler Divergence) is a measure of how one probability distribution diverges from a second, expected probability distribution. It quantifies the difference between two distributions \( P \) and \( Q \).
-    
-    \begin{equation}
-        D_{KL}(P \parallel Q) = \sum_{i} P(i) \log \frac{P(i)}{Q(i)}
-    \end{equation}
-    
-    \subsubsection*{Earth Mover's Distance (EMD)}
-    Earth Mover's Distance is a measure of the distance between two probability distributions over a region \( D \). It is the minimum cost to transform one distribution into the other, viewed as the "work" needed to move the distribution mass.
-    
-    \begin{equation}
-        \text{EMD}(P, Q) = \inf_{\gamma \in \Gamma(P,Q)} \int_{D \times D} d(x, y) \, d\gamma(x, y)
-    \end{equation}
-    
-    where \( \Gamma(P, Q) \) is the set of all possible joint distributions whose marginals are \( P \) and \( Q \), and \( d(x, y) \) is the ground distance between elements \( x \) and \( y \).
-
-\pagebreak
-
 \section{\MakeUppercase{Dataset Exploration}}
 \autoref{tab:audio_files} provides a summary of various audio files, detailing their serial numbers (SN), file names, sampling rates, file sizes in \gls{kib}, and durations in seconds. A brief description of the audio is mentioned after the table.
 
@@ -937,7 +916,7 @@ Among the five silent videos, three videos (very\_very\_short\_video, very\_shor
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video1spatialfreq.png}
-    \caption{Spatial Frequency of all frames of Video 1}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 1}
     \label{fig:spatial-frequency-1}
 \end{figure}
 
@@ -946,28 +925,28 @@ The above figure contains the spatial frequency graph of all 5 frames of video 1
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video2spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 2}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 2}
     \label{fig:spatial-frequency-2}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video3spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 3}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 3}
     \label{fig:spatial-frequency-3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video4spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 4}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 4}
     \label{fig:spatial-frequency-4}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video5spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 5}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
     \label{fig:spatial-frequency-5}
 \end{figure}
 
@@ -977,6 +956,42 @@ Conversely, the image with lowest average spatial frequency describes a frame th
 
 By comparing these two images, we gain insight into the different types of content represented in the dataset. The spatial frequency analysis provides a quantitative means of distinguishing between images with varying levels of detail and texture, helping us understand their underlying structural characteristics.
     
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/very_very_short.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-1}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/very_short.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/short.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/medium.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/long.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-5}
+\end{figure}
+
     \pagebreak
 
 \section{\MakeUppercase{Implementation Details}}
@@ -1708,6 +1723,9 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
         \label{fig:loss-curve-12}
     \end{figure}
 
+    The loss values initially start at a very low level and then experience a very steep decline, approaching zero. The loss then saturates and gradually encroaches near zero. Around epoch 300, the loss values are already near zero, but the training continues up to 1000 epochs. The reason for this extended training is that even minute improvements in the loss were positively impacting evaluation metrics like PSNR (Peak Signal-to-Noise Ratio) and log spectral distance.
+
+    An exception is observed in the loss curve for pure tone audio at 5000 Hz. Here, the loss value falls from 0.53 to 0.499 within the first 10 epochs and then remains constant. This plateau indicates the model's difficulty in learning high-frequency audio signals.
 
     \subsection{Video Dataset}
     Below are the grouth truth images and the predicted images of first video dataset.
