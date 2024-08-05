@@ -146,7 +146,7 @@ The paper ``Deep Contextual Video Compression" \cite{li2021deep} introduces a co
 
 Further deepening our understanding, the exploration of latent spaces in ``Deep Learning in Latent Space for Video Prediction and Compression" \cite{Liu_latentvideo} reveals that employing deep autoencoders trained with \gls{gan}s can effectively compress video data. This novel framework adopts a \gls{gan}-based autoencoder architecture, accompanied by trainable quantization and entropy coding, to compress video sequences within a latent vector space. This method begins by learning efficient latent space representations of video frames via a deep autoencoder trained with \gls{gan}s, followed by inter-frame prediction using a convolutional \gls{lstm} network. This approach only stores the differences between predicted and actual representations in a compact latent space, reducing residual entropy. Additionally, the framework demonstrates its versatility by applying the same Conv\gls{lstm} predictor to both video compression and anomaly detection tasks. Performance evaluations show that this method achieves superior or competitive results compared to other state-of-the-art learning-based \gls{codec}, offering a wide range of rate-distortion trade-offs and effectively reducing both spatial and temporal redundancies.
 
-Another significant stride is presented in ``Video Compression with Entropy-Constrained Neural Representations," \cite{Gomes_2023_CVPR} where the compression occurs not in pixel space but within the neural network parameter space. According to the paper, encoding videos as neural networks (known as \gls{nvr}) offers innovative video processing capabilities, though traditional methods still outperform \gls{nvr}s in video compression due to inefficiencies in compact spatio-temporal representation and disjoint rate-distortion optimization. To address these issues, they propose a novel convolutional architecture that effectively represents spatio-temporal information and employs a joint optimization strategy for rate and distortion. This end-to-end approach eliminates the need for post-training operations like quantization or pruning. Evaluations on the \gls{uvg} dataset show that their method achieves state-of-the-art results, surpassing both traditional \gls{hevc} benchmarks and established neural video compression methods. 
+Another significant stride is presented in ``Video Compression with Entropy-constrained Neural Representations," \cite{Gomes_2023_CVPR} where the compression occurs not in pixel space but within the neural network parameter space. According to the paper, encoding videos as neural networks (known as \gls{nvr}) offers innovative video processing capabilities, though traditional methods still outperform \gls{nvr}s in video compression due to inefficiencies in compact spatio-temporal representation and disjoint rate-distortion optimization. To address these issues, they propose a novel convolutional architecture that effectively represents spatio-temporal information and employs a joint optimization strategy for rate and distortion. This end-to-end approach eliminates the need for post-training operations like quantization or pruning. Evaluations on the \gls{uvg} dataset show that their method achieves state-of-the-art results, surpassing both traditional \gls{hevc} benchmarks and established neural video compression methods. 
 
 The paper ``Neural Video Compression with Diverse Contexts" \cite{li2023neural} proposes enhancing context diversity in both temporal and spatial dimensions. Temporally, the model is guided to learn hierarchical quality patterns across frames, enriching long-term, high-quality temporal contexts. Additionally, group-based offset diversity is introduced to improve temporal context mining within an optical flow-based coding framework. Spatially, a quadtree-based partitioning method increases spatial context diversity for more effective entropy coding.To tap the potential of optical flow-based coding framework, a group-based offset diversity where the cross-group interaction for better context mining is proposed. Experiments demonstrate that this \gls{codec} achieves a 23.5\% bitrate reduction over previous state-of-the-art \gls{nvc}s and surpasses the developing next-generation traditional \gls{codec} \gls{ecm} in both \gls{rgb} and YUV420 colorspaces in terms of \gls{psnr}. 
 
@@ -235,7 +235,7 @@ The feasibility analysis for the project includes technical feasibility, economi
     \begin{enumerate}[label=\textbf{\roman*.}]
         \item \textbf{Complex Signal Representation:} Sinusoidal activation functions enable neural networks to capture fine details and high-frequency components of signals more effectively. Traditional activation functions often struggle with this, leading to smoother, less detailed representations.
         \item \textbf{Smooth and Periodic Activation:} The smooth, continuous, and periodic nature of sinusoidal functions helps avoid issues like vanishing or exploding gradients, which are common with traditional activation functions, especially in deeper networks. This leads to more stable and efficient training dynamics.
-        \item \textbf{Principled Initialization:} \gls{siren}s benefit from a principled initialization scheme tailored for sinusoidal activations, ensuring that the network starts with a configuration that is conducive to learning complex patterns without the instability seen with other activation functions.
+        \item \textbf{Principled Initialization:} \gls{siren}s benefit from principled initialization scheme tailored for sinusoidal activations, ensuring that the network starts with a configuration that is conducive to learning complex patterns without the instability seen with other activation functions.
     \end{enumerate}
     
     \subsection{Transition to Sinusoidal Representation Networks (SIRENs)}
@@ -261,7 +261,7 @@ The feasibility analysis for the project includes technical feasibility, economi
         \end{itemize}
         \item \textbf{Layer-wise Propagation}
         \begin{itemize}
-            \item Weights and Biases: Weights $w$ are initialized uniformly within $U\left(-\frac{c}{\sqrt{n}}, \frac{c}{\sqrt{n}}\right)$, where $c$ is a scaling factor and $n$ is the fan-in.
+            \item Weights and Biases: Weights $w$ are initialized uniformly within $U\left(-\frac{c}{\sqrt{n}}, \frac{c}{\sqrt{n}}\right)$ where, $c$ is a scaling factor and $n$ is the fan-in.
             \item Output of Deeper Layers: In subsequent layers, each input is arcsine distributed due to the previous layer's sine activation. The weighted sum $w^T x$ approaches a normal distribution as the number of inputs $n$ increases. Passing this sum through another sine function keeps the output arcsine distributed, preserving the distribution across layers.
         \end{itemize}
         \item \textbf{Special Handling in the First Layer} \\
@@ -284,7 +284,7 @@ The feasibility analysis for the project includes technical feasibility, economi
     \autoref{fig:conceptual-pruning} shows network pruning which involves selectively removing weights from fully connected layers that fall below a specified threshold, to reduce model complexity. Additionally, unnecessary nodes are eliminated to optimize computational efficiency and enhance model performance.
     
     \subsection{Quantization}
-    Quantization involves reducing the precision of the model's parameters, such as weights, from floating-point to lower-bit representations, which decrease the model size.
+    Quantization involves reducing the precision of the model's parameters, such as weights and biases, from floating-point to lower-bit representations, which decrease the model size.
     \begin{equation}
         w' = \text{round}\left(\frac{w}{s}\right)
     \end{equation}
@@ -296,8 +296,7 @@ The feasibility analysis for the project includes technical feasibility, economi
             \caption{Quantization}
             \label{fig:conceptual-quantization}
     \end{figure}
-    In \autoref{fig:conceptual-quantization}, a sample 4x4 matrix of weights is taken. The weights are quantized to 4 bins (denoted with 4 colors),
-    all the weights in the same bin share the same value. The centriods for each bin can be found using K-Means Clustering. For updating the centriods, the gradients  are grouped according to the bins, summed together, multiplied by the learning weight and subtracted from the previous centriod. The weights are then replaced by the centroids of the respective bins.
+    In \autoref{fig:conceptual-quantization}, a sample 4x4 matrix of weights is taken. The weights are quantized to 4 bins (denoted with 4 colors), all the weights in the same bin share the same value. The centriods for each bin can be found using K-Means Clustering. For updating the centriods, the gradients  are grouped according to the bins, summed together, multiplied by the learning weight and subtracted from the previous centriod. The weights are then replaced by the centroids of the respective bins.
         
     \subsection{Variational Autoencoder (VAE) }
         \begin{figure}[H]
@@ -306,7 +305,7 @@ The feasibility analysis for the project includes technical feasibility, economi
         \caption{Variational Autoencoder}
         \label{fig:vae}
     \end{figure}
-    \autoref{fig:vae} illustrates the architecture and workflow of a Variational Autoencoder (VAE), capturing the process from input to output through a series of transformations within the encoder, latent space, and decoder. The input, denoted as $\mathbf{x}$, represents the neural network parameters (weights and biases). These parameters are flattened and normalized into a high-dimensional vector. The goal is to transform these parameters into a manageable, lower-dimensional latent representation while retaining essential performance characteristics. The encoder processes the input data $\mathbf{x}$ and maps it into the latent space. Unlike traditional autoencoders, the VAE encoder outputs parameters defining Gaussian distributions for each latent dimension: mean $\mu$ and variance $\sigma^2$. The equations governing this transformation are:
+    The \autoref{fig:vae} illustrates an architecture and workflow of a \gls{vae}, capturing the process from input to output through a series of transformations within the encoder, latent space, and decoder. The input, denoted as $\mathbf{x}$, represents the neural network parameters (weights and biases). These parameters are flattened and normalized into a high-dimensional vector. The goal is to transform these parameters into a manageable, lower-dimensional latent representation while retaining essential performance characteristics. The encoder processes the input data $\mathbf{x}$ and maps it into a latent space. Unlike traditional autoencoders, the VAE encoder outputs parameters defining Gaussian distributions for each latent dimension: mean $\mu$ and variance $\sigma^2$. The equations governing this transformation are:
     \begin{equation}
            \mu = f_{\mu}(\mathbf{x}), \quad \sigma^2 = f_{\sigma}(\mathbf{x})
     \end{equation}
@@ -959,7 +958,7 @@ By comparing these two images, we gain insight into the different types of conte
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/video_radial_plots/very_very_short.png}
-    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \caption{Average Radial Intensity vs Spatial Frequency for Video 1}
     \label{fig:radial-plot-1}
 \end{figure}
 
@@ -967,28 +966,28 @@ By comparing these two images, we gain insight into the different types of conte
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/video_radial_plots/very_short.png}
-    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \caption{Average Radial Intensity vs Spatial Frequency for Video 2}
     \label{fig:radial-plot-2}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/video_radial_plots/short.png}
-    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \caption{Average Radial Intensity vs Spatial Frequency for Video 3}
     \label{fig:radial-plot-3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/video_radial_plots/medium.png}
-    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \caption{Average Radial Intensity vs Spatial Frequency for Video 4}
     \label{fig:radial-plot-4}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/video_radial_plots/long.png}
-    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \caption{Average Radial Intensity vs Spatial Frequency for Video 5}
     \label{fig:radial-plot-5}
 \end{figure}
 
@@ -1206,7 +1205,6 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
 
 \section{\MakeUppercase{Results and Analysis}}
 
-    
     \subsection{Audio Dataset}
     This section presents two visualizations of the audio signal: the first subplot shows amplitude over time with notable peaks, and the second subplot is a spectrogram displaying frequency content and amplitude intensity. Additionally, a table provides \gls{psnr} and log spectral distance metrics for ground truth and prediction pairs, assessing signal fidelity and frequency representation accuracy.
     
@@ -1491,29 +1489,29 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \hline
         \textbf{SN} & \textbf{File Name} & \textbf{PSNR} & \textbf{LSD} \\
         \hline
-        1  & puretone100hz & 48.39 & 1.95  \\
+        1  & Audio 1 & 48.39 & 1.95  \\
         \hline
-        2  & puretone500hz & 42.79 & 4.39  \\
+        2  & Audio 2 & 42.79 & 4.39  \\
         \hline
-        3  & puretone1000hz & 22.37 & 7.97  \\
+        3  & Audio 3 & 22.37 & 7.97  \\
         \hline
-        4  & puretone5000hz & 3.01  & 14.24 \\
+        4  & Audio 4 & 3.01  & 14.24 \\
         \hline
-        5  & sweeping\_tone200-500hz & 37.00 & 4.15  \\
+        5  & Audio 5 & 37.00 & 4.15  \\
         \hline
-        6  & fluctuating\_tone400 & 34.79 & 5.92  \\
+        6  & Audio 6 & 34.79 & 5.92  \\
         \hline
-        7  & multitoneA4E4 & 47.93 & 5.19  \\
+        7  & Audio 7 & 47.93 & 5.19  \\
         \hline
-        8  & multitoneBeats & 52.94 & 2.61  \\
+        8  & Audio 8 & 52.94 & 2.61  \\
         \hline
-        9  & 06seconds & 37.11 & 5.82  \\
+        9  & Audio 9 & 37.11 & 5.82  \\
         \hline
-        10 & 12seconds & 31.66 & 10.23 \\
+        10 & Audio 10 & 31.66 & 10.23 \\
         \hline
-        11 & 24seconds & 28.84 & 11.38 \\
+        11 & Audio 11 & 28.84 & 11.38 \\
         \hline
-        12 & music & 23.16 & 15.98 \\
+        12 & Audio 12 & 23.16 & 15.98 \\
         \hline
     \end{tabular}
     \label{tab:audio_metrics_ordered}
@@ -1589,88 +1587,86 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
     \end{figure}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{KL Divergence (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000006 & 0.000000 & 0.000000 \\
-    input layer - hidden layer 1 & 1.556353 & 0.124401 & 0.090967 \\
-    hidden layer 1 - hidden layer 2 & 0.420411 & 0.042276 & 0.035750 \\
-    hidden layer 2 - hidden layer 3 & 0.210519 & 0.018601 & 0.013199 \\
-    hidden layer 3 - hidden layer 4 & 0.244147 & 0.009357 & 0.006045 \\
-    hidden layer 4 - output layer & 0.155492 & 0.000728 & 0.000372 \\
-    \hline
-    \end{tabular}
     \caption{KL Divergence for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{KL Divergence (Weights) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000006 & 0.000000 & 0.000000 \\
+    input layer & hidden layer 1 & 1.556353 & 0.124401 & 0.090967 \\
+    hidden layer 1 & hidden layer 2 & 0.420411 & 0.042276 & 0.035750 \\
+    hidden layer 2 & hidden layer 3 & 0.210519 & 0.018601 & 0.013199 \\
+    hidden layer 3 & hidden layer 4 & 0.244147 & 0.009357 & 0.006045 \\
+    hidden layer 4 & output layer & 0.155492 & 0.000728 & 0.000372 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{Earth Mover's Distance (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000192 & 0.000010 & 0.000009 \\
-    input layer - hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
-    hidden layer 1 - hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
-    hidden layer 2 - hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
-    hidden layer 3 - hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
-    hidden layer 4 - output layer & 0.000953 & 0.000258 & 0.000170 \\
-    \hline
-    \end{tabular}
     \caption{Earth Mover's Distance for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{Earth Mover's Dist. (Weights) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000192 & 0.000010 & 0.000009 \\
+    input layer & hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
+    hidden layer 1 & hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
+    hidden layer 2 & hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
+    hidden layer 3 & hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
+    hidden layer 4 & output layer & 0.000953 & 0.000258 & 0.000170 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{Earth Mover's Distance (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000192 & 0.000010 & 0.000009 \\
-    input layer - hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
-    hidden layer 1 - hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
-    hidden layer 2 - hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
-    hidden layer 3 - hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
-    hidden layer 4 - output layer & 0.000953 & 0.000258 & 0.000170 \\
-    \hline
-    \end{tabular}
     \caption{Earth Mover's Distance for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{Earth Mover's Dist. (Weights) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000192 & 0.000010 & 0.000009 \\
+    input layer & hidden layer 1 & 0.001151 & 0.000205 & 0.000113 \\
+    hidden layer 1 & hidden layer 2 & 0.000543 & 0.000218 & 0.000159 \\
+    hidden layer 2 & hidden layer 3 & 0.000293 & 0.000130 & 0.000093 \\
+    hidden layer 3 & hidden layer 4 & 0.000102 & 0.000033 & 0.000026 \\
+    hidden layer 4 & output layer & 0.000953 & 0.000258 & 0.000170 \\
+    \hline
+    \end{tabular}
     \end{table}
 
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{KL Divergence (Biases)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 300} & \textbf{Epoch 300 - 600} & \textbf{Epoch 600 - 999} \\
-    \hline
-    input - input layer & 0.000015 & 0.000001 & 0.000001 \\
-    input layer - hidden layer 1 & 0.001897 & 0.000149 & 0.000110 \\
-    hidden layer 1 - hidden layer 2 & 0.000474 & 0.000036 & 0.000019 \\
-    hidden layer 2 - hidden layer 3 & 0.001169 & 0.000007 & 0.000004 \\
-    hidden layer 3 - hidden layer 4 & 0.000371 & 0.000003 & 0.000004 \\
-    hidden layer 4 - output layer & 0.000000 & 0.000000 & 0.000000 \\
-    \hline
-    \end{tabular}
     \caption{KL Divergence for Biases}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{KL Divergence (Biases) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 300} & \textbf{300 - 600} & \textbf{600 - 999} \\
+    \hline
+    input & input layer & 0.000015 & 0.000001 & 0.000001 \\
+    input layer & hidden layer 1 & 0.001897 & 0.000149 & 0.000110 \\
+    hidden layer 1 & hidden layer 2 & 0.000474 & 0.000036 & 0.000019 \\
+    hidden layer 2 & hidden layer 3 & 0.001169 & 0.000007 & 0.000004 \\
+    hidden layer 3 & hidden layer 4 & 0.000371 & 0.000003 & 0.000004 \\
+    hidden layer 4 & output layer & 0.000000 & 0.000000 & 0.000000 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     
-    The KL Divergence (Kullback-Leibler Divergence) for weights shows a decreasing trend across the epochs for each layer. Initially, the KL Divergence values are highest in the earlier epochs (0-300) and reduce significantly as the training progresses (300-600 and 600-999 epochs). For instance, the KL Divergence between the input layer and hidden layer 1 starts at 1.556353 in the initial epoch range, dropping to 0.124401 and further to 0.090967 in the later epochs. This consistent reduction indicates that the model's weights are becoming more stable and optimized as training progresses, suggesting a successful learning process and effective weight adjustment towards minimizing the divergence between the distributions.
+    The \gls{kld} for weights shows a decreasing trend across the epochs for each layer. Initially, the KL Divergence values are highest in the earlier epochs (0-300) and reduce significantly as the training progresses (300-600 and 600-999 epochs). For instance, the KL Divergence between the input layer and hidden layer 1 starts at 1.556353 in the initial epoch range, dropping to 0.124401 and further to 0.090967 in the later epochs. This consistent reduction indicates that the model's weights are becoming more stable and optimized as training progresses, suggesting a successful learning process and effective weight adjustment towards minimizing the divergence between the distributions.
 
-    The Earth Mover's Distance (EMD) for weights also exhibits a similar downward trend, reflecting the efficiency of the training process. For instance, the EMD between the input layer and hidden layer 1 starts at 0.001151 in the initial epoch range and decreases to 0.000205 and 0.000113 in the subsequent epochs. This reduction in EMD indicates that the distribution of weights between layers is converging and becoming more consistent over time. The trend is consistent across other layers as well, with the initial high values indicating more significant adjustments in the early training phases and lower values in later epochs demonstrating fine-tuning and stabilization of the weights. This overall decrease in both KL Divergence and EMD supports the model's effective training and improved representation learning over time.
-
-
+    The \gls{emd} for weights also exhibits a similar downward trend, reflecting the efficiency of the training process. For instance, the EMD between the input layer and hidden layer 1 starts at 0.001151 in the initial epoch range and decreases to 0.000205 and 0.000113 in the subsequent epochs. This reduction in \gls{emd} indicates that the distribution of weights between layers is converging and becoming more consistent over time. The trend is consistent across other layers as well, with the initial high values indicating more significant adjustments in the early training phases and lower values in later epochs demonstrating fine-tuning and stabilization of the weights. This overall decrease in both KL Divergence and EMD supports the model's effective training and improved representation learning over time.
 
 
 
@@ -1704,9 +1700,9 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
         \label{fig:audio-activation-999}
     \end{figure}
 
-    The activation plots in this set provide a comprehensive view of how activations are distributed across different layers of the network, both before and after applying sine activation functions. Initially, the input values are uniformly distributed, as depicted by the even distribution in the histogram and the linear cumulative distribution function (CDF).For the input layer with linear activation, the probability density function (PDF) becomes almost normally distributed due to the effect of weights initialization. This normal-like distribution is evident from the bell-shaped histogram and the S-shaped curve in the CDF. However, after applying the sine activation, the PDF transitions towards an arcsine distribution, shown by the histogram peaks at the extremes and the distinct shape of the CDF.
+    The activation plots in this set provide a comprehensive view of how activations are distributed across different layers of the network, both before and after applying sine activation functions. Initially, the input values are uniformly distributed, as depicted by the even distribution in the histogram and the linear cumulative distribution function (CDF). For the input layer with linear activation, the probability density function (PDF) becomes almost normally distributed due to the effect of weights initialization. This normal-like distribution is evident from the bell-shaped histogram and the S-shaped curve in the CDF. However, after applying the sine activation, the PDF transitions towards an arcsine distribution, shown by the histogram peaks at the extremes and the distinct shape of the CDF.
 
-    Moving on to the hidden layers, a similar trend is observed. The first hidden layer with linear activation has a near-normal distribution, as shown by the central peak in the histogram and the corresponding CDF. When sine activation is applied, the distribution changes to resemble an arcsine distribution, with peaks at the boundaries in the histogram and the characteristic shape in the CDF.The second hidden layer also follows this pattern. With linear activation, the distribution remains near-normal, and the sine activation shifts it towards an arcsine distribution. This is consistently seen in the histograms and CDFs for both activations.In the third hidden layer, the linear activation maintains a near-normal distribution, while the sine activation once again transforms the distribution to an arcsine form. The fourth hidden layer exhibits the same behavior, with a near-normal distribution under linear activation and an arcsine distribution with sine activation.
+    Moving on to the hidden layers, a similar trend is observed. The first hidden layer with linear activation has a near-normal distribution, as shown by the central peak in the histogram and the corresponding CDF. When sine activation is applied, the distribution changes to resemble an arcsine distribution, with peaks at the boundaries in the histogram and the characteristic shape in the CDF. The second hidden layer also follows this pattern. With linear activation, the distribution remains near-normal, and the sine activation shifts it towards an arcsine distribution. This is consistently seen in the histograms and CDFs for both activations. In the third hidden layer, the linear activation maintains a near-normal distribution, while the sine activation once again transforms the distribution to an arcsine form. The fourth hidden layer exhibits the same behavior, with a near-normal distribution under linear activation and an arcsine distribution with sine activation.
 
     Finally, the output layer shows a close-to-normal distribution before any non-linear activation is applied, as indicated by the bell-shaped histogram and the normal-like CDF. Overall, these plots clearly demonstrate the transition from uniformly distributed input values through near-normal distributions with linear activations to arcsine-like distributions with sine activations, highlighting the significant impact of the sine function on the activation values throughout the network.
 
@@ -1965,79 +1961,79 @@ In conclusion, while the evaluation metrics demonstrate the architecture's stren
     \end{figure}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{KL Divergence (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 700} & \textbf{Epoch 700 - 1500} & \textbf{Epoch 1500 - 1999} \\
-    \hline
-    input - input layer & 0.000161 & 0.000049 & 0.000046 \\
-    input layer - hidden layer 1 & 1.362321 & 0.179672 & 0.122370 \\
-    hidden layer 1 - hidden layer 2 & 1.138587 & 0.414731 & 0.281766 \\
-    hidden layer 2 - hidden layer 3 & 17.374886 & 0.267125 & 0.224011 \\
-    hidden layer 3 - hidden layer 4 & 0.608277 & 0.323486 & 18.722935 \\
-    hidden layer 4 - output layer & 1.306046 & 0.046368 & 0.021945 \\
-    \hline
-    \end{tabular}
     \caption{KL Divergence for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{KL Divergence (Weights) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 700} & \textbf{700 - 1500} & \textbf{1500 - 1999} \\
+    \hline
+    input & input layer & 0.000161 & 0.000049 & 0.000046 \\
+    input layer & hidden layer 1 & 1.362321 & 0.179672 & 0.122370 \\
+    hidden layer 1 & hidden layer 2 & 1.138587 & 0.414731 & 0.281766 \\
+    hidden layer 2 & hidden layer 3 & 17.374886 & 0.267125 & 0.224011 \\
+    hidden layer 3 & hidden layer 4 & 0.608277 & 0.323486 & 18.722935 \\
+    hidden layer 4 & output layer & 1.306046 & 0.046368 & 0.021945 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     \begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-    \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{Earth Mover's Distance (Weights)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 700} & \textbf{Epoch 700 - 1500} & \textbf{Epoch 1500 - 1999} \\
-    \hline
-    input - input layer & 0.000657 & 0.000495 & 0.000316 \\
-    input layer - hidden layer 1 & 0.000335 & 0.000102 & 0.000054 \\
-    hidden layer 1 - hidden layer 2 & 0.000299 & 0.000112 & 0.000044 \\
-    hidden layer 2 - hidden layer 3 & 0.000152 & 0.000057 & 0.000025 \\
-    hidden layer 3 - hidden layer 4 & 0.000090 & 0.000051 & 0.000028 \\
-    hidden layer 4 - output layer & 0.000757 & 0.000093 & 0.000045 \\
-    \hline
-    \end{tabular}
     \caption{Earth Mover's Distance for Weights}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{Earth Mover's Dist. (Weights) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 700} & \textbf{700 - 1500} & \textbf{1500 - 1999} \\
+    \hline
+    input & input layer & 0.000657 & 0.000495 & 0.000316 \\
+    input layer & hidden layer 1 & 0.000335 & 0.000102 & 0.000054 \\
+    hidden layer 1 & hidden layer 2 & 0.000299 & 0.000112 & 0.000044 \\
+    hidden layer 2 & hidden layer 3 & 0.000152 & 0.000057 & 0.000025 \\
+    hidden layer 3 & hidden layer 4 & 0.000090 & 0.000051 & 0.000028 \\
+    hidden layer 4 & output layer & 0.000757 & 0.000093 & 0.000045 \\
+    \hline
+    \end{tabular}
     \end{table}
 
     \begin{table}[H]
+    \caption{KL Divergence for Biases}
     \centering
-    \begin{tabular}{|l|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|}
     \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{KL Divergence (Biases)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 700} & \textbf{Epoch 700 - 1500} & \textbf{Epoch 1500 - 1999} \\
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{KL Divergence (Biases) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 700} & \textbf{700 - 1500} & \textbf{1500 - 1999} \\
     \hline
-    input - input layer & 0.000044 & 0.000037 & 0.000005 \\
-    input layer - hidden layer 1 & 0.004088 & 0.000360 & 0.000422 \\
-    hidden layer 1 - hidden layer 2 & 0.016827 & 0.013568 & 0.003450 \\
-    hidden layer 2 - hidden layer 3 & 0.036906 & 0.001071 & 0.002715 \\
-    hidden layer 3 - hidden layer 4 & 0.003555 & 0.000064 & 0.000076 \\
-    hidden layer 4 - output layer & 0.000000 & 0.000000 & 0.000000 \\
+    input & input layer & 0.000044 & 0.000037 & 0.000005 \\
+    input layer & hidden layer 1 & 0.004088 & 0.000360 & 0.000422 \\
+    hidden layer 1 & hidden layer 2 & 0.016827 & 0.013568 & 0.003450 \\
+    hidden layer 2 & hidden layer 3 & 0.036906 & 0.001071 & 0.002715 \\
+    hidden layer 3 & hidden layer 4 & 0.003555 & 0.000064 & 0.000076 \\
+    hidden layer 4 & output layer & 0.000000 & 0.000000 & 0.000000 \\
     \hline
     \end{tabular}
-    \caption{KL Divergence for Biases}
     \end{table}
     
     \begin{table}[H]
+    \caption{Earth Mover's Distance for Biases}
     \centering
-    \begin{tabular}{|l|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|}
     \hline
-    \multirow{2}{*}{\textbf{Layer}} & \multicolumn{3}{|c|}{\textbf{Earth Mover's Distance (Biases)}} \\
-    \cline{2-4}
-    & \textbf{Epoch 0 - 700} & \textbf{Epoch 700 - 1500} & \textbf{Epoch 1500 - 1999} \\
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{3}{c|}{\textbf{Earth Mover's Dist. (Biases) in Epochs}} \\
+    \cline{1-5}
+    From & To & \textbf{0 - 700} & \textbf{700 - 1500} & \textbf{1500 - 1999} \\
     \hline
-    input - input layer & 0.000632 & 0.000379 & 0.000288 \\
-    input layer - hidden layer 1 & 0.000218 & 0.000088 & 0.000064 \\
-    hidden layer 1 - hidden layer 2 & 0.000211 & 0.000177 & 0.000145 \\
-    hidden layer 2 - hidden layer 3 & 0.000150 & 0.000081 & 0.000081 \\
-    hidden layer 3 - hidden layer 4 & 0.000142 & 0.000064 & 0.000059 \\
-    hidden layer 4 - output layer & 0.001341 & 0.000164 & 0.000194 \\
+    input & input layer & 0.000632 & 0.000379 & 0.000288 \\
+    input layer & hidden layer 1 & 0.000218 & 0.000088 & 0.000064 \\
+    hidden layer 1 & hidden layer 2 & 0.000211 & 0.000177 & 0.000145 \\
+    hidden layer 2 & hidden layer 3 & 0.000150 & 0.000081 & 0.000081 \\
+    hidden layer 3 & hidden layer 4 & 0.000142 & 0.000064 & 0.000059 \\
+    hidden layer 4 & output layer & 0.001341 & 0.000164 & 0.000194 \\
     \hline
     \end{tabular}
-    \caption{Earth Mover's Distance for Biases}
     \end{table}
 
 
