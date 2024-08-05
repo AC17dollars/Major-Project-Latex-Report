@@ -146,7 +146,7 @@ The paper ``Deep Contextual Video Compression" \cite{li2021deep} introduces a co
 
 Further deepening our understanding, the exploration of latent spaces in ``Deep Learning in Latent Space for Video Prediction and Compression" \cite{Liu_latentvideo} reveals that employing deep autoencoders trained with \gls{gan}s can effectively compress video data. This novel framework adopts a \gls{gan}-based autoencoder architecture, accompanied by trainable quantization and entropy coding, to compress video sequences within a latent vector space. This method begins by learning efficient latent space representations of video frames via a deep autoencoder trained with \gls{gan}s, followed by inter-frame prediction using a convolutional \gls{lstm} network. This approach only stores the differences between predicted and actual representations in a compact latent space, reducing residual entropy. Additionally, the framework demonstrates its versatility by applying the same Conv\gls{lstm} predictor to both video compression and anomaly detection tasks. Performance evaluations show that this method achieves superior or competitive results compared to other state-of-the-art learning-based \gls{codec}, offering a wide range of rate-distortion trade-offs and effectively reducing both spatial and temporal redundancies.
 
-Another significant stride is presented in ``Video Compression with Entropy-Constrained Neural Representations," \cite{Gomes_2023_CVPR} where the compression occurs not in pixel space but within the neural network parameter space. According to the paper, encoding videos as neural networks (known as \gls{nvr}) offers innovative video processing capabilities, though traditional methods still outperform \gls{nvr}s in video compression due to inefficiencies in compact spatio-temporal representation and disjoint rate-distortion optimization. To address these issues, they propose a novel convolutional architecture that effectively represents spatio-temporal information and employs a joint optimization strategy for rate and distortion. This end-to-end approach eliminates the need for post-training operations like quantization or pruning. Evaluations on the \gls{uvg} dataset show that their method achieves state-of-the-art results, surpassing both traditional \gls{hevc} benchmarks and established neural video compression methods. 
+Another significant stride is presented in ``Video Compression with Entropy-constrained Neural Representations," \cite{Gomes_2023_CVPR} where the compression occurs not in pixel space but within the neural network parameter space. According to the paper, encoding videos as neural networks (known as \gls{nvr}) offers innovative video processing capabilities, though traditional methods still outperform \gls{nvr}s in video compression due to inefficiencies in compact spatio-temporal representation and disjoint rate-distortion optimization. To address these issues, they propose a novel convolutional architecture that effectively represents spatio-temporal information and employs a joint optimization strategy for rate and distortion. This end-to-end approach eliminates the need for post-training operations like quantization or pruning. Evaluations on the \gls{uvg} dataset show that their method achieves state-of-the-art results, surpassing both traditional \gls{hevc} benchmarks and established neural video compression methods. 
 
 The paper ``Neural Video Compression with Diverse Contexts" \cite{li2023neural} proposes enhancing context diversity in both temporal and spatial dimensions. Temporally, the model is guided to learn hierarchical quality patterns across frames, enriching long-term, high-quality temporal contexts. Additionally, group-based offset diversity is introduced to improve temporal context mining within an optical flow-based coding framework. Spatially, a quadtree-based partitioning method increases spatial context diversity for more effective entropy coding.To tap the potential of optical flow-based coding framework, a group-based offset diversity where the cross-group interaction for better context mining is proposed. Experiments demonstrate that this \gls{codec} achieves a 23.5\% bitrate reduction over previous state-of-the-art \gls{nvc}s and surpasses the developing next-generation traditional \gls{codec} \gls{ecm} in both \gls{rgb} and YUV420 colorspaces in terms of \gls{psnr}. 
 
@@ -235,7 +235,7 @@ The feasibility analysis for the project includes technical feasibility, economi
     \begin{enumerate}[label=\textbf{\roman*.}]
         \item \textbf{Complex Signal Representation:} Sinusoidal activation functions enable neural networks to capture fine details and high-frequency components of signals more effectively. Traditional activation functions often struggle with this, leading to smoother, less detailed representations.
         \item \textbf{Smooth and Periodic Activation:} The smooth, continuous, and periodic nature of sinusoidal functions helps avoid issues like vanishing or exploding gradients, which are common with traditional activation functions, especially in deeper networks. This leads to more stable and efficient training dynamics.
-        \item \textbf{Principled Initialization:} \gls{siren}s benefit from a principled initialization scheme tailored for sinusoidal activations, ensuring that the network starts with a configuration that is conducive to learning complex patterns without the instability seen with other activation functions.
+        \item \textbf{Principled Initialization:} \gls{siren}s benefit from principled initialization scheme tailored for sinusoidal activations, ensuring that the network starts with a configuration that is conducive to learning complex patterns without the instability seen with other activation functions.
     \end{enumerate}
     
     \subsection{Transition to Sinusoidal Representation Networks (SIRENs)}
@@ -261,7 +261,7 @@ The feasibility analysis for the project includes technical feasibility, economi
         \end{itemize}
         \item \textbf{Layer-wise Propagation}
         \begin{itemize}
-            \item Weights and Biases: Weights $w$ are initialized uniformly within $U\left(-\frac{c}{\sqrt{n}}, \frac{c}{\sqrt{n}}\right)$, where $c$ is a scaling factor and $n$ is the fan-in.
+            \item Weights and Biases: Weights $w$ are initialized uniformly within $U\left(-\frac{c}{\sqrt{n}}, \frac{c}{\sqrt{n}}\right)$ where, $c$ is a scaling factor and $n$ is the fan-in.
             \item Output of Deeper Layers: In subsequent layers, each input is arcsine distributed due to the previous layer's sine activation. The weighted sum $w^T x$ approaches a normal distribution as the number of inputs $n$ increases. Passing this sum through another sine function keeps the output arcsine distributed, preserving the distribution across layers.
         \end{itemize}
         \item \textbf{Special Handling in the First Layer} \\
@@ -284,7 +284,7 @@ The feasibility analysis for the project includes technical feasibility, economi
     \autoref{fig:conceptual-pruning} shows network pruning which involves selectively removing weights from fully connected layers that fall below a specified threshold, to reduce model complexity. Additionally, unnecessary nodes are eliminated to optimize computational efficiency and enhance model performance.
     
     \subsection{Quantization}
-    Quantization involves reducing the precision of the model's parameters, such as weights, from floating-point to lower-bit representations, which decrease the model size.
+    Quantization involves reducing the precision of the model's parameters, such as weights and biases, from floating-point to lower-bit representations, which decrease the model size.
     \begin{equation}
         w' = \text{round}\left(\frac{w}{s}\right)
     \end{equation}
@@ -296,8 +296,7 @@ The feasibility analysis for the project includes technical feasibility, economi
             \caption{Quantization}
             \label{fig:conceptual-quantization}
     \end{figure}
-    In \autoref{fig:conceptual-quantization}, a sample 4x4 matrix of weights is taken. The weights are quantized to 4 bins (denoted with 4 colors),
-    all the weights in the same bin share the same value. The centriods for each bin can be found using K-Means Clustering. For updating the centriods, the gradients  are grouped according to the bins, summed together, multiplied by the learning weight and subtracted from the previous centriod. The weights are then replaced by the centroids of the respective bins.
+    In \autoref{fig:conceptual-quantization}, a sample 4x4 matrix of weights is taken. The weights are quantized to 4 bins (denoted with 4 colors), all the weights in the same bin share the same value. The centriods for each bin can be found using K-Means Clustering. For updating the centriods, the gradients  are grouped according to the bins, summed together, multiplied by the learning weight and subtracted from the previous centriod. The weights are then replaced by the centroids of the respective bins.
         
     \subsection{Variational Autoencoder (VAE) }
         \begin{figure}[H]
@@ -306,7 +305,7 @@ The feasibility analysis for the project includes technical feasibility, economi
         \caption{Variational Autoencoder}
         \label{fig:vae}
     \end{figure}
-    \autoref{fig:vae} illustrates the architecture and workflow of a Variational Autoencoder (VAE), capturing the process from input to output through a series of transformations within the encoder, latent space, and decoder. The input, denoted as $\mathbf{x}$, represents the neural network parameters (weights and biases). These parameters are flattened and normalized into a high-dimensional vector. The goal is to transform these parameters into a manageable, lower-dimensional latent representation while retaining essential performance characteristics. The encoder processes the input data $\mathbf{x}$ and maps it into the latent space. Unlike traditional autoencoders, the VAE encoder outputs parameters defining Gaussian distributions for each latent dimension: mean $\mu$ and variance $\sigma^2$. The equations governing this transformation are:
+    The \autoref{fig:vae} illustrates an architecture and workflow of a \gls{vae}, capturing the process from input to output through a series of transformations within the encoder, latent space, and decoder. The input, denoted as $\mathbf{x}$, represents the neural network parameters (weights and biases). These parameters are flattened and normalized into a high-dimensional vector. The goal is to transform these parameters into a manageable, lower-dimensional latent representation while retaining essential performance characteristics. The encoder processes the input data $\mathbf{x}$ and maps it into a latent space. Unlike traditional autoencoders, the VAE encoder outputs parameters defining Gaussian distributions for each latent dimension: mean $\mu$ and variance $\sigma^2$. The equations governing this transformation are:
     \begin{equation}
            \mu = f_{\mu}(\mathbf{x}), \quad \sigma^2 = f_{\sigma}(\mathbf{x})
     \end{equation}
@@ -992,6 +991,9 @@ By comparing these two images, we gain insight into the different types of conte
     \label{fig:radial-plot-5}
 \end{figure}
 
+
+The figures above show the Average Radial Intensity versus Spatial Frequency (cycles/pixel) for our video dataset. All plots exhibit a similar trend where the radial averaged intensity decreases with increasing spatial frequency. This indicates that most of the energy is concentrated at lower spatial frequencies, and there is a rapid decline as the spatial frequency increases. The plot shown in \autoref{fig:radial-plot-1} for video 1 shows a steep decline in intensity from the beginning, with the rate of decline slowing down around a spatial frequency of 50 cycles/pixel. There is a noticeable flattening of the curve after 200 cycles/pixel. The plot for Video 2 shown in \autoref{fig:radial-plot-2} follows a similar pattern to that of Video 1, with a rapid decline in intensity initially, followed by a more gradual decline. The plot for Video 3 shown in \autoref{fig:radial-plot-3} also shows a rapid initial decline in intensity. The curve flattens out similarly to the previous plots, but it appears slightly smoother, indicating less fluctuation in intensity values at higher frequencies. The plot for shown in \autoref{fig:radial-plot-4} for Video 4 and for video 5 shown in \autoref{fig:radial-plot-5} is also consistent with the previous videos, showing a sharp initial decline followed by a more gradual decrease in intensity. Comparing the plots, it is evident that all videos share a common trend of decreasing radial averaged intensity with increasing spatial frequency. The initial rapid decline followed by a gradual decrease is consistent across all videos. However, Videos 2 and 4 show slightly more fluctuation at higher frequencies which indicates these videos contain more high frequency contents compared to others, while Video 3 appears smoother indicating it has the least amount of high frequency content. Videos 4 and 5 exhibit minor dips around 200 cycles/pixel, suggesting some variations in the spatial frequency content for these videos. Overall, the plots indicate that the energy distribution in these videos is predominantly concentrated at lower spatial frequencies, with a consistent decline as the frequency increases.
+
     \pagebreak
 
 \section{\MakeUppercase{Implementation Details}}
@@ -1206,7 +1208,6 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
 
 \section{\MakeUppercase{Results and Analysis}}
 
-    
     \subsection{Audio Dataset}
     This section presents two visualizations of the audio signal: the first subplot shows amplitude over time with notable peaks, and the second subplot is a spectrogram displaying frequency content and amplitude intensity. Additionally, a table provides \gls{psnr} and log spectral distance metrics for ground truth and prediction pairs, assessing signal fidelity and frequency representation accuracy.
     
@@ -1226,7 +1227,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone100hztime.png}
-        \caption{Spectogram of Predicted Puretone 100Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 100Hz Audio}
         \label{fig:pred-pure100-time}
     \end{figure}
     \begin{figure}[H]
@@ -1252,7 +1253,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone500hztime.png}
-        \caption{Spectogram of Predicted Puretone 500Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 500Hz Audio}
         \label{fig:pred-pure500-time}
     \end{figure}
     \begin{figure}[H]
@@ -1278,7 +1279,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone1000hztime.png}
-        \caption{Spectogram of Predicted Puretone 1000Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 1000Hz Audio}
         \label{fig:pred-pure1000-time}
     \end{figure}
     \begin{figure}[H]
@@ -1310,7 +1311,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone5000hztime.png}
-        \caption{Spectogram of Predicted Puretone 5000Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 5000Hz Audio}
         \label{fig:pred-pure5000-time}
     \end{figure}
     \begin{figure}[H]
@@ -1325,45 +1326,82 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hz.png}
-        \caption{Spectogram of Ground Truth Sweeping Tone 200-500Hz Audio}
-        \label{fig:gt-sweep200-500-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hztime.png}
+        \caption{Time domain graph of Ground Truth Sweeping tone Audio}
+        \label{fig:gt-sweeping-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hzspec.png}
+        \caption{Spectrogram of Ground Truth Sweeping tone Audio}
+        \label{fig:gt-sweeping-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hzpred.png}
-        \caption{Spectogram of Predicted Sweeping Tone 200-500Hz Audio}
-        \label{fig:pred-sweep200-500-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/Predsweeping_tone200-500hztime.png}
+        \caption{Time Domain Graph of Predicted Sweeping tone Audio}
+        \label{fig:pred-sweeping-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/Predsweeping_tone200-500hzspec.png}
+        \caption{Spectogram of Predicted Sweeping tone Audio}
+        \label{fig:pred-sweeping-spec}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400.png}
-        \caption{Spectogram of Ground Truth Fluctuating 400Hz Audio}
-        \label{fig:gt-fluc400-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400time.png}
+        \caption{Time domain graph of Ground Truth Fluctuating tone Audio}
+        \label{fig:gt-fluctuating-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400spec.png}
+        \caption{Spectrogram of Ground Truth Fluctuating tone Audio}
+        \label{fig:gt-fluctuating-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400pred.png}
-        \caption{Spectogram of Predicted Fluctuating 400Hz Audio}
-        \label{fig:pred-fluc400-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/Predfluctuating_tone400time.png}
+        \caption{Time domain graph of Predicted Fluctuating tone Audio}
+        \label{fig:pred-fluctuating-time}
     \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/Predfluctuating_tone400spec.png}
+        \caption{Spectogram of Predicted Fluctuating tone Audio}
+        \label{fig:pred-fluctuatung-spec}
+    \end{figure}
+
 
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4.png}
-        \caption{Spectogram of Ground Truth Multitone A4E4 audio}
-        \label{fig:gt-multiA4E4-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4time.png}
+        \caption{Time domain graph of Ground Truth Multitone 440Hz and 660Hz Audio}
+        \label{fig:gt-multitonea4e4-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4spec.png}
+        \caption{Spectrogram of Ground Truth Multitone 440Hz and 660Hz Audio}
+        \label{fig:gt-multitonea4e4-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4pred.png}
-        \caption{Spectogram of Predicted Multitone A4E4 Seconds Audio}
-        \label{fig:pred-multiA4E4-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/PredmultitoneA4E4time.png}
+        \caption{Time domain graph of Predicted Multitone 440Hz and 660Hz Audio}
+        \label{fig:pred-multitonea4e4-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/PredmultitoneA4E4spec.png}
+        \caption{Spectogram of Predicted Multitone 440Hz and 660Hz Audio}
+        \label{fig:pred-multitoneA4E4-spec}
     \end{figure}
 
 
@@ -1454,29 +1492,29 @@ In the other cases, similar issues of spectral blurring and noise introduction a
         \hline
         \textbf{SN} & \textbf{File Name} & \textbf{PSNR} & \textbf{LSD} \\
         \hline
-        1  & puretone100hz & 48.39 & 1.95  \\
+        1  & Audio 1 & 48.39 & 1.95  \\
         \hline
-        2  & puretone500hz & 42.79 & 4.39  \\
+        2  & Audio 2 & 42.79 & 4.39  \\
         \hline
-        3  & puretone1000hz & 22.37 & 7.97  \\
+        3  & Audio 3 & 22.37 & 7.97  \\
         \hline
-        4  & puretone5000hz & 3.01  & 14.24 \\
+        4  & Audio 4 & 3.01  & 14.24 \\
         \hline
-        5  & sweeping\_tone200-500hz & 37.00 & 4.15  \\
+        5  & Audio 5 & 37.00 & 4.15  \\
         \hline
-        6  & fluctuating\_tone400 & 34.79 & 5.92  \\
+        6  & Audio 6 & 34.79 & 5.92  \\
         \hline
-        7  & multitoneA4E4 & 47.93 & 5.19  \\
+        7  & Audio 7 & 47.93 & 5.19  \\
         \hline
-        8  & multitoneBeats & 52.94 & 2.61  \\
+        8  & Audio 8 & 52.94 & 2.61  \\
         \hline
-        9  & 06seconds & 37.11 & 5.82  \\
+        9  & Audio 9 & 37.11 & 5.82  \\
         \hline
-        10 & 12seconds & 31.66 & 10.23 \\
+        10 & Audio 10 & 31.66 & 10.23 \\
         \hline
-        11 & 24seconds & 28.84 & 11.38 \\
+        11 & Audio 11 & 28.84 & 11.38 \\
         \hline
-        12 & music & 23.16 & 15.98 \\
+        12 & Audio 12 & 23.16 & 15.98 \\
         \hline
     \end{tabular}
     \label{tab:audio_metrics_ordered}
