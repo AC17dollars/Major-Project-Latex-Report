@@ -1235,42 +1235,78 @@ The total number of trainable parameters in the neural network is 3,155,983.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone100hz.png}
-        \caption{Spectogram of Ground Truth Puretone 100Hz Audio}
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone100hztime.png}
+        \caption{Time domain graph of Ground Truth Puretone 100Hz Audio}
+        \label{fig:gt-pure100-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone100hzspec.png}
+        \caption{Spectrogram of Ground Truth Puretone 100Hz Audio}
         \label{fig:gt-pure100-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone100hzpred.png}
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone100hztime.png}
+        \caption{Spectogram of Predicted Puretone 100Hz Audio}
+        \label{fig:pred-pure100-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone100hzspec.png}
         \caption{Spectogram of Predicted Puretone 100Hz Audio}
         \label{fig:pred-pure100-spec}
     \end{figure}
 
-     \begin{figure}[H]
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone500hz.png}
-        \caption{Spectogram of Ground Truth Puretone 500Hz Audio}
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone500hztime.png}
+        \caption{Time domain graph of Ground Truth Puretone 500Hz Audio}
+        \label{fig:gt-pure500-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone500hzspec.png}
+        \caption{Spectrogram of Ground Truth Puretone 500Hz Audio}
         \label{fig:gt-pure500-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone500hzpred.png}
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone500hztime.png}
+        \caption{Spectogram of Predicted Puretone 500Hz Audio}
+        \label{fig:pred-pure500-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone500hzspec.png}
         \caption{Spectogram of Predicted Puretone 500Hz Audio}
         \label{fig:pred-pure500-spec}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone1000hz.png}
-        \caption{Spectogram of Ground Truth Puretone 1000Hz Audio}
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone1000hztime.png}
+        \caption{Time domain graph of Ground Truth Puretone 1000Hz Audio}
+        \label{fig:gt-pure1000-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone1000hzspec.png}
+        \caption{Spectrogram of Ground Truth Puretone 1000Hz Audio}
         \label{fig:gt-pure1000-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone1000hzpred.png}
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone1000hztime.png}
+        \caption{Spectogram of Predicted Puretone 1000Hz Audio}
+        \label{fig:pred-pure1000-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone1000hzspec.png}
         \caption{Spectogram of Predicted Puretone 1000Hz Audio}
         \label{fig:pred-pure1000-spec}
     \end{figure}
@@ -1283,17 +1319,30 @@ The total number of trainable parameters in the neural network is 3,155,983.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone5000hz.png}
-        \caption{Spectogram of Ground Truth Puretone 5000Hz Audio}
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone5000hztime.png}
+        \caption{Time domain graph of Ground Truth Puretone 5000Hz Audio}
+        \label{fig:gt-pure5000-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/puretone5000hzspec.png}
+        \caption{Spectrogram of Ground Truth Puretone 5000Hz Audio}
         \label{fig:gt-pure5000-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/puretone5000hzpred.png}
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone5000hztime.png}
+        \caption{Spectogram of Predicted Puretone 5000Hz Audio}
+        \label{fig:pred-pure5000-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/predpuretone5000hzspec.png}
         \caption{Spectogram of Predicted Puretone 5000Hz Audio}
         \label{fig:pred-pure5000-spec}
     \end{figure}
+
 
     We observe a clear distinction between the ground truth and predicted pure tone audio at 5000Hz. The ground truth waveform displays an amplitude fluctuating consistently between -1 and +1, indicating a strong and stable signal. In contrast, the predicted waveform exhibits a significantly lower amplitude, fluctuating between approximately -0.1 and +0.1. This predicted waveform is almost flat, indicating the model's inability to accurately generate the desired signal. Furthermore, the frequency vs. time plot for the ground truth audio shows a single, distinct line at 5000Hz, confirming the purity of the tone. However, the plot for the predicted audio reveals additional lower frequency components, suggesting that the model fails to accurately predict the 5000Hz frequency and instead generates noise.
 
