@@ -4,12 +4,13 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \providecommand*{\algorithmautorefname}{Algorithm}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \begin{document}
 
 \input{acronyms} % input acronyms.tex file
 
-\titlepreamble{A Major Project : Part 'A' Report\\On}
+\titlepreamble{Major Project Final Report (Part-A)\\On}
 \projecttitle{Data-driven Video Codec with Implicit Neural Representations}
 \addauthor{Abhinav Chalise}{THA077BEI003}
 \addauthor{Nimesh Gopal Pradhan}{THA077BEI026}
@@ -191,13 +192,6 @@ The feasibility analysis for the project includes technical feasibility, economi
 
     The \autoref{fig:implicit-vs-traditional} provides a visual comparison between traditional neural networks and implicit neural networks like SIREN (Sinusoidal Representation Network). Traditional neural networks utilize a single set of shared weights and biases for all inputs, aiming to generalize across a dataset. This generalization allows the network to accurately classify or predict outcomes for new, unseen data based on its training. For instance, in the \autoref{fig:implicit-vs-traditional}, a traditional neural network trained on images of birds, reptiles, and mammals uses the same network architecture to classify any new image into these categories.
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.95\linewidth]{assets/why overfitting.png}
-        \caption{Implicit Neural Network vs Traditional Neural Network}
-        \label{fig:implicit-vs-traditional}
-    \end{figure}
-
     In contrast, implicit neural networks represent each piece of media with its own unique neural network, characterized by distinct weights and biases. This approach fundamentally changes the way these networks operate. Overfitting, typically seen as a drawback in traditional neural networks, becomes a beneficial feature in implicit neural networks. Overfitting allows the network to memorize and accurately reproduce the intricate details and nuances of the specific piece of media it represents. For example, in the image, each silent video and audio clip has its own dedicated neural network that predicts frame-wise RGB values per pixel or time-wise amplitude values, respectively.
 
     The advantages of this approach are:
@@ -206,6 +200,13 @@ The feasibility analysis for the project includes technical feasibility, economi
         \item \textbf{Detail Preservation:} The overfitting ensures that the network captures and reproduces fine-grained details of the media.
         \item \textbf{Per-Media Specialization:} Each piece of media is encoded into its unique network, allowing for highly specialized and optimized representations.
     \end{itemize}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.95\linewidth]{assets/why overfitting.png}
+        \caption{Implicit Neural Network vs Traditional Neural Network}
+        \label{fig:implicit-vs-traditional}
+    \end{figure}
 
     Thus implicit neural networks like \gls{siren} create unique networks for each media piece, leveraging overfitting to capture detailed representations. This allows implicit neural networks to store intricate details within their parameters, making overfitting a beneficial feature.
     
@@ -352,7 +353,7 @@ where \( N \) is the total number of sampled points, \( \Phi \) is the SIREN mod
     \label{fig:propagation-diagram}
 \end{figure}
 
-The figure provides an illustration of the forward and backward propagation processes in a SIREN neural network. In the forward propagation section, the input \( \mathbf{X} \) is passed through the input layer, then sine activation is applied, and then sequentially through hidden layers 1 (with sine activation) and hidden layer 2 (with sine activation), and finally through the output layer. The forward propagation process can be described by the equations:
+The figure provides an illustration of the forward and backward propagation processes in a \gls{siren} neural network. In the forward propagation section, the input \( \mathbf{X} \) is passed through the input layer, then sine activation is applied, and then sequentially through hidden layers 1 (with sine activation) and hidden layer 2 (with sine activation), and finally through the output layer. The forward propagation process can be described by the equations:
 \begin{equation}
     \mathbf{Z}^{(l)} = \mathbf{W}^{(l)T} \mathbf{a}^{(l-1)} + \mathbf{b}^{(l)}
 \end{equation}
@@ -368,16 +369,15 @@ where:
     \item \( \mathbf{a}^{(l)} \) is the activation of the \( l \)-th layer after applying the sine function.
 \end{itemize}
 
-The error \( \mathbf{E} \) is calculated based on the difference between the predicted output \( \mathbf{a}^{(3)} \) and the actual output \( \mathbf{y}_i \). Specifically, we use the Mean Squared Error (MSE) loss function over the RGB channels:
+The error \( \mathbf{E} \) is calculated based on the difference between the predicted output \( \mathbf{a}^{(3)} \) and the actual output \( \mathbf{y}_i \). Specifically, we use the Mean Squared Error (MSE) loss function:
 \begin{equation}
-    \mathbf{E} = \frac{1}{3} \sum_{i=1}^{3} (\mathbf{a}^{(3)}_i - \mathbf{y}_i)^2
+    \mathbf{E} = \frac{1}{2} \sum_{i=1}^{N} (\mathbf{a}^{(3)}_i - \mathbf{y}_i)^2
 \end{equation}
 where:
 \begin{itemize}
     \item \( \mathbf{a}^{(3)}_i \) is the predicted output.
     \item \( \mathbf{y}_i \) is the actual output.
 \end{itemize}
-The loss equation has been written referencing \autoref{fig:32-32-neural} where the output is \gls{rgb} values of pixels, which is why the sum runs from 1 to 3.
 
 The backward propagation section shows the gradient calculation needed to update the network's weights. It starts with the error gradient \( \frac{\partial \mathbf{E}}{\partial \mathbf{a}^{(3)}} \) at the output layer and propagates backwards through hidden layers 2 and 1, and finally to the input layer. This involves computing the gradients \( \frac{\partial \mathbf{a}^{(3)}}{\partial \mathbf{a}^{(2)}} \), \( \frac{\partial \mathbf{a}^{(2)}}{\partial \mathbf{a}^{(1)}} \), and \( \frac{\partial \mathbf{a}^{(1)}}{\partial \mathbf{a}_{(in)}} \).
 
@@ -685,7 +685,9 @@ This section provides an overview of the system architecture and the methodology
         \label{fig:architecture-neural-network}
     \end{figure}
     The neural network model is designed to process spatio-temporal coordinates and generate corresponding \gls{rgb} pixel values and audio amplitude. The network features an input layer with 3 neurons, which takes in the space-time coordinates $(x, y, t)$ where $x$ and $y$ are spatial coordinates and $t$ is the temporal coordinate. The output layer consists of 4 neurons that produce the RGB values of a pixel and the amplitude value of audio, specifically the Red ($r$), Green ($g$), and Blue ($b$) color values, along with the audio amplitude ($A$). Between the input and output layers, the model includes $n$ fully connected hidden layers, each containing $m$ neurons. Each of these layers employs the \gls{siren} activation function, which uses the sine function to effectively model periodic signals and fine-grained details, making it particularly suitable for handling the intricate relationships inherent in audio and visual data. This architecture uses the SIREN activation function to enable high-quality signal representation, capturing both spatial and temporal dynamics to generate detailed multimedia outputs.
-    
+    \\
+    To rigorously evaluate the performance of our model on video and audio data separately, we employ two distinct SIREN architectures tailored to each modality. For video processing, the video-specific architecture features an input layer with three neurons corresponding to the pixel coordinates \((x, y)\) and the frame index \((t)\), which together determine the spatial and temporal aspects of the video frames. The output of this video network is a triplet of neurons, each representing the RGB values \((r, g, b)\) of each pixel. This allows the model to accurately reconstruct the visual information for each frame. In contrast, the audio-specific architecture is streamlined to focus solely on temporal data, with a single input neuron for the time coordinate \((t)\). The output is a single neuron that produces the amplitude \((A)\) of the audio signal at each time point. This separation of architectures enables focused training and optimization for each modality, ensuring that the intricacies of both video and audio signals are effectively captured and reproduced with high fidelity.
+
     \subsection{Loss Function}
     To effectively generate \gls{inr} for audio-video data, it is essential to define appropriate loss functions that guide the learning process. Below, the specific loss functions for audio and video are introduced, followed by the formulation of a combined loss function that integrates both modalities.
 
@@ -734,7 +736,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: \gls{psnr} is commonly employed to measure the quality of reconstruction in lossy compression \gls{codec}s. It compares the similarity between the original and compressed video by measuring the ratio between the maximum possible power of a signal and the power of distorting noise.
                 \item \textbf{Value Range}: Typically expressed in \gls{db}, the higher the \gls{psnr}, the better the quality of the compressed video. A higher \gls{psnr} value indicates that the reconstruction is of higher quality.
                 \item \textbf{Preference} $\uparrow$: Values typically range from 20 to 50 \gls{db}, where higher values (around 40 \gls{db} or more) represent excellent quality.
-                \item \textbf{Formula} \\ 
+                \item \textbf{Formula}
                 \begin{equation}\label{eqn:PSNR}
                     \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
                 \end{equation}
@@ -753,7 +755,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: \gls{ssim} is used to measure the similarity between two images or videos. It considers attributes that are important to the human visual system such as luminance, contrast, and structure.
                 \item \textbf{Value Range}: \gls{ssim} values range from -1 to 1. A score of 1 indicates perfect similarity, meaning there is no loss of structural information.
                 \item \textbf{Preference} $\uparrow$: Higher \gls{ssim} values signify less visual distortion and better compression quality.
-                \item \textbf{Formula}\\ 
+                \item \textbf{Formula}
                 \begin{equation}\label{eqn:SSIM}
                     \text{SSIM}(x, y) = \frac{(2 \mu_x \mu_y + c_1)(2 \sigma_{xy} + c_2)}{(\mu_x^2 + \mu_y^2 + c_1)(\sigma_x^2 + \sigma_y^2 + c_2)}
                 \end{equation}
@@ -766,7 +768,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: L1 loss measures the average magnitude of errors between corresponding pixels in the original and compressed images or frames, without considering the direction of the errors.
                 \item \textbf{Value Range}: The value can range from 0 to $\infty$,  0 indicating no error (perfect compression).
                 \item \textbf{Preference} $\downarrow$: Lower L1 loss values indicate that the compressed video is more accurate in terms of raw pixel values.
-                \item \textbf{Formula}\\
+                \item \textbf{Formula}
                 \begin{equation}
                     \text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
                 \end{equation}
@@ -805,7 +807,9 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     
     \item \textbf{Preference $\downarrow$:} Lower values are preferable, indicating lower spectral distortion.
     
-    \item \textbf{Formula:} LSD is computed as:
+    \item \textbf{Formula:}
+    
+    LSD is computed as:
     \begin{equation}
         \text{LSD} = \frac{1}{N} \sum_{n=1}^{N} \sqrt{\frac{1}{K} \sum_{k=1}^{K} \left[ \log |X(k,n)| - \log |Y(k,n)| \right]^2}
     \end{equation}
@@ -820,7 +824,9 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     
     \item \textbf{Preference $\uparrow$:} Higher values are preferable, indicating less noise and better signal reconstruction quality.
     
-    \item \textbf{Formula:} PSNR is calculated as:
+    \item \textbf{Formula:}
+    
+    PSNR is calculated as:
     \begin{equation}
         \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
     \end{equation}
@@ -837,25 +843,6 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
 
     \pagebreak
 
-    \subsection*{KL Divergence and Earth Mover's Distance}
-
-    \subsubsection*{KL Divergence}
-    KL Divergence (Kullback-Leibler Divergence) is a measure of how one probability distribution diverges from a second, expected probability distribution. It quantifies the difference between two distributions \( P \) and \( Q \).
-    
-    \begin{equation}
-        D_{KL}(P \parallel Q) = \sum_{i} P(i) \log \frac{P(i)}{Q(i)}
-    \end{equation}
-    
-    \subsubsection*{Earth Mover's Distance (EMD)}
-    Earth Mover's Distance is a measure of the distance between two probability distributions over a region \( D \). It is the minimum cost to transform one distribution into the other, viewed as the "work" needed to move the distribution mass.
-    
-    \begin{equation}
-        \text{EMD}(P, Q) = \inf_{\gamma \in \Gamma(P,Q)} \int_{D \times D} d(x, y) \, d\gamma(x, y)
-    \end{equation}
-    
-    where \( \Gamma(P, Q) \) is the set of all possible joint distributions whose marginals are \( P \) and \( Q \), and \( d(x, y) \) is the ground distance between elements \( x \) and \( y \).
-    
-
 \section{\MakeUppercase{Dataset Exploration}}
 \autoref{tab:audio_files} provides a summary of various audio files, detailing their serial numbers (SN), file names, sampling rates, file sizes in \gls{kib}, and durations in seconds. A brief description of the audio is mentioned after the table.
 
@@ -865,37 +852,37 @@ All the audio files are of .wav extension.
     \centering
     \caption{Audio Files Characteristics}
     \label{tab:audio_files}
-    \begin{tabular}{|c|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|L{4cm}|}
         \hline
-        \textbf{SN} & \textbf{Audio File} & \textbf{Sampling} & \textbf{Size (KiB)} & \textbf{Duration} & \textbf{Description}\\
-        &  & \textbf{Rate (Hz)} &  & \textbf{(seconds)} & \\
+        \multirow{2}{*}{\textbf{SN}} & \multirow{2}{*}{\textbf{Audio File}} & \textbf{Sampling} & \textbf{Duration} & \multirow{2}{*}{\textbf{Size(KiB)}} & \multirow{2}{*}{\textbf{Description}} \\
+        & & \textbf{Rate (Hz)} & \textbf{(seconds)} &  & \\
         \hline
-        1 & Audio 1 & \multirow{9}{*}{44100} & 516.84 & 6 & Pure tone of 100 Hz.\\
+        1 & Audio 1 & \multirow{9}{*}{44100} & 516.84 & 6 & Pure tone of 100 Hz. \\
         \cline{1-2} \cline{4-6}
-        2 & Audio 2 & & 516.84 & 6 & Pure tone of 500 Hz.\\
+        2 & Audio 2 & & 516.84 & 6 & Pure tone of 500 Hz. \\
         \cline{1-2} \cline{4-6}
-        3 & Audio 3 & & 516.84 & 6 & Pure tone of 1000 Hz.\\
+        3 & Audio 3 & & 516.84 & 6 & Pure tone of 1000 Hz. \\
         \cline{1-2} \cline{4-6}
-        4 & Audio 4 & & 516.84 & 6 & Pure tone of 5000 Hz.\\
+        4 & Audio 4 & & 516.84 & 6 & Pure tone of 5000 Hz. \\
         \cline{1-2} \cline{4-6}
-        5 & Audio 5 & & 516.83 & 6 & Sweeping tone 200 Hz to 500 Hz.\\
+        5 & Audio 5 & & 516.83 & 6 & Sweeping tone 200 Hz to 500 Hz. \\
         \cline{1-2} \cline{4-6}
-        6 & Audio 6 & & 516.84 & 6 & Fluctuating frequency around 400 Hz.\\
+        6 & Audio 6 & & 516.84 & 6 & Fluctuating frequency around 400 Hz. \\
         \cline{1-2} \cline{4-6}
-        7 & Audio 7 & & 430.7 & 5 & Multitone: 440 Hz and 660 Hz.\\
+        7 & Audio 7 & & 430.7 & 5 & Multitone: 440 Hz and 660 Hz. \\
         \cline{1-2} \cline{4-6}
-        8 & Audio 8 & & 430.7 & 5 & Multitone: 400 Hz and 403 Hz.\\
+        8 & Audio 8 & & 430.7 & 5 & Multitone: 400 Hz and 403 Hz. \\
         \cline{1-2} \cline{4-6}
-        9 & Audio 9 & & 1203.99 & 6 & Melody played using a violin.\\
+        9 & Audio 9 & & 1203.99 & 6 & Melody played using a violin. \\
         \hline
-        10 & Audio 10 & \multirow{2}{*}{48000} & 1212.21 & 12 & Female voice, Male voice, Crowd chants, Music effects.\\
+        10 & Audio 10 & \multirow{2}{*}{48000} & 1212.21 & 12 & Female voice, Male voice, Crowd chants, Music effects. \\
         \cline{1-2} \cline{4-6}
         11 & Audio 11 & & 4633.97 & 24 & Instrumental melody, Male voice, Music effects. \\
         \hline
-        12 & Audio 12 & 44100 & 1033.63 & 6 & Multiple instruments, male vocalist.\\
+        12 & Audio 12 & 44100 & 1033.63 & 6 & Multiple instruments, male vocalist. \\
         \hline
     \end{tabular}
-    \end{table}    
+\end{table} 
 
 \subsection{Video Dataset}
 
@@ -929,7 +916,7 @@ Among the five silent videos, three videos (very\_very\_short\_video, very\_shor
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video1spatialfreq.png}
-    \caption{Spatial Frequency of all frames of Video 1}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 1}
     \label{fig:spatial-frequency-1}
 \end{figure}
 
@@ -938,28 +925,28 @@ The above figure contains the spatial frequency graph of all 5 frames of video 1
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video2spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 2}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 2}
     \label{fig:spatial-frequency-2}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video3spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 3}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 3}
     \label{fig:spatial-frequency-3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video4spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 4}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 4}
     \label{fig:spatial-frequency-4}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/spatial_frequency/video5spatialfreq.png}
-    \caption{Highest and Lowest average Spatial Frequency in Video 5}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
     \label{fig:spatial-frequency-5}
 \end{figure}
 
@@ -969,24 +956,61 @@ Conversely, the image with lowest average spatial frequency describes a frame th
 
 By comparing these two images, we gain insight into the different types of content represented in the dataset. The spatial frequency analysis provides a quantitative means of distinguishing between images with varying levels of detail and texture, helping us understand their underlying structural characteristics.
     
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/very_very_short.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-1}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/very_short.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/short.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/medium.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/video_radial_plots/long.png}
+    \caption{Highest and Lowest Average Spatial Frequency in Video 5}
+    \label{fig:radial-plot-5}
+\end{figure}
+
     \pagebreak
 
 \section{\MakeUppercase{Implementation Details}}
 The project is developed using Python, leveraging PyTorch as the primary deep learning framework. Interactive Python sessions are utilized for testing and rapid prototyping. Jupyter Notebooks are employed for exploratory data analysis and iterative experimentation, allowing for an interactive and visual approach to model development. TensorBoard is used to visualize training metrics and monitor the performance of the \gls{siren} network during training. Visual Studio Code serves as the main \gls{ide} for code writing and debugging.
 
 \subsection{Instrumentation}
-    The software and hardware used for this project are listed below: \\
+    The software and hardware used for this project are listed below:
     \begin{table}[H]
         \caption{Instrumentation Table}
         \label{table:instrumentation-table}
         \centering
-        \begin{tabular}{|p{0.2\linewidth}|p{0.3\linewidth}|p{0.4\linewidth}|}
+        \begin{tabular}{|L{0.2\linewidth}|L{0.3\linewidth}|L{0.4\linewidth}|}
             \hline
             \textbf{Requirement} & \textbf{Solution} & \textbf{Reason} \\
             \hline
             High-Performance Computing & NVIDIA RTX 4090 & Overfitting the video to the model \\
             \hline
-            Deep Learning Frameworks & PyTorch & Developing and implementing neural network models \\
+            Deep Learning Frameworks & PyTorch &
+            Developing and implementing neural network models \\
             \hline
             Development Environment & Visual Studio Code with Notebook extensions & Running and Debugging Code\\
             \hline
@@ -994,6 +1018,8 @@ The project is developed using Python, leveraging PyTorch as the primary deep le
             \hline
         \end{tabular}
     \end{table}
+    
+
 
 \subsection{Hardware Specifications}
 The project is trained on a system with the following specifications:
@@ -1628,75 +1654,78 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone100.png}
         \caption{Training Loss curve of Audio 1}
-        \label{fig:loss-curve-1}
+        \label{fig:audio-loss-curve-1}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone500.png}
         \caption{Training Loss curve of Audio 2}
-        \label{fig:loss-curve-2}
+        \label{fig:audio-loss-curve-2}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone1000.png}
         \caption{Training Loss curve of Audio 3}
-        \label{fig:loss-curve-3}
+        \label{fig:audio-loss-curve-3}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone5000.png}
         \caption{Training Loss curve of Audio 4}
-        \label{fig:loss-curve-4}
+        \label{fig:audio-loss-curve-4}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/sweepingtone200_500.png}
         \caption{Training Loss curve of Audio 5}
-        \label{fig:loss-curve-5}
+        \label{fig:audio-loss-curve-5}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/fluctuating_tone400.png}
         \caption{Training Loss curve of Audio 6}
-        \label{fig:loss-curve-6}
+        \label{fig:audio-loss-curve-6}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/multitone_a4e4.png}
         \caption{Training Loss curve of Audio 7}
-        \label{fig:loss-curve-7}
+        \label{fig:audio-loss-curve-7}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/multitone_beats.png}
         \caption{Training Loss curve of Audio 8}
-        \label{fig:loss-curve-8}
+        \label{fig:audio-loss-curve-8}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/06seconds.png}
         \caption{Training Loss curve of Audio 9}
-        \label{fig:loss-curve-9}
+        \label{fig:audio-loss-curve-9}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/12seconds.png}
         \caption{Training Loss curve of Audio 10}
-        \label{fig:loss-curve-10}
+        \label{fig:audio-loss-curve-10}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/24seconds.png}
         \caption{Training Loss curve of Audio 11}
-        \label{fig:loss-curve-11}
+        \label{fig:audio-loss-curve-11}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_loss_curves/music_with_instrument.png}
         \caption{Training Loss curve of Audio 12}
-        \label{fig:loss-curve-12}
+        \label{fig:audio-loss-curve-12}
     \end{figure}
 
+    The loss values initially start at a very low level and then experience a very steep decline, approaching zero. The loss then saturates and gradually encroaches near zero. Around epoch 300, the loss values are already near zero, but the training continues up to 1000 epochs. The reason for this extended training is that even minute improvements in the loss were positively impacting evaluation metrics like \gls{psnr} and log spectral distance.
+
+    An exception is observed in the loss curve shown in \autoref{fig:audio-loss-curve-4}. Here, the loss value falls from 0.53 to 0.499 within the first 10 epochs and then remains constant. This is because audio 4 only contains high frequency of 5000Hz and the model is unable to learn high-frequency audio signals.
 
     \subsection{Video Dataset}
     Below are the grouth truth images and the predicted images of first video dataset.
@@ -1990,6 +2019,45 @@ In conclusion, while the evaluation metrics demonstrate the architecture's stren
 
     When sine activation is applied, the PDFs of the layers transform significantly. The histograms reveal peaks at the boundaries and fewer values in the center, resembling an arcsine distribution. This characteristic shift is evident in the distinctive shape of the CDFs for sine-activated layers. Each hidden layer follows this pattern, where linear activation maintains a near-normal distribution, and sine activation alters it to approximate an arcsine distribution. The output layer also exhibits a close-to-normal distribution, shown by the bell-shaped histogram and the corresponding CDF. 
 
+    \subsubsection{Loss Curves}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/very_very_short.png}
+        \caption{Training Loss curve of Video 1}
+        \label{fig:video-loss-curve-1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/very_short.png}
+        \caption{Training Loss curve of Video 2}
+        \label{fig:video-loss-curve-2}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/short.png}
+        \caption{Training Loss curve of Video 3}
+        \label{fig:video-loss-curve-3}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/medium.png}
+        \caption{Training Loss curve of Video 4}
+        \label{fig:video-loss-curve-4}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/video_loss_curves/long.png}
+        \caption{Training Loss curve of Video 5}
+        \label{fig:video-loss-curve-5}
+    \end{figure}
+
+
+    The loss values for the video representation model start at a low level and show a very steep decline, approaching nearly zero around epoch 100. After this point, the rate of decline in the loss slows down almost being linear. Although the loss value approaches zero, training continues beyond this point. This is because even though there were only minute improvements in the loss function the performance metrics such as \gls{psnr}, \gls{ssim}, and \gls{lpips} were improving. The continued training ensured that these evaluation metrics were optimized, further enhancing the quality of the video representation model.
+    
     \pagebreak
 
 
