@@ -9,7 +9,7 @@
 
 \input{acronyms} % input acronyms.tex file
 
-\titlepreamble{A Major Project Proposal\\On}
+\titlepreamble{A Major Part A Final Report\\On}
 \projecttitle{Data-driven Video Codec with Implicit Neural Representations}
 \addauthor{Abhinav Chalise}{THA077BEI003}
 \addauthor{Nimesh Gopal Pradhan}{THA077BEI026}
@@ -65,7 +65,7 @@
     
 \section*{ABSTRACT}
 \addcontentsline{toc}{section}{ABSTRACT}
-    In an era where video content consumption is rapidly increasing, efficient audio-video compression has become paramount to managing storage and bandwidth requirements. This project proposes a novel approach utilizing \gls{inr} to compress audio and video data. For audio, we represent sequences of amplitude per frame or time segment, while video is represented as sequences of frames. By using \gls{inr}, we propose to create models that accurately capture the essential characteristics of both audio and video data. These models are then encoded and compressed to significantly reduce data size without compromising quality. Upon retrieval, the models are decoded to reconstruct the original audio and video content. It is important to note that this approach employs lossy compression techniques. This method is particularly tailored for use in domains with stringent audio-video quality and compression requirements, ensuring high efficiency and fidelity.
+    In response to the escalating demand for efficient media storage and streaming, this project explores a novel audio-video compression approach using Implicit Neural Representations (INR). We trained our model on five diverse video datasets and twelve distinct audio samples, achieving varied performance metrics across these media types. The video compression results indicated that our model could effectively compress and reconstruct videos with a reasonable balance of fidelity and compression, achieving Peak Signal-to-Noise Ratios (PSNR) ranging from 23.4656 to 29.0736, Structural Similarity Indices (SSIM) between 0.7924 and 0.8521, and Learned Perceptual Image Patch Similarity (LPIPS) scores from 0.0699 to 0.2386. Audio results varied more significantly, with PSNR values ranging from 3.0149 to 52.9438 and Log Spectral Distances (LSD) between 1.9508 and 15.9798. Notably, our model demonstrated limitations in accurately predicting high-frequency audio content, suggesting areas for future refinement. Furthermore, we implemented adaptive sampling strategies for video data, modulating the sample fraction based on temporal correlations within frames to optimize compression without sacrificing quality. These findings highlight the potential of INR-based models in multimedia compression while also delineating specific challenges in handling high-frequency components and dynamic content variations.
 
     \textit{Keywords: Compression, Decode, Encode, Implicit neural representation, Neural networks, Video}
 
