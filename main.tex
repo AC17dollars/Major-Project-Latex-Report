@@ -1170,7 +1170,7 @@ The total number of trainable parameters in the neural network is 3,155,983.
 
 \pagebreak 
 
-\section{\MakeUppercase{Results}}
+\section{\MakeUppercase{Results and Analysis}}
 
     
     \subsection{Audio Dataset}
@@ -1591,6 +1591,82 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
     Finally, the output layer shows a close-to-normal distribution before any non-linear activation is applied, as indicated by the bell-shaped histogram and the normal-like CDF. Overall, these plots clearly demonstrate the transition from uniformly distributed input values through near-normal distributions with linear activations to arcsine-like distributions with sine activations, highlighting the significant impact of the sine function on the activation values throughout the network.
 
 
+
+    \subsubsection{Loss Curves}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone100.png}
+        \caption{Training Loss curve of Audio 1}
+        \label{fig:loss-curve-1}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone500.png}
+        \caption{Training Loss curve of Audio 2}
+        \label{fig:loss-curve-2}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone1000.png}
+        \caption{Training Loss curve of Audio 3}
+        \label{fig:loss-curve-3}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/puretone5000.png}
+        \caption{Training Loss curve of Audio 4}
+        \label{fig:loss-curve-4}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/sweepingtone200_500.png}
+        \caption{Training Loss curve of Audio 5}
+        \label{fig:loss-curve-5}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/fluctuating_tone400.png}
+        \caption{Training Loss curve of Audio 6}
+        \label{fig:loss-curve-6}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/multitone_a4e4.png}
+        \caption{Training Loss curve of Audio 7}
+        \label{fig:loss-curve-7}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/multitone_beats.png}
+        \caption{Training Loss curve of Audio 8}
+        \label{fig:loss-curve-8}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/06seconds.png}
+        \caption{Training Loss curve of Audio 9}
+        \label{fig:loss-curve-9}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/12seconds.png}
+        \caption{Training Loss curve of Audio 10}
+        \label{fig:loss-curve-10}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/24seconds.png}
+        \caption{Training Loss curve of Audio 11}
+        \label{fig:loss-curve-11}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_loss_curves/music_with_instrument.png}
+        \caption{Training Loss curve of Audio 12}
+        \label{fig:loss-curve-12}
+    \end{figure}
+
+
     \subsection{Video Dataset}
     Below are the grouth truth images and the predicted images of first video dataset.
 
@@ -1702,79 +1778,7 @@ Overall, the results indicate that shorter videos tend to maintain higher visual
 
 In conclusion, while the evaluation metrics demonstrate the architecture's strengths in preserving video quality in shorter videos, there is room for optimization to achieve consistent performance across all video types. Improving the architecture to handle longer or more complex videos more effectively could be a focus for future work, ensuring high perceptual quality and structural similarity across various content types.
 
-\subsubsection{Loss Curves}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_puretone100hz.png}
-        \caption{Training Loss curve of Audio 1}
-        \label{fig:loss-curve-1}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_puretone500hz.png}
-        \caption{Training Loss curve of Audio 2}
-        \label{fig:loss-curve-2}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_puretone1000hz.png}
-        \caption{Training Loss curve of Audio 3}
-        \label{fig:loss-curve-3}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_puretone5000hz.png}
-        \caption{Training Loss curve of Audio 4}
-        \label{fig:loss-curve-4}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_sweeping_tone200-500hz.png}
-        \caption{Training Loss curve of Audio 5}
-        \label{fig:loss-curve-5}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_fluctuating_tone400.png}
-        \caption{Training Loss curve of Audio 6}
-        \label{fig:loss-curve-6}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_multitoneA4E4.png}
-        \caption{Training Loss curve of Audio 7}
-        \label{fig:loss-curve-7}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_multitoneBeats.png}
-        \caption{Training Loss curve of Audio 8}
-        \label{fig:loss-curve-8}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_06.png}
-        \caption{Training Loss curve of Audio 9}
-        \label{fig:loss-curve-9}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_12.png}
-        \caption{Training Loss curve of Audio 10}
-        \label{fig:loss-curve-10}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_24.png}
-        \caption{Training Loss curve of Audio 11}
-        \label{fig:loss-curve-11}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/loss_curve/training_loss_curve_12.png}
-        \caption{Training Loss curve of Audio 12}
-        \label{fig:loss-curve-12}
-    \end{figure}
+
 
 
 \subsubsection{Histogram of Weights and Biases for Video 3}
