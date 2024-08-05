@@ -484,7 +484,7 @@ This section provides an overview of the system architecture and the methodology
         \subsubsection{Compression Pipeline}
         \begin{enumerate}[label=\textbf{\roman*.}]
           \item \textbf{Teacher Model:} This is a pre-trained or more complex model that captures comprehensive details and intricacies of the video and audio data.
-          \item \textbf{Knowledge Distillation:} Information and learned patterns from the teacher model are transferred to a simpler, more efficient student model. This process involves training the student model to mimic the output of the teacher model but with less computational overhead or more optimized for specific tasks like compression.
+          \item \textbf{Knowledge Distillation:} Information and patterns from the teacher model are transferred to a simpler, more efficient student model. This process involves training the student model to mimic the output of the teacher model but with less computational overhead or more optimized for specific tasks like compression.
           \item \textbf{Student Model:} A simplified version of the teacher model that is optimized for operational efficiency. This model is used for the actual compression, utilizing the distilled knowledge to maintain quality while reducing file size. The output from the student model is a compressed version of the original video and audio, ready for transmission.
           
         \item \textbf{Model Pruning:} Redundant parameters within the network are removed post- overfitting to streamline the model without significantly affecting its output accu- racy.
@@ -526,7 +526,7 @@ This section provides an overview of the system architecture and the methodology
         The extracted audio is normalized to a consistent sampling rate, standardizing the audio data across all inputs. This normalization is crucial for tasks involving audio processing, ensuring that all audio tracks are handled uniformly.
         
         \item \textbf{Audio Splitting:}
-        The normalized audio is subsequently split into segments. These segments can be synchronized with the video frames or based on specific time intervals, facilitating tasks that require tight integration between audio and visual data.
+        The normalized audio is subsequently split into segments. The segments can then be synchronized with the video frames or based on specific time intervals, facilitating tasks that require tight integration between audio and visual data.
     \end{enumerate}
     
     This pre-processing pipeline sets a robust foundation for effectively handling and processing video and audio data, ensuring both components are in a suitable format for detailed and synchronized analysis.
@@ -661,7 +661,7 @@ This section provides an overview of the system architecture and the methodology
     
     During response-based knowledge distillation, the student model's predictions are compared against the teacher model's predictions. This comparison helps calculate the distillation loss, which captures the discrepancy between the student's output and the teacher's output. Simultaneously, the ground truth provides the representation loss, measuring how well the student model represents the actual data.
     
-    These two types of losses, distillation loss and representation loss, are typically weighted and combined to calculate the total loss. This total loss is then used for feedback and backpropagation during the training process, allowing the student model to gradually learn and mimic the behavior of the more complex teacher model.
+    These two types of losses, distillation-loss and representation-loss, are weighted and combined to calculate the total loss. This total loss is then used for feedback and backpropagation during the training process, allowing the student model to gradually learn and mimic the behavior of the more complex teacher model.
     
     By using response-based knowledge distillation, the student model can benefit from the rich representations learned by the teacher model, even though it has a simpler architecture. This approach is particularly useful for tasks where computational resources or model complexity are constrained, yet high performance is desired.
 
@@ -679,7 +679,7 @@ This section provides an overview of the system architecture and the methodology
     \subsection{Architecture of Neural Network}
     \begin{figure}[H]
         \centering
-        \includegraphics[height=0.6\textheight]{assets/Neural Network Architecture Vertical.png}
+        \includegraphics[width=\linewidth]{assets/Neural Network Architecture Vertical.png}
         \caption{Architecture of Neural Network}
         \label{fig:architecture-neural-network}
     \end{figure}
@@ -990,6 +990,9 @@ By comparing these two images, we gain insight into the different types of conte
     \caption{Average Radial Intensity vs Spatial Frequency for Video 5}
     \label{fig:radial-plot-5}
 \end{figure}
+
+
+The figures above show the Average Radial Intensity versus Spatial Frequency (cycles/pixel) for our video dataset. All plots exhibit a similar trend where the radial averaged intensity decreases with increasing spatial frequency. This indicates that most of the energy is concentrated at lower spatial frequencies, and there is a rapid decline as the spatial frequency increases. The plot shown in \autoref{fig:radial-plot-1} for video 1 shows a steep decline in intensity from the beginning, with the rate of decline slowing down around a spatial frequency of 50 cycles/pixel. There is a noticeable flattening of the curve after 200 cycles/pixel. The plot for Video 2 shown in \autoref{fig:radial-plot-2} follows a similar pattern to that of Video 1, with a rapid decline in intensity initially, followed by a more gradual decline. The plot for Video 3 shown in \autoref{fig:radial-plot-3} also shows a rapid initial decline in intensity. The curve flattens out similarly to the previous plots, but it appears slightly smoother, indicating less fluctuation in intensity values at higher frequencies. The plot for shown in \autoref{fig:radial-plot-4} for Video 4 and for video 5 shown in \autoref{fig:radial-plot-5} is also consistent with the previous videos, showing a sharp initial decline followed by a more gradual decrease in intensity. Comparing the plots, it is evident that all videos share a common trend of decreasing radial averaged intensity with increasing spatial frequency. The initial rapid decline followed by a gradual decrease is consistent across all videos. However, Videos 2 and 4 show slightly more fluctuation at higher frequencies which indicates these videos contain more high frequency contents compared to others, while Video 3 appears smoother indicating it has the least amount of high frequency content. Videos 4 and 5 exhibit minor dips around 200 cycles/pixel, suggesting some variations in the spatial frequency content for these videos. Overall, the plots indicate that the energy distribution in these videos is predominantly concentrated at lower spatial frequencies, with a consistent decline as the frequency increases.
 
     \pagebreak
 
@@ -1481,6 +1484,93 @@ In the other cases, similar issues of spectral blurring and noise introduction a
     In all four comparisons across different durations of audio—6 seconds, 12 seconds, 24 seconds, and the music segment—the predicted audio consistently displays a reduction in detail and fidelity compared to the ground truth. The waveform of the predicted audio appears to mimic the general shape of the ground truth waveform which suggest the model has captured the overall temporal structure of the audio signal. However upon closer inspection, several differences become apparent. The predicted waveform shows slight discrepancies in amplitude variation compared to the ground truth, indicating that the model has not perfectly replicated the dynamic range of the original audio signal.The waveforms of the predicted audio are generally smoother and more compressed, lacking the dynamic amplitude variations evident in the ground truth, which show sharper peaks and deeper troughs. 
     
     Additionally, the predicted spectrogram exhibits noticeable variations in frequency content; while the general pattern of harmonics is present, some frequency bands appear less defined or slightly shifted compared to the ground truth. The intensity levels in the predicted spectrogram also differ, with certain areas showing reduced or heightened intensity, suggesting variations in loudness or timbre compared to the original. Spectrogram analysis further reveals that the predicted audio tends to have less vibrant colors and reduced frequency activity, particularly in the higher frequency ranges. This muted frequency response suggests a simplification in the audio's complexity and a loss of fine detail, indicating that the prediction models might be averaging or smoothing over nuances present in the original audio signals. The temporal alignment of frequency components in the predicted spectrogram shows minor deviations from the ground truth, indicating that the model may have introduced slight timing errors in reproducing the audio signal.
+
+    \subsubsection{Cross Correlation Between Ground Truth and Predicted Audio}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone100hz.wav_puretone100hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 1}
+        \label{fig:cross-correlation-1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone500hz.wav_puretone500hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 2}
+        \label{fig:cross-correlation-2}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone1000hz.wav_puretone1000hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 3}
+        \label{fig:cross-correlation-3}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_puretone5000hz.wav_puretone5000hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 4}
+        \label{fig:cross-correlation-4}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_sweeping_tone200-500hz.wav_sweeping_tone200-500hzpred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 5}
+        \label{fig:cross-correlation-5}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_fluctuating_tone400.wav_fluctuating_tone400pred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 6}
+        \label{fig:cross-correlation-6}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_multitoneA4E4.wav_multitoneA4E4pred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 7}
+        \label{fig:cross-correlation-7}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_multitoneBeats.wav_multitoneBeatspred.wav.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 8}
+        \label{fig:cross-correlation-8}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_06seconds_06secondspred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 9}
+        \label{fig:cross-correlation-9}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_12seconds_12secondspred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 10}
+        \label{fig:cross-correlation-10}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_24seconds_24secondspred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 11}
+        \label{fig:cross-correlation-11}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/crosscorrelation/cross_correlation_music_musicpred.png}
+        \caption{Cross Correlation Between Ground Truth and Predicted Audio 12}
+        \label{fig:cross-correlation-12}
+    \end{figure}
+
     \subsubsection{Evaluation Metrics}
     \begin{table}[H]
     \caption{PSNR and LSD values for audio data}
