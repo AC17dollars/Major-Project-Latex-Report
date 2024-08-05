@@ -1163,15 +1163,15 @@ The total number of trainable parameters in the neural network is 3,155,983.
 \begin{table}[H]
     \caption{Hyperparameters Used in Models}
     \centering
-    \begin{tabular}{|c|p{11cm}|}
+    \begin{tabular}{|L{3.1cm}|p{10cm}|}
     \hline
     \textbf{Hyperparameter} & \textbf{Description} \\
     \hline
-    Learning Rate & Controls the step size at each iteration while moving toward a minimum of the loss function. \\
+    Learning Rate \textbf{(1e-4)} & Controls the step size at each iteration while moving toward a minimum of the loss function. \\
     \hline
-    Batch Size & Number of samples processed before the model is updated. \\
+    Batch Size \textbf{(1)} & Number of samples processed before the model is updated. \\
     \hline
-    \( \omega_0 \) & Initial value for the first layer's weights, ensuring the sine function spans multiple periods over \([-1, 1]\). \\
+    \( \omega_0 \) \textbf{(30)} & Initial value for the first layer's weights, ensuring the sine function spans multiple periods over \([-1, 1]\). \\
     \hline
     Sample Fraction & Fraction of video pixels to sample in each batch. \\
     \hline
@@ -1188,13 +1188,7 @@ The total number of trainable parameters in the neural network is 3,155,983.
     \hline
     \textbf{Hyperparameter} & \textbf{Values} \\
     \hline
-    Learning Rate & \( 1 \times 10^{-4} \) \\
-    \hline
-    Batch Size & 1 \\
-    \hline
     Epochs & 1000 \\
-    \hline
-    \( \omega_0 \) & 30 \\
     \hline
     \end{tabular}
     \label{tab:hyperparameters-audio}
@@ -1205,23 +1199,27 @@ The total number of trainable parameters in the neural network is 3,155,983.
 \begin{table}[H]
     \caption{Hyperparameters for Different Video Types}
     \centering
-    \begin{tabular}{|c|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|}
     \hline
-    \textbf{Video Name} & \textbf{Batch Size} & \textbf{Learning Rate} & \textbf{\( \omega_0 \)} & \textbf{Epochs} & \textbf{Sample Fraction} \\
+    \textbf{Video Name} & \textbf{Epochs} & \textbf{Sample Fraction} \\
     \hline
-    Very Very Short & 1 & \( 1 \times 10^{-4} \) & 30 & 1000 & 0.5 \\
+    Very Very Short & 1000 & 0.5 \\
     \hline
-    Very Short & 1 & \( 1 \times 10^{-4} \) & 30 & 3000 & 0.5 \\
+    Very Short & 3000 & 0.5 \\
     \hline
-    Short & 1 & \( 1 \times 10^{-4} \) & 30 & 2000 & 0.05 \\
+    Short & 2000 & 0.05 \\
     \hline
-    Medium & 1 & \( 1 \times 10^{-4} \) & 30 & 2000 & 0.01 \\
+    Medium & 2000 & 0.01 \\
     \hline
-    Long & 1 & \( 1 \times 10^{-4} \) & 30 & 1500 & 0.005 \\
+    Long & 1500 & 0.005 \\
     \hline
     \end{tabular}
     \label{tab:hyperparameters-video}
 \end{table}
+
+In \autoref{tab:hyperparameters-audio}, the choice of 1000 epochs reflects a compromise between training time and model performance for audio data. This value was chosen manually to ensure sufficient training without excessive computation time.
+
+The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tailored to various video sizes and types. Epochs and sample fractions are adjusted according to the video's length and complexity. For example, very short videos require fewer epochs (1000) and a higher sample fraction (0.5) to achieve optimal training results quickly. Conversely, longer videos, which are more complex, necessitates a reduced sample fraction (0.005) to maintain training efficiency. These adjustments were made based on empirical observations and manual tuning to achieve the best balance between training duration and model performance as evaluated by \gls{psnr} scores.
 
 
 
