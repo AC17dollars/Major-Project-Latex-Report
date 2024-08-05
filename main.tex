@@ -991,6 +991,9 @@ By comparing these two images, we gain insight into the different types of conte
     \label{fig:radial-plot-5}
 \end{figure}
 
+
+The figures above show the Average Radial Intensity versus Spatial Frequency (cycles/pixel) for our video dataset. All plots exhibit a similar trend where the radial averaged intensity decreases with increasing spatial frequency. This indicates that most of the energy is concentrated at lower spatial frequencies, and there is a rapid decline as the spatial frequency increases. The plot shown in \autoref{fig:radial-plot-1} for video 1 shows a steep decline in intensity from the beginning, with the rate of decline slowing down around a spatial frequency of 50 cycles/pixel. There is a noticeable flattening of the curve after 200 cycles/pixel. The plot for Video 2 shown in \autoref{fig:radial-plot-2} follows a similar pattern to that of Video 1, with a rapid decline in intensity initially, followed by a more gradual decline. The plot for Video 3 shown in \autoref{fig:radial-plot-3} also shows a rapid initial decline in intensity. The curve flattens out similarly to the previous plots, but it appears slightly smoother, indicating less fluctuation in intensity values at higher frequencies. The plot for shown in \autoref{fig:radial-plot-4} for Video 4 and for video 5 shown in \autoref{fig:radial-plot-5} is also consistent with the previous videos, showing a sharp initial decline followed by a more gradual decrease in intensity. Comparing the plots, it is evident that all videos share a common trend of decreasing radial averaged intensity with increasing spatial frequency. The initial rapid decline followed by a gradual decrease is consistent across all videos. However, Videos 2 and 4 show slightly more fluctuation at higher frequencies which indicates these videos contain more high frequency contents compared to others, while Video 3 appears smoother indicating it has the least amount of high frequency content. Videos 4 and 5 exhibit minor dips around 200 cycles/pixel, suggesting some variations in the spatial frequency content for these videos. Overall, the plots indicate that the energy distribution in these videos is predominantly concentrated at lower spatial frequencies, with a consistent decline as the frequency increases.
+
     \pagebreak
 
 \section{\MakeUppercase{Implementation Details}}
@@ -1224,7 +1227,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone100hztime.png}
-        \caption{Spectogram of Predicted Puretone 100Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 100Hz Audio}
         \label{fig:pred-pure100-time}
     \end{figure}
     \begin{figure}[H]
@@ -1250,7 +1253,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone500hztime.png}
-        \caption{Spectogram of Predicted Puretone 500Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 500Hz Audio}
         \label{fig:pred-pure500-time}
     \end{figure}
     \begin{figure}[H]
@@ -1276,7 +1279,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone1000hztime.png}
-        \caption{Spectogram of Predicted Puretone 1000Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 1000Hz Audio}
         \label{fig:pred-pure1000-time}
     \end{figure}
     \begin{figure}[H]
@@ -1308,7 +1311,7 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
     \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{assets/audio_results/predpuretone5000hztime.png}
-        \caption{Spectogram of Predicted Puretone 5000Hz Audio}
+        \caption{Time domain graph of Predicted Puretone 5000Hz Audio}
         \label{fig:pred-pure5000-time}
     \end{figure}
     \begin{figure}[H]
@@ -1323,45 +1326,82 @@ The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tail
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hz.png}
-        \caption{Spectogram of Ground Truth Sweeping Tone 200-500Hz Audio}
-        \label{fig:gt-sweep200-500-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hztime.png}
+        \caption{Time domain graph of Ground Truth Sweeping tone Audio}
+        \label{fig:gt-sweeping-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hzspec.png}
+        \caption{Spectrogram of Ground Truth Sweeping tone Audio}
+        \label{fig:gt-sweeping-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/sweeping_tone200-500hzpred.png}
-        \caption{Spectogram of Predicted Sweeping Tone 200-500Hz Audio}
-        \label{fig:pred-sweep200-500-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/Predsweeping_tone200-500hztime.png}
+        \caption{Time Domain Graph of Predicted Sweeping tone Audio}
+        \label{fig:pred-sweeping-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/Predsweeping_tone200-500hzspec.png}
+        \caption{Spectogram of Predicted Sweeping tone Audio}
+        \label{fig:pred-sweeping-spec}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400.png}
-        \caption{Spectogram of Ground Truth Fluctuating 400Hz Audio}
-        \label{fig:gt-fluc400-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400time.png}
+        \caption{Time domain graph of Ground Truth Fluctuating tone Audio}
+        \label{fig:gt-fluctuating-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400spec.png}
+        \caption{Spectrogram of Ground Truth Fluctuating tone Audio}
+        \label{fig:gt-fluctuating-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/fluctuating_tone400pred.png}
-        \caption{Spectogram of Predicted Fluctuating 400Hz Audio}
-        \label{fig:pred-fluc400-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/Predfluctuating_tone400time.png}
+        \caption{Time domain graph of Predicted Fluctuating tone Audio}
+        \label{fig:pred-fluctuating-time}
     \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/Predfluctuating_tone400spec.png}
+        \caption{Spectogram of Predicted Fluctuating tone Audio}
+        \label{fig:pred-fluctuatung-spec}
+    \end{figure}
+
 
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4.png}
-        \caption{Spectogram of Ground Truth Multitone A4E4 audio}
-        \label{fig:gt-multiA4E4-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4time.png}
+        \caption{Time domain graph of Ground Truth Multitone 440Hz and 660Hz Audio}
+        \label{fig:gt-multitonea4e4-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4spec.png}
+        \caption{Spectrogram of Ground Truth Multitone 440Hz and 660Hz Audio}
+        \label{fig:gt-multitonea4e4-spec}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{assets/audio_results/multitoneA4E4pred.png}
-        \caption{Spectogram of Predicted Multitone A4E4 Seconds Audio}
-        \label{fig:pred-multiA4E4-spec}
+        \includegraphics[width=\linewidth]{assets/audio_results/PredmultitoneA4E4time.png}
+        \caption{Time domain graph of Predicted Multitone 440Hz and 660Hz Audio}
+        \label{fig:pred-multitonea4e4-time}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{assets/audio_results/PredmultitoneA4E4spec.png}
+        \caption{Spectogram of Predicted Multitone 440Hz and 660Hz Audio}
+        \label{fig:pred-multitoneA4E4-spec}
     \end{figure}
 
 
