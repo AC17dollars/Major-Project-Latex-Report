@@ -484,7 +484,7 @@ This section provides an overview of the system architecture and the methodology
         \subsubsection{Compression Pipeline}
         \begin{enumerate}[label=\textbf{\roman*.}]
           \item \textbf{Teacher Model:} This is a pre-trained or more complex model that captures comprehensive details and intricacies of the video and audio data.
-          \item \textbf{Knowledge Distillation:} Information and learned patterns from the teacher model are transferred to a simpler, more efficient student model. This process involves training the student model to mimic the output of the teacher model but with less computational overhead or more optimized for specific tasks like compression.
+          \item \textbf{Knowledge Distillation:} Information and patterns from the teacher model are transferred to a simpler, more efficient student model. This process involves training the student model to mimic the output of the teacher model but with less computational overhead or more optimized for specific tasks like compression.
           \item \textbf{Student Model:} A simplified version of the teacher model that is optimized for operational efficiency. This model is used for the actual compression, utilizing the distilled knowledge to maintain quality while reducing file size. The output from the student model is a compressed version of the original video and audio, ready for transmission.
           
         \item \textbf{Model Pruning:} Redundant parameters within the network are removed post- overfitting to streamline the model without significantly affecting its output accu- racy.
@@ -526,7 +526,7 @@ This section provides an overview of the system architecture and the methodology
         The extracted audio is normalized to a consistent sampling rate, standardizing the audio data across all inputs. This normalization is crucial for tasks involving audio processing, ensuring that all audio tracks are handled uniformly.
         
         \item \textbf{Audio Splitting:}
-        The normalized audio is subsequently split into segments. These segments can be synchronized with the video frames or based on specific time intervals, facilitating tasks that require tight integration between audio and visual data.
+        The normalized audio is subsequently split into segments. The segments can then be synchronized with the video frames or based on specific time intervals, facilitating tasks that require tight integration between audio and visual data.
     \end{enumerate}
     
     This pre-processing pipeline sets a robust foundation for effectively handling and processing video and audio data, ensuring both components are in a suitable format for detailed and synchronized analysis.
@@ -661,7 +661,7 @@ This section provides an overview of the system architecture and the methodology
     
     During response-based knowledge distillation, the student model's predictions are compared against the teacher model's predictions. This comparison helps calculate the distillation loss, which captures the discrepancy between the student's output and the teacher's output. Simultaneously, the ground truth provides the representation loss, measuring how well the student model represents the actual data.
     
-    These two types of losses, distillation loss and representation loss, are typically weighted and combined to calculate the total loss. This total loss is then used for feedback and backpropagation during the training process, allowing the student model to gradually learn and mimic the behavior of the more complex teacher model.
+    These two types of losses, distillation-loss and representation-loss, are weighted and combined to calculate the total loss. This total loss is then used for feedback and backpropagation during the training process, allowing the student model to gradually learn and mimic the behavior of the more complex teacher model.
     
     By using response-based knowledge distillation, the student model can benefit from the rich representations learned by the teacher model, even though it has a simpler architecture. This approach is particularly useful for tasks where computational resources or model complexity are constrained, yet high performance is desired.
 
@@ -679,7 +679,7 @@ This section provides an overview of the system architecture and the methodology
     \subsection{Architecture of Neural Network}
     \begin{figure}[H]
         \centering
-        \includegraphics[height=0.6\textheight]{assets/Neural Network Architecture Vertical.png}
+        \includegraphics[width=\linewidth]{assets/Neural Network Architecture Vertical.png}
         \caption{Architecture of Neural Network}
         \label{fig:architecture-neural-network}
     \end{figure}
