@@ -9,7 +9,7 @@
 
 \input{acronyms} % input acronyms.tex file
 
-\titlepreamble{A Major Part A Final Report\\On}
+\titlepreamble{A Major Porject : Part 'A' Final Report\\On}
 \projecttitle{Data-driven Video Codec with Implicit Neural Representations}
 \addauthor{Abhinav Chalise}{THA077BEI003}
 \addauthor{Nimesh Gopal Pradhan}{THA077BEI026}
@@ -86,6 +86,7 @@
 
 
 \mainsection
+
 \section{\MakeUppercase{Introduction}}
 The amount of video content generated and consumed daily is growing exponentially \cite{biteable2021} which has led to efficient video compression techniques to be increasingly vital. This project aims to explore methods of video compression using deep learning techniques and representing videos through implicit neural representation and compressing these neural networks.
     
@@ -112,7 +113,7 @@ The amount of video content generated and consumed daily is growing exponentiall
     \subsection{Objectives}
     The main objectives of our project can be summed up as:
     \begin{itemize}
-        \item To develop an implicit neural representation model for both silent videos and videos with audio content.
+        \item To develop an implicit neural representation model for both silent videos and videos with audio content
         
         \item To implement an efficient compression as well as encoding and decoding framework for the neural representation model
 
@@ -166,13 +167,12 @@ The feasibility analysis for the project includes technical feasibility, economi
     \subsection{Technical Feasibility}
     The required technologies for video compression, such as H.264, H.265/\gls{hevc}, VP9, AV1, and various encoding and decoding algorithms, are widely available. The project utilizes a neural network-based approach for video compression, thus the availability of computing powers through NVIDIA GTX 1650, NVIDIA RTX 4090 and platforms like Google Colab allows for sufficient training and inference testing.
     \subsection{Economical Feasibility}
-    The economic feasibility of the project is supported by access to valid Azure credits worth \$1000, which allows for cost-effective utilization of cloud computing resources. The use of cloud services for training and deployment reduces infrastructure costs and provides scalability as per project requirements. This approach ensures efficient allocation of financial resources and contributes to the project's economic viability.
+    For the dataset, we have utilized a free dataset. For the training computing resources, we have access to an RTX 4090 GPU from our supervisor, ensuring that our project is economically feasible. This setup significantly reduces our operational costs and enhances the viability of our project from a financial perspective.
     \subsection{Legal Feasibility}
-    Legal feasibility considerations include the use of datasets such as Vimeo-90K, YouTube-UGC, Kinetics, and others for training and testing neural network models. While these datasets are widely used in research, it is important to note that specific datasets may have copyright restrictions or usage terms that require compliance. Proper attribution and adherence to licensing terms are essential to ensure legal compliance and avoid copyright infringement issues.
+    Legal feasibility considerations include the use of dataset Vimeo-90K for training neural network models. While these datasets are widely used in research, it is important to note that specific datasets may have copyright restrictions or usage terms that require compliance. Proper attribution and adherence to licensing terms are essential to ensure legal compliance and avoid copyright infringement issues.
     \subsection{Schedule Feasibility}
     Effective project management practices, including task prioritization, milestone tracking, and regular progress evaluations, are implemented to ensure timely completion of project objectives. The utilization of project management tools and techniques, along with efficient resource allocation, facilitates meeting project deadlines and achieving desired outcomes within the specified time frame. The overview of our project schedule can be seen on \autoref{fig:gantt}.
 \pagebreak
-
 
 \section{\MakeUppercase{Theoretical Background}}
     \subsection{Introduction to Implicit Neural Networks (INNs)}
@@ -266,44 +266,6 @@ The feasibility analysis for the project includes technical feasibility, economi
         \item \textbf{Special Handling in the First Layer} \\
           For the first layer, weights are adjusted by a factor $\omega_0$, set to 30. This adjustment ensures that the sine function: $\sin(\omega_0 \cdot Wx + b)$ spans multiple periods over the interval [-1, 1]. This extensive coverage is beneficial for handling the complex patterns and frequencies in video and audio data, enabling the network to capture a broad range of features initially.        
     \end{enumerate}
-
-    \subsection{Knowledge Distillation for Model Compression}
-    Knowledge distillation is a technique used in machine learning to transfer knowledge from a larger, more complex model (teacher) to a smaller, simpler model (student). This process aims to improve the efficiency and speed of the smaller model while maintaining or even enhancing its performance. One variant of knowledge distillation is \gls{rbkd}, which focuses on distilling knowledge related to the model's response or output behavior.
-
-    The fundamental idea behind \gls{rbkd} is to train a student model to mimic not just the final predictions of the teacher model but also the intermediate responses or activations. This approach aims to capture the nuanced decision-making processes of the teacher model, enabling the student to generalize better and achieve comparable performance with fewer parameters.
-    
-    The main idea behind \gls{rbkd} revolves around the concept of feature representations and decision boundaries. By learning from the teacher model's response patterns, the student model can develop a deeper understanding of the underlying data distribution and make more informed predictions, especially in complex and high-dimensional input spaces.
-    
-    
-    Soft Target Loss:
-    The soft target loss remains the primary component in the distillation process. It compares the probabilities predicted by the student model to those of the teacher model:
-    \begin{equation}
-        L_{\text{soft}} = \text{CrossEntropy}(S(x), T(x))
-    \end{equation}
-    
-    where $L_{\text{soft}}$ is the soft target loss, $S(x)$ is the student model's output, and $T(x)$ is the teacher model's output for input $x$.
-    
-    The overall loss function simplifies to just the soft target loss without the response matching component:
-    \begin{equation}
-        L_{\text{total}} = \alpha L_{\text{soft}}
-    \end{equation}
-
-    where  $L_{\text{total}}$ is the total loss function, $\alpha$ is a hyperparameter controlling the importance of the soft target loss, and $L_{\text{soft}}$ is the soft target loss as defined above.
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.95\linewidth]{assets/Knowledge Distillation.png}
-        \caption{Block Diagram of Knowledge Distillation}
-        \label{fig:block-diagram-knowledge-distillation}
-    \end{figure}
-    In \autoref{fig:block-diagram-knowledge-distillation}, the teacher model is a SIREN (Sinusoidal Representation Networks) network pretrained on audio-visual data, while the student model is a shallower version designed to learn from the teacher's responses.
-
-    The inputs to both models are in the form of (x, y, t), where (x, y) represent spatial coordinates in the video, and t represents time. The teacher model outputs four values: r, g, b (RGB values corresponding to (x, y, t)), and Amplitude (corresponding audio amplitude for the given (x, y, t)). Notably, the (x, y) coordinates are ignored in the context of audio amplitude.
-    
-    During response-based knowledge distillation, the student model's predictions are compared against the teacher model's predictions. This comparison helps calculate the distillation loss, which captures the discrepancy between the student's output and the teacher's output. Simultaneously, the ground truth provides the representation loss, measuring how well the student model represents the actual data.
-    
-    These two types of losses, distillation loss and representation loss, are typically weighted and combined to calculate the total loss. This total loss is then used for feedback and backpropagation during the training process, allowing the student model to gradually learn and mimic the behavior of the more complex teacher model.
-    
-    By using response-based knowledge distillation, the student model can benefit from the rich representations learned by the teacher model, even though it has a simpler architecture. This approach is particularly useful for tasks where computational resources or model complexity are constrained, yet high performance is desired.
 
     \subsection{Pruning}
     Pruning is a technique used to reduce the size of a neural network by removing unnecessary or less important parameters (weights and neurons). Pruning reduces the complexity of the neural network by removing weights that have minimal impact on the model’s output, thereby reducing overfitting and improving the model's generalization capabilities.
@@ -461,6 +423,38 @@ where \( \Gamma(P, Q) \) is the set of all possible joint distributions whose ma
 
 \pagebreak
 
+
+\subsection{Mathematical Formulation of the Arcsine Distribution}
+
+We use the arcsine distribution in our analysis. The key mathematical properties of this distribution are outlined below, with detailed derivations provided in the appendix.
+
+\subsubsection{Probability Density Function (PDF)}
+The PDF of the arcsine distribution on the interval \((-1, 1)\) is given by:
+\begin{equation}
+f(x) = \frac{1}{\pi \sqrt{1-x^2}}
+\end{equation}
+
+\subsubsection{Cumulative Distribution Function (CDF)}
+The cumulative distribution function (CDF), \( F(x) \), is defined as the integral of the probability density function (PDF) from the lower bound of the interval to \( x \):
+\begin{equation}
+F(x) = \int_{-1}^{x} f(t) \, dt
+\end{equation}
+
+\subsubsection{Mean}
+The mean \(\mu\) of the distribution is calculated as follows:
+\begin{equation}
+\mu = \int_{-1}^{1} x f(x) \, dx = \int_{-1}^{1} x \cdot \frac{1}{\pi \sqrt{1-x^2}} \, dx
+\end{equation}
+
+\subsubsection{Variance}
+The variance \(\sigma^2\) of the distribution is derived from the expected square and the square of the expected value:
+\begin{equation}
+\sigma^2 = \mathbf{E}[X^2] - (\mathbf{E}[X])^2
+\end{equation}
+
+These equations are fundamental to our project's analysis section and form the basis of our statistical analysis.
+
+
 \section{\MakeUppercase{System Architecture and Methodology}}   
 This section provides an overview of the system architecture and the methodology used in video \gls{codec} with a implicit neural network-based approach.
     \subsection{Block Diagram}
@@ -500,17 +494,6 @@ This section provides an overview of the system architecture and the methodology
     
         \end{enumerate}
 
-        \subsection{Model Decoding}
-        The decoding process is facilitated through the use of a \gls{vae}. During this phase, the latent representations, previously encoded, are input back into the \gls{vae}. The decoder then reconstructs the quantized model weights from these latent variables, effectively translating the compressed data back into its original, functional form.
-        \subsubsection{Reconstruction}
-        \begin{enumerate}[label=\textbf{\roman*.}]
-          \item \textbf{Pixel-wise Output Generation:} Space-time coordinates are processed using the compressed model to regenerate \gls{rgb} values for each pixel and amplitude values for the audio at each time step.
-          \item \textbf{Concatenation:} Individual outputs are concatenated to reconstruct the frames and audio track, reassembling the video and audio into a coherent output.
-        \end{enumerate}
-        
-        \subsubsection{Reconstructed Video with Audio}
-        The final output is a fully reconstructed video with audio that has been compressed, encoded, and then decoded, demonstrating the effectiveness of the neural network in handling complex video and audio data processing tasks.
-    
     \subsection{Pre-processing Pipeline}
     \begin{figure}[H]
         \centering
@@ -548,18 +531,6 @@ This section provides an overview of the system architecture and the methodology
     \end{enumerate}
     
     This pre-processing pipeline sets a robust foundation for effectively handling and processing video and audio data, ensuring both components are in a suitable format for detailed and synchronized analysis.
-
-
-    \subsection{Flowchart}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[height=0.7\textheight]{assets/Major Compression Decompression Flowchart.png}
-        \caption{Compression Decompression Flowchart}
-        \label{fig:comp-decomp-flowchart}
-    \end{figure}
-    \autoref{fig:comp-decomp-flowchart} describes the overall project flow starting with video input, from which individual frames and audio are extracted. A neural network is trained to model the video, known as implicit neural representation, where a space-time coordinate is mapped to an \gls{rgb} value and an audio amplitude. This trained model undergoes compression using knowledge distillation. The compressed model can then be used for storage or transmission.
-
-    In the Receiver side, the process begins by sampling the model using space-time coordinatres from which \gls{rgb} and amplitude values can be retrieved. The model is sampled multiple times until all frames and audio are fully generated through pixel concatenation and audio concatenation. Finally, the frames and audio are combined to reconstruct the original input video.
 
     \subsection{Quantization Aware Pruning}
     \textit{Quantization} in machine learning is the process of reducing the number of bits that represent the model's weights and activations. It typically involves converting 32-bit floating-point numbers to lower precision formats like 16-bit, 8-bit, or even binary (1-bit) representations. This reduces the model size and accelerates inference on hardware with limited computational resources.
@@ -657,7 +628,55 @@ This section provides an overview of the system architecture and the methodology
         \end{algorithmic}
     \end{algorithm}
 
+    \subsection{Knowledge Distillation for Model Compression}
+    Knowledge distillation is a technique used in machine learning to transfer knowledge from a larger, more complex model (teacher) to a smaller, simpler model (student). This process aims to improve the efficiency and speed of the smaller model while maintaining or even enhancing its performance. One variant of knowledge distillation is \gls{rbkd}, which focuses on distilling knowledge related to the model's response or output behavior.
+
+    The fundamental idea behind \gls{rbkd} is to train a student model to mimic not just the final predictions of the teacher model but also the intermediate responses or activations. This approach aims to capture the nuanced decision-making processes of the teacher model, enabling the student to generalize better and achieve comparable performance with fewer parameters.
     
+    The main idea behind \gls{rbkd} revolves around the concept of feature representations and decision boundaries. By learning from the teacher model's response patterns, the student model can develop a deeper understanding of the underlying data distribution and make more informed predictions, especially in complex and high-dimensional input spaces.
+    
+    
+    Soft Target Loss:
+    The soft target loss remains the primary component in the distillation process. It compares the probabilities predicted by the student model to those of the teacher model:
+    \begin{equation}
+        L_{\text{soft}} = \text{CrossEntropy}(S(x), T(x))
+    \end{equation}
+    
+    where $L_{\text{soft}}$ is the soft target loss, $S(x)$ is the student model's output, and $T(x)$ is the teacher model's output for input $x$.
+    
+    The overall loss function simplifies to just the soft target loss without the response matching component:
+    \begin{equation}
+        L_{\text{total}} = \alpha L_{\text{soft}}
+    \end{equation}
+
+    where  $L_{\text{total}}$ is the total loss function, $\alpha$ is a hyperparameter controlling the importance of the soft target loss, and $L_{\text{soft}}$ is the soft target loss as defined above.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.95\linewidth]{assets/Knowledge Distillation.png}
+        \caption{Block Diagram of Knowledge Distillation}
+        \label{fig:block-diagram-knowledge-distillation}
+    \end{figure}
+    In \autoref{fig:block-diagram-knowledge-distillation}, the teacher model is a SIREN (Sinusoidal Representation Networks) network pretrained on audio-visual data, while the student model is a shallower version designed to learn from the teacher's responses.
+
+    The inputs to both models are in the form of (x, y, t), where (x, y) represent spatial coordinates in the video, and t represents time. The teacher model outputs four values: r, g, b (RGB values corresponding to (x, y, t)), and Amplitude (corresponding audio amplitude for the given (x, y, t)). Notably, the (x, y) coordinates are ignored in the context of audio amplitude.
+    
+    During response-based knowledge distillation, the student model's predictions are compared against the teacher model's predictions. This comparison helps calculate the distillation loss, which captures the discrepancy between the student's output and the teacher's output. Simultaneously, the ground truth provides the representation loss, measuring how well the student model represents the actual data.
+    
+    These two types of losses, distillation loss and representation loss, are typically weighted and combined to calculate the total loss. This total loss is then used for feedback and backpropagation during the training process, allowing the student model to gradually learn and mimic the behavior of the more complex teacher model.
+    
+    By using response-based knowledge distillation, the student model can benefit from the rich representations learned by the teacher model, even though it has a simpler architecture. This approach is particularly useful for tasks where computational resources or model complexity are constrained, yet high performance is desired.
+
+    \subsection{Model Decoding}
+        The decoding process is facilitated through the use of a \gls{vae}. During this phase, the latent representations, previously encoded, are input back into the \gls{vae}. The decoder then reconstructs the quantized model weights from these latent variables, effectively translating the compressed data back into its original, functional form.
+        \subsubsection{Reconstruction}
+        \begin{enumerate}[label=\textbf{\roman*.}]
+          \item \textbf{Pixel-wise Output Generation:} Space-time coordinates are processed using the compressed model to regenerate \gls{rgb} values for each pixel and amplitude values for the audio at each time step.
+          \item \textbf{Concatenation:} Individual outputs are concatenated to reconstruct the frames and audio track, reassembling the video and audio into a coherent output.
+        \end{enumerate}
+        
+        \subsubsection{Reconstructed Video with Audio}
+        The final output is a fully reconstructed video with audio that has been compressed, encoded, and then decoded, demonstrating the effectiveness of the neural network in handling complex video and audio data processing tasks.
+
     \subsection{Architecture of Neural Network}
     \begin{figure}[H]
         \centering
