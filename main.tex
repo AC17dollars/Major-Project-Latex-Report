@@ -4,6 +4,7 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \providecommand*{\algorithmautorefname}{Algorithm}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \begin{document}
 
@@ -734,7 +735,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: \gls{psnr} is commonly employed to measure the quality of reconstruction in lossy compression \gls{codec}s. It compares the similarity between the original and compressed video by measuring the ratio between the maximum possible power of a signal and the power of distorting noise.
                 \item \textbf{Value Range}: Typically expressed in \gls{db}, the higher the \gls{psnr}, the better the quality of the compressed video. A higher \gls{psnr} value indicates that the reconstruction is of higher quality.
                 \item \textbf{Preference} $\uparrow$: Values typically range from 20 to 50 \gls{db}, where higher values (around 40 \gls{db} or more) represent excellent quality.
-                \item \textbf{Formula} \\ 
+                \item \textbf{Formula}
                 \begin{equation}\label{eqn:PSNR}
                     \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
                 \end{equation}
@@ -753,7 +754,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: \gls{ssim} is used to measure the similarity between two images or videos. It considers attributes that are important to the human visual system such as luminance, contrast, and structure.
                 \item \textbf{Value Range}: \gls{ssim} values range from -1 to 1. A score of 1 indicates perfect similarity, meaning there is no loss of structural information.
                 \item \textbf{Preference} $\uparrow$: Higher \gls{ssim} values signify less visual distortion and better compression quality.
-                \item \textbf{Formula}\\ 
+                \item \textbf{Formula}
                 \begin{equation}\label{eqn:SSIM}
                     \text{SSIM}(x, y) = \frac{(2 \mu_x \mu_y + c_1)(2 \sigma_{xy} + c_2)}{(\mu_x^2 + \mu_y^2 + c_1)(\sigma_x^2 + \sigma_y^2 + c_2)}
                 \end{equation}
@@ -766,7 +767,7 @@ This section provides an overview of the system architecture and the methodology
                 \item \textbf{Overview}: L1 loss measures the average magnitude of errors between corresponding pixels in the original and compressed images or frames, without considering the direction of the errors.
                 \item \textbf{Value Range}: The value can range from 0 to $\infty$,  0 indicating no error (perfect compression).
                 \item \textbf{Preference} $\downarrow$: Lower L1 loss values indicate that the compressed video is more accurate in terms of raw pixel values.
-                \item \textbf{Formula}\\
+                \item \textbf{Formula}
                 \begin{equation}
                     \text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
                 \end{equation}
@@ -974,18 +975,19 @@ By comparing these two images, we gain insight into the different types of conte
 The project is developed using Python, leveraging PyTorch as the primary deep learning framework. Interactive Python sessions are utilized for testing and rapid prototyping. Jupyter Notebooks are employed for exploratory data analysis and iterative experimentation, allowing for an interactive and visual approach to model development. TensorBoard is used to visualize training metrics and monitor the performance of the \gls{siren} network during training. Visual Studio Code serves as the main \gls{ide} for code writing and debugging.
 
 \subsection{Instrumentation}
-    The software and hardware used for this project are listed below: \\
+    The software and hardware used for this project are listed below:
     \begin{table}[H]
         \caption{Instrumentation Table}
         \label{table:instrumentation-table}
         \centering
-        \begin{tabular}{|p{0.2\linewidth}|p{0.3\linewidth}|p{0.4\linewidth}|}
+        \begin{tabular}{|L{0.2\linewidth}|L{0.3\linewidth}|L{0.4\linewidth}|}
             \hline
             \textbf{Requirement} & \textbf{Solution} & \textbf{Reason} \\
             \hline
             High-Performance Computing & NVIDIA RTX 4090 & Overfitting the video to the model \\
             \hline
-            Deep Learning Frameworks & PyTorch & Developing and implementing neural network models \\
+            Deep Learning Frameworks & PyTorch &
+            Developing and implementing neural network models \\
             \hline
             Development Environment & Visual Studio Code with Notebook extensions & Running and Debugging Code\\
             \hline
