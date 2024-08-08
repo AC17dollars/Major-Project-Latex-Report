@@ -129,13 +129,13 @@ The amount of video content generated and consumed daily is growing exponentiall
         \subsubsection{Project Limitations}
         While aiming for reduction in file sizes, the compression model may not achieve top-notch video quality preservation compared to uncompressed versions. The effectiveness of the model may vary depending on the complexity of the audio-video content, limiting its applicability to a specific range of video content. The computational resources required for training and deploying the model implementing \gls{inr} techniques may pose practical constraints, affecting real-time processing capabilities or scalability.
         \subsubsection{Applications}
-        \begin{enumerate}[label=\textbf{\roman*.}]
-            \item Streaming Services: Enhancing the efficiency of video compression can significantly reduce bandwidth usage and improve streaming quality, benefitting platforms like Netflix, YouTube, and other online video services.
-            \item Social Media: Improved video compression can enable faster upload and download speeds, enhancing user experience on platforms like Instagram, Facebook etc.
-            \item Cloud Storage: Efficient video compression can reduce storage costs and improve access times for cloud storage providers like Google Drive, Dropbox
-            \item Broadcasting: Television and live broadcast services can benefit from reduced transmission costs.
-            \item Surveillance Systems: Compression of high-resolution surveillance footage can save storage space and facilitate faster retrieval and analysis of video data in security systems.
-        \end{enumerate}
+        \begin{itemize}
+            \item \textbf{Streaming Services:} Enhancing the efficiency of video compression can significantly reduce bandwidth usage and improve streaming quality, benefitting platforms like Netflix, YouTube, and other online video services.
+            \item \textbf{Social Media:} Improved video compression can enable faster upload and download speeds, enhancing user experience on platforms like Instagram, Facebook etc.
+            \item \textbf{Cloud Storage:} Efficient video compression can reduce storage costs and improve access times for cloud storage providers like Google Drive, Dropbox
+            \item \textbf{Broadcasting:} Television and live broadcast services can benefit from reduced transmission costs.
+            \item \textbf{Surveillance Systems:} Compression of high-resolution surveillance footage can save storage space and facilitate faster retrieval and analysis of video data in security systems.
+        \end{itemize}
             
     \pagebreak
     
@@ -341,7 +341,7 @@ Additionally, to capture temporal dynamics in video and audio, derivatives of th
 \begin{equation}
     L = \frac{1}{N} \sum_{n=1}^N \left((\Phi(\mathbf{x}_n) - y_n)^2 + \lambda (\nabla\Phi(\mathbf{x}_n) - \nabla y_n)^2\right) 
 \end{equation}
-where \( N \) is the total number of sampled points, \( \Phi \) is the SIREN model, \( \mathbf{x}_n \) are the input coordinates for the \(n\)-th data point, \( y_n \) are the actual output values at the \(n\)-th data point, \( \lambda \) is a regularization parameter, \( \nabla\Phi(\mathbf{x}_n) \) is the derivative of the \gls{siren} output with respect to the input at \( \mathbf{x}_n \), and \( \nabla y_n \) is the derivative of the true output values with respect to the input at \( \mathbf{x}_n \).
+where, \( N \) is the total number of sampled points, \( \Phi \) is the SIREN model, \( \mathbf{x}_n \) are the input coordinates for the \(n\)-th data point, \( y_n \) are the actual output values at the \(n\)-th data point, \( \lambda \) is a regularization parameter, \( \nabla\Phi(\mathbf{x}_n) \) is the derivative of the \gls{siren} output with respect to the input at \( \mathbf{x}_n \), and \( \nabla y_n \) is the derivative of the true output values with respect to the input at \( \mathbf{x}_n \).
 
 
 \subsection{Forward and Backward Propagation in SIREN Network}
@@ -359,7 +359,7 @@ The figure provides an illustration of the forward and backward propagation proc
 \begin{equation}
     \mathbf{a}^{(l)} = \sin(\mathbf{Z}^{(l)})
 \end{equation}
-where:
+where,
 \begin{itemize}
     \item \( \mathbf{Z}^{(l)} \) is the linear combination of inputs at layer \( l \).
     \item \( \mathbf{W}^{(l)} \) represents the weights of the \( l \)-th layer.
@@ -372,7 +372,7 @@ The error \( \mathbf{E} \) is calculated based on the difference between the pre
 \begin{equation}
     \mathbf{E} = \frac{1}{2} \sum_{i=1}^{N} (\mathbf{a}^{(3)}_i - \mathbf{y}_i)^2
 \end{equation}
-where:
+where,
 \begin{itemize}
     \item \( \mathbf{a}^{(3)}_i \) is the predicted output.
     \item \( \mathbf{y}_i \) is the actual output.
@@ -388,7 +388,7 @@ The weights and biases are updated as per the following equations:
     \mathbf{b}^{(l)} \leftarrow \mathbf{b}^{(l)} - \eta \frac{\partial \mathbf{E}}{\partial \mathbf{b}^{(l)}}  
 \end{equation}
 
-Where:
+where,
 \begin{itemize}
     \item \( \mathbf{W}^{(l)} \) represents the weights of the \( l \)-th layer.
     \item \( \mathbf{b}^{(l)} \) represents the biases of the \( l \)-th layer.
@@ -552,13 +552,6 @@ This section provides an overview of the system architecture and the methodology
         \item \textbf{Pre-Trained Model}: The process starts with a pre-trained model that serves as the baseline for further optimization.
         
         \item \textbf{Define Quantization and Pruning Parameters}: Parameters for quantization (e.g., bit-width) and pruning (e.g., threshold for pruning) are defined. These parameters guide the subsequent steps.
-        
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.9\linewidth]{assets/Quantization Aware Pruning.png}
-        \caption{Quantization Aware Pruning}
-        \label{fig:quantization-aware-pruning}
-    \end{figure}
 
         \item \textbf{Perform Fake Quantization to Simulate its Effects}: During training, fake quantization is performed to simulate the effects of quantization without actually converting weights to lower precision. This helps the model learn to cope with the reduced precision.
         
@@ -571,6 +564,13 @@ This section provides an overview of the system architecture and the methodology
         \item \textbf{Evaluate Importance of Weights, Layers, etc.}: The importance of different weights and layers is evaluated to identify which parts of the model can be pruned.
         
         \item \textbf{Prune Unimportant Parts}: The identified unimportant parts (e.g., weights, neurons) are pruned to reduce the model size.
+        
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.9\linewidth]{assets/Quantization Aware Pruning.png}
+            \caption{Quantization Aware Pruning}
+            \label{fig:quantization-aware-pruning}
+        \end{figure}
         
         \item \textbf{Simulate both Quantization and Pruning Effects}: The combined effects of both quantization and pruning are simulated to assess their impact on the model.
         
@@ -650,15 +650,18 @@ This section provides an overview of the system architecture and the methodology
     \end{equation}
 
     where  $L_{\text{total}}$ is the total loss function, $\alpha$ is a hyperparameter controlling the importance of the soft target loss, and $L_{\text{soft}}$ is the soft target loss as defined above.
+    
+    In \autoref{fig:block-diagram-knowledge-distillation}, the teacher model is a SIREN (Sinusoidal Representation Networks) network pretrained on audio-visual data, while the student model is a shallower version designed to learn from the teacher's responses.
+    
+    The inputs to both models are in the form of (x, y, t), where (x, y) represent spatial coordinates in the video, and t represents time. The teacher model outputs four values: r, g, b (RGB values corresponding to (x, y, t)), and Amplitude (corresponding audio amplitude for the given (x, y, t)). Notably, the (x, y) coordinates are ignored in the context of audio amplitude.
+    
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.95\linewidth]{assets/Knowledge Distillation.png}
         \caption{Block Diagram of Knowledge Distillation}
         \label{fig:block-diagram-knowledge-distillation}
     \end{figure}
-    In \autoref{fig:block-diagram-knowledge-distillation}, the teacher model is a SIREN (Sinusoidal Representation Networks) network pretrained on audio-visual data, while the student model is a shallower version designed to learn from the teacher's responses.
 
-    The inputs to both models are in the form of (x, y, t), where (x, y) represent spatial coordinates in the video, and t represents time. The teacher model outputs four values: r, g, b (RGB values corresponding to (x, y, t)), and Amplitude (corresponding audio amplitude for the given (x, y, t)). Notably, the (x, y) coordinates are ignored in the context of audio amplitude.
     
     During response-based knowledge distillation, the student model's predictions are compared against the teacher model's predictions. This comparison helps calculate the distillation loss, which captures the discrepancy between the student's output and the teacher's output. Simultaneously, the ground truth provides the representation loss, measuring how well the student model represents the actual data.
     
@@ -685,7 +688,7 @@ This section provides an overview of the system architecture and the methodology
         \label{fig:architecture-neural-network}
     \end{figure}
     The neural network model is designed to process spatio-temporal coordinates and generate corresponding \gls{rgb} pixel values and audio amplitude. The network features an input layer with 3 neurons, which takes in the space-time coordinates $(x, y, t)$ where $x$ and $y$ are spatial coordinates and $t$ is the temporal coordinate. The output layer consists of 4 neurons that produce the RGB values of a pixel and the amplitude value of audio, specifically the Red ($r$), Green ($g$), and Blue ($b$) color values, along with the audio amplitude ($A$). Between the input and output layers, the model includes $n$ fully connected hidden layers, each containing $m$ neurons. Each of these layers employs the \gls{siren} activation function, which uses the sine function to effectively model periodic signals and fine-grained details, making it particularly suitable for handling the intricate relationships inherent in audio and visual data. This architecture uses the SIREN activation function to enable high-quality signal representation, capturing both spatial and temporal dynamics to generate detailed multimedia outputs.
-    \\
+
     To rigorously evaluate the performance of our model on video and audio data separately, we employ two distinct SIREN architectures tailored to each modality. For video processing, the video-specific architecture features an input layer with three neurons corresponding to the pixel coordinates \((x, y)\) and the frame index \((t)\), which together determine the spatial and temporal aspects of the video frames. The output of this video network is a triplet of neurons, each representing the RGB values \((r, g, b)\) of each pixel. This allows the model to accurately reconstruct the visual information for each frame. In contrast, the audio-specific architecture is streamlined to focus solely on temporal data, with a single input neuron for the time coordinate \((t)\). The output is a single neuron that produces the amplitude \((A)\) of the audio signal at each time point. This separation of architectures enables focused training and optimization for each modality, ensuring that the intricacies of both video and audio signals are effectively captured and reproduced with high fidelity.
 
     \subsection{Loss Function}
@@ -696,7 +699,7 @@ This section provides an overview of the system architecture and the methodology
         \begin{equation}
             \mathcal{L}_{\text{audio}} = \int_{\Omega_{\text{audio}}} \| \Phi_{\text{audio}}(t) - f_{\text{audio}}(t) \| \, dt
         \end{equation}
-        where:
+        where,
         \begin{itemize}
             \item \( t \in \mathbb{R} \) is the time point,
             \item  \( \Phi_{\text{audio}}(t) \) is the model's output for the audio at time \( t \),
@@ -709,7 +712,7 @@ This section provides an overview of the system architecture and the methodology
         \begin{equation}
             \mathcal{L}_{\text{video}} = \int_{\Omega_{\text{video}}} \| \Phi_{\text{video}}(x, t) - f_{\text{video}}(x, t) \| \, dx \, dt
         \end{equation}
-        where:
+        where,
         \begin{itemize}
         \item \( (x, t) \in \mathbb{R}^3 \) represents the space-time coordinates,
         \item \( \Phi_{\text{video}}(x, t) \) is the model's output for the video at space-time coordinate \( (x, t) \),
@@ -722,7 +725,7 @@ This section provides an overview of the system architecture and the methodology
         \begin{equation}
             \mathcal{L}_{\text{combined}} = \lambda_{\text{audio}} \mathcal{L}_{\text{audio}} + \lambda_{\text{video}} \mathcal{L}_{\text{video}}
             \end{equation}
-            where:
+            where,
             \begin{itemize}
                 \item \( \lambda_{\text{audio}} \) is the weight that balances the contribution of the audio loss,
                 \item \( \lambda_{\text{video}} \) is the weight that balances the contribution of video loss.
@@ -740,7 +743,7 @@ This section provides an overview of the system architecture and the methodology
                 \begin{equation}\label{eqn:PSNR}
                     \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
                 \end{equation}
-                where $\text{MAX}_I$ is the maximum possible pixel value of the image (e.g., 255 for 8-bit images), and $\text{MSE}$ is the mean squared error between the original and compressed image.
+                where, $\text{MAX}_I$ is the maximum possible pixel value of the image (e.g., 255 for 8-bit images), and $\text{MSE}$ is the mean squared error between the original and compressed image.
                \end{itemize} 
            
         \subsubsection{Learned Perceptual Image Patch Similarity}
@@ -759,7 +762,7 @@ This section provides an overview of the system architecture and the methodology
                 \begin{equation}\label{eqn:SSIM}
                     \text{SSIM}(x, y) = \frac{(2 \mu_x \mu_y + c_1)(2 \sigma_{xy} + c_2)}{(\mu_x^2 + \mu_y^2 + c_1)(\sigma_x^2 + \sigma_y^2 + c_2)}
                 \end{equation}
-                where $\mu_x$ and $\mu_y$ are the average intensities of images $x$ and $y$, $\sigma_{x}$ and $\sigma_y$ are the variance, $\sigma_{xy}$ is the covariance between $x$ and $y$, and $c_1$ and $c_2$ are variables to stabilize division.
+                where, $\mu_x$ and $\mu_y$ are the average intensities of images $x$ and $y$, $\sigma_{x}$ and $\sigma_y$ are the variance, $\sigma_{xy}$ is the covariance between $x$ and $y$, and $c_1$ and $c_2$ are variables to stabilize division.
             \end{itemize}
 
         
@@ -772,7 +775,7 @@ This section provides an overview of the system architecture and the methodology
                 \begin{equation}
                     \text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
                 \end{equation}
-                where $x_i$ and $y_i$ are pixel values of original and compressed images respectively, and $N$ is the total number of pixels.
+                where, $x_i$ and $y_i$ are pixel values of original and compressed images respectively, and $N$ is the total number of pixels.
             \end{itemize}
 
 
@@ -813,7 +816,7 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     \begin{equation}
         \text{LSD} = \frac{1}{N} \sum_{n=1}^{N} \sqrt{\frac{1}{K} \sum_{k=1}^{K} \left[ \log |X(k,n)| - \log |Y(k,n)| \right]^2}
     \end{equation}
-    where \( X(k,n) \) and \( Y(k,n) \) are the magnitude spectra of the original and processed signals for the \( n \)-th frame and \( k \)-th frequency bin, respectively, \( N \) is the number of frames, and \( K \) is the number of frequency bins.
+    where, \( X(k,n) \) and \( Y(k,n) \) are the magnitude spectra of the original and processed signals for the \( n \)-th frame and \( k \)-th frequency bin, respectively, \( N \) is the number of frames, and \( K \) is the number of frequency bins.
 \end{itemize}
 
 \subsubsection{Peak Signal-to-Noise Ratio (PSNR)}
@@ -830,7 +833,7 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
     \begin{equation}
         \text{PSNR} = 20 \cdot \log_{10}\left(\frac{{\text{MAX}_I}}{\sqrt{\text{MSE}}}\right)
     \end{equation}
-    where \( MAX \) is the maximum possible pixel value (in audio, the signal's peak value), and MSE is the mean squared error between the original and processed audio signals.
+    where, \( \text{MAX} \) is the maximum possible pixel value (in audio, the signal's peak value), and MSE is the mean squared error between the original and processed audio signals.
 \end{itemize}
 
 \subsubsection{File Size}
