@@ -909,7 +909,7 @@ All the audio files are of .wav extension.
     \end{tabular}
     \end{table}
 
-Among the five silent videos, three videos (very\_very\_short\_video, very\_short\_video, and short\_video) have frames without any temporal relationship meaning it is a slideshow video of unrelated images, while the other two videos include some frames that do have a temporal connection.
+Among the five silent videos, three videos (Video 1, Video 2 and Video 3) have frames without any temporal relationship meaning it is a slideshow video of unrelated images, while the other two videos  (Video 4 and Video 5) include some frames that do have a temporal connection.
 
 
 \subsection{Spatial Frequency and Radial Plots of Frames in Video Dataset}
@@ -1185,15 +1185,15 @@ The total number of trainable parameters in the neural network is 3,155,983.
     \hline
     \textbf{Video Name} & \textbf{Epochs} & \textbf{Sample Fraction} \\
     \hline
-    Very Very Short & 1000 & 0.5 \\
+    Video 1 & 1000 & 0.5 \\
     \hline
-    Very Short & 3000 & 0.5 \\
+    Video 2 & 3000 & 0.5 \\
     \hline
-    Short & 2000 & 0.05 \\
+    Video 3 & 2000 & 0.05 \\
     \hline
-    Medium & 2000 & 0.01 \\
+    Video 4 & 2000 & 0.01 \\
     \hline
-    Long & 1500 & 0.005 \\
+    Video & 1500 & 0.005 \\
     \hline
     \end{tabular}
     \label{tab:hyperparameters-video}
@@ -1201,7 +1201,7 @@ The total number of trainable parameters in the neural network is 3,155,983.
 
 In \autoref{tab:hyperparameters-audio}, the choice of 1000 epochs reflects a compromise between training time and model performance for audio data. This value was chosen manually to ensure sufficient training without excessive computation time.
 
-The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tailored to various video sizes and types. Epochs and sample fractions are adjusted according to the video's length and complexity. For example, very short videos require fewer epochs (1000) and a higher sample fraction (0.5) to achieve optimal training results quickly. Conversely, longer videos, which are more complex, necessitates a reduced sample fraction (0.005) to maintain training efficiency. These adjustments were made based on empirical observations and manual tuning to achieve the best balance between training duration and model performance as evaluated by \gls{psnr} scores.
+The \autoref{tab:hyperparameters-video} illustrates how hyperparameters are tailored to various video sizes and types. Epochs and sample fractions are adjusted according to the video's length and complexity. For example, video 1 require fewer epochs (1000) and a higher sample fraction (0.5) to achieve optimal training results quickly. Conversely, longer videos like Video 5, which are more complex, necessitates a reduced sample fraction (0.005) to maintain training efficiency. These adjustments were made based on empirical observations and manual tuning to achieve the best balance between training duration and model performance as evaluated by \gls{psnr} scores.
 
 
 
@@ -1989,15 +1989,15 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
         \hline
         \textbf{SN} & \textbf{Video} & \textbf{PSNR} & \textbf{SSIM} & \textbf{LPIPS} \\
         \hline
-        1 & very\_very\_short\_video & 29.0736 & 0.8749 & 0.0699 \\ 
+        1 & Video 1 & 29.0736 & 0.8749 & 0.0699 \\ 
         \hline
-        2 & very\_short\_video & 28.8302 & 0.8982 & 0.0869 \\ 
+        2 & Video 2 & 28.8302 & 0.8982 & 0.0869 \\ 
         \hline
-        3 & short\_video & 27.4749 & 0.8579 & 0.1820 \\ 
+        3 & Video 3 & 27.4749 & 0.8579 & 0.1820 \\ 
         \hline
-        4 & medium\_video & 23.4656 & 0.8875 & 0.1927 \\ 
+        4 & Video 4 & 23.4656 & 0.8875 & 0.1927 \\ 
         \hline
-        5 & long\_video & 24.4722 & 0.8695 & 0.2386 \\ 
+        5 & Video 5 & 24.4722 & 0.8695 & 0.2386 \\ 
         \bottomrule
     \end{tabular}
     \label{tab:video_metrics}
