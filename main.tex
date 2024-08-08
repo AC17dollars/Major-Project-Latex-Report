@@ -2444,18 +2444,18 @@ The below Derivations have been done using \autoref{fig:32-32-neural} as referen
 
 \subsection*{Appendix C: Arcsine Distribution on \([-1, 1]\)}
 \addcontentsline{toc}{subsection}{Appendix C: Arcsine Distribution on [-1, 1]}
-
+\appendixnumbering{C}
 \textbf{Probability Density Function (PDF)}\\
 The PDF of the arcsine distribution on the interval \((-1, 1)\) is given by:
-\[
-f(x) = \frac{1}{\pi \sqrt{1-x^2}}
-\]
+\begin{equation}
+    f(x) = \frac{1}{\pi \sqrt{1-x^2}}
+\end{equation}
 
 \textbf{Cumulative Distribution Function (CDF)}\\
 The cumulative distribution function (CDF), \( F(x) \), is defined as the integral of the probability density function (PDF) from the lower bound of the interval to \( x \):
-\[
-F(x) = \int_{-1}^{x} f(t) \, dt
-\]
+\begin{equation}
+    F(x) = \int_{-1}^{x} f(t) \, dt
+\end{equation}
 
 Given the PDF for the arcsine distribution:
 \[
@@ -2493,25 +2493,25 @@ F(x) = \frac{1}{\pi} \arcsin x + \frac{1}{2}
 \]
 
 Thus, the CDF of the arcsine distribution on \([-1, 1]\) is:
-\[
-F(x) = \frac{1}{\pi} \arcsin(x) + \frac{1}{2}
-\]
+\begin{equation}
+    F(x) = \frac{1}{\pi} \arcsin(x) + \frac{1}{2}
+\end{equation}
 
 \textbf{Mean}\\
 The mean \(\mu\) of the distribution is given by:
-\[
-\mu = \int_{-1}^{1} x f(x) \, dx = \int_{-1}^{1} x \cdot \frac{1}{\pi \sqrt{1-x^2}} \, dx
-\]
+\begin{equation}
+    \mu = \int_{-1}^{1} x f(x) \, dx = \int_{-1}^{1} x \cdot \frac{1}{\pi \sqrt{1-x^2}} \, dx
+\end{equation}
 This integral evaluates to zero because \( x \cdot f(x) \) is an odd function integrated over a symmetric interval around zero:
-\[
-\mu = 0
-\]
+\begin{equation}
+    \mu = 0
+\end{equation}
 
 \textbf{Variance}\\
 The variance \(\sigma^2\) is calculated as:
-\[
-\sigma^2 = \mathbf{E}[X^2] - (\mathbf{E}[X])^2
-\]
+\begin{equation}
+    \sigma^2 = \mathbf{E}[X^2] - (\mathbf{E}[X])^2
+\end{equation}
 Since \(\mathbf{E}[X] = 0\), we have:
 \[
 \mathbf{E}[X^2] = \int_{-1}^{1} x^2 f(x) \, dx = \int_{-1}^{1} x^2 \cdot \frac{1}{\pi \sqrt{1-x^2}} \, dx
@@ -2521,9 +2521,86 @@ By symmetry and properties of the arcsine distribution, this integral evaluates 
 \mathbf{E}[X^2] = \frac{1}{2}
 \]
 Thus, the variance is:
+\begin{equation}
+    \sigma^2 = \frac{1}{2} - 0^2 = \frac{1}{2}
+\end{equation}
+
+\pagebreak
+
+\subsection*{Appendix D: IEEE 754 Floating Point Representation}
+\label{app:ieee-754-fp32}
+\addcontentsline{toc}{subsection}{Appendix D: IEEE 754 Floating Point Representation}
+\appendixnumbering{D}
+To represent the number \( 0.9146 \) in IEEE 754 single precision floating-point format:
+
+1. \textbf{Convert to Binary:}
 \[
-\sigma^2 = \frac{1}{2} - 0^2 = \frac{1}{2}
+0.9146_{10} \approx 0.111010100010001100111010_2
 \]
+
+2. \textbf{Normalize the Binary Number:}
+\[
+0.111010100010001100111010_2 = 1.11010100010001100111010 \times 2^{-1}
+\]
+
+3. \textbf{Bias the Exponent:}
+\[
+\text{Exponent} = -1 + 127 = 126
+\]
+
+In binary:
+\[
+126_{10} = 01111110_2
+\]
+
+4. \textbf{IEEE 754 Representation:}
+\begin{equation}
+    \begin{array}{|c|c|c|}
+        \hline
+        \text{Sign Bit} & \text{Exponent} & \text{Mantissa} \\
+        \hline
+        0 & 01111110 & 11010100010001100111010 \\
+        \hline
+    \end{array}
+\end{equation}
+
+5. \textbf{Convert IEEE 754 Representation to Decimal:}
+\begin{itemize}
+    \item \textbf{Sign Bit}: 0 (indicating a positive number)
+    \item \textbf{Exponent}: \(01111110_2\) in binary, which is 126 in decimal.
+    \item \textbf{Bias}: 127
+    \item \textbf{Actual Exponent}: \(126 - 127 = -1\)
+    \item \textbf{Mantissa}: \(1.11010100010001100111010_2\) (implicit leading 1 added)
+\end{itemize}
+
+\textbf{Calculate the Decimal Value:}
+\[
+\text{Value} = (-1)^{\text{sign}} \times 1.\text{Mantissa} \times 2^{\text{Actual Exponent}}
+\]
+\[
+\text{Value} = (-1)^0 \times 1.11010100010001100111010_2 \times 2^{-1}
+\]
+
+Convert \(1.11010100010001100111010_2\) to decimal:
+\begin{align*}
+    1.11010100010001100111010_2 &= 1 + 0.5 + 0.25 + 0.0625 + 0.015625 + 9.765625 \times 10^{-4}\\
+        &\begin{aligned}
+        % &1 + 0.5 + 0.25 + 0.0625 + 0.015625 + 9.765625 \times 10^{-4}\\
+        &+ 6.103515625 \times 10^{-5} + 3.051757813 \times 10^{-5} + \\
+        & 3.814697266 \times 10^{-6} + 1.907348633 \times 10^{-6}\\
+        &+ 9.536743164 \times 10^{-7} + 2.384185791 \times 10^{-7}\\
+    \end{aligned}\\
+        &= 1.829200029373168945312
+\end{align*}
+\begin{equation}
+    \begin{aligned}
+        \text{Value} &= 1.829200029373168945312 \times 2^{-1}\\
+        &= 1.829200029373168945312 \times 0.5\\
+        &= 0.914600014686584472656
+    \end{aligned}
+\end{equation}
+
+The discrepancy arises because the true value of \(0.9146\) cannot be exactly represented in binary. The value stored in IEEE 754 format is \(0.914600014686584472656\), which is very close to the original value \(0.9146\), with the difference due to rounding in the conversion process.
 
 \pagebreak
 
