@@ -850,7 +850,7 @@ To thoroughly assess the effectiveness of our proposed audio processing techniqu
 \autoref{tab:audio_files} provides a summary of various audio files, detailing their serial numbers (SN), file names, sampling rates, file sizes in \gls{kib}, and durations in seconds. A brief description of the audio is mentioned after the table.
 
 \subsection{Audio Dataset}
-All the audio files are of .wav extension.
+All the music is stored in WAV (Waveform Audio File Format) files because WAV is an uncompressed format that preserves the original, raw audio quality without any loss of data. Unlike compressed formats, which reduce file size by removing some audio information, WAV files maintain the full fidelity of the sound, ensuring that the music is captured and reproduced exactly as it was recorded. 
 \begin{table}[H]
     \centering
     \caption{Audio Files Characteristics}
@@ -858,7 +858,7 @@ All the audio files are of .wav extension.
     \begin{tabular}{|c|c|c|c|c|L{4cm}|}
         \hline
         \multirow{2}{*}{\textbf{SN}} & \multirow{2}{*}{\textbf{Audio File}} & \textbf{Sampling} & \textbf{Size(KiB)} & \multirow{2}{*}{\textbf{Duration}} & \multirow{2}{*}{\textbf{Description}} \\
-        & & \textbf{Rate (Hz)} & \textbf{(seconds)} &  & \\
+        & & \textbf{Rate (Hz)} &  & \textbf{(seconds)} & \\
         \hline
         1 & Audio 1 & \multirow{9}{*}{44100} & 516.84 & 6 & Pure tone of 100 Hz. \\
         \cline{1-2} \cline{4-6}
@@ -889,7 +889,7 @@ All the audio files are of .wav extension.
 
 \subsection{Video Dataset}
 
-\autoref{tab:video_files} provides a summary of various video files, detailing their serial numbers (SN), file names, resolution, frames per second (fps), file size in \gls{mib} and video duration in seconds.
+\autoref{tab:video_files} provides a summary of various video files, detailing their serial numbers (SN), file names, resolution, frames per second (fps), file size in \gls{mib} and video duration in seconds. All the videos are stored in AVI (Audio Video Interleave) format because AVI is an uncompressed format that preserves the original, raw video quality without any loss of data. Unlike compressed video formats, which reduce file size by discarding some visual information, AVI files maintain the full integrity of video streams.
 
 \begin{table}[H]
     \centering
@@ -1050,41 +1050,77 @@ This architecture enables the network to learn a continuous representation of au
 \subsubsection*{Trainable Parameters}
 The dimensions of the trainable parameters (weights and biases) are as follows:
 
-\begin{enumerate}[label=\textbf{\roman*.}]
-    \item \textbf{Input to Input Layer}
-    \begin{itemize}
-        \item Weight matrix \( \mathbf{W}^{(\text{in})} \): \( 1 \times 1 \)
-        \item Bias vector \( \mathbf{b}^{(\text{in})} \): \( 1 \)
-    \end{itemize}
-    \item \textbf{Input Layer to First Hidden Layer}
-    \begin{itemize}
-        \item Weight matrix \( \mathbf{W}^{(\text{1})} \): \( 256 \times 1 \)
-        \item Bias vector \( \mathbf{b}^{(\text{1})} \): \( 256 \)
-    \end{itemize}
-    \item \textbf{Hidden Layers}
-    \begin{itemize}
-        \item Weight matrices \( \mathbf{W}^{(n)} \) for \( n = 2, 3, 4 \):
-        \begin{itemize}
-            \item[\(\circ\)] \( \mathbf{W}^{(2)} \): \( 256 \times 256 \)
-            \item[\(\circ\)] \( \mathbf{W}^{(3)} \): \( 256 \times 256 \)
-            \item[\(\circ\)] \( \mathbf{W}^{(4)} \): \( 256 \times 256 \)
-        \end{itemize}
-        \item Bias vectors \( \mathbf{b}^{(n)} \) for \( n = 2, 3, 4 \):
-        \begin{itemize}
-            \item[\(\circ\)] \( \mathbf{b}^{(2)} \): \( 256 \)
-            \item[\(\circ\)] \( \mathbf{b}^{(3)} \): \( 256 \)
-            \item[\(\circ\)] \( \mathbf{b}^{(4)} \): \( 256 \)
-        \end{itemize}
-    \end{itemize}
-    \item \textbf{Last Hidden Layer to Output Layer}
-    \begin{itemize}
-        \item Weight matrix \( \mathbf{W}^{(\text{5})} \): \( 1 \times 256 \)
-        \item Bias vector \( \mathbf{b}^{(\text{5})} \): \( 1 \)
-    \end{itemize}
-\end{enumerate}
+% \begin{enumerate}[label=\textbf{\roman*.}]
+%     \item \textbf{Input to Input Layer}
+%     \begin{itemize}
+%         \item Weight matrix \( \mathbf{W}^{(\text{in})} \): \( 1 \times 1 \)
+%         \item Bias vector \( \mathbf{b}^{(\text{in})} \): \( 1 \)
+%     \end{itemize}
+%     \item \textbf{Input Layer to First Hidden Layer}
+%     \begin{itemize}
+%         \item Weight matrix \( \mathbf{W}^{(\text{1})} \): \( 256 \times 1 \)
+%         \item Bias vector \( \mathbf{b}^{(\text{1})} \): \( 256 \)
+%     \end{itemize}
+%     \item \textbf{Hidden Layers}
+%     \begin{itemize}
+%         \item Weight matrices \( \mathbf{W}^{(n)} \) for \( n = 2, 3, 4 \):
+%         \begin{itemize}
+%             \item[\(\circ\)] \( \mathbf{W}^{(2)} \): \( 256 \times 256 \)
+%             \item[\(\circ\)] \( \mathbf{W}^{(3)} \): \( 256 \times 256 \)
+%             \item[\(\circ\)] \( \mathbf{W}^{(4)} \): \( 256 \times 256 \)
+%         \end{itemize}
+%         \item Bias vectors \( \mathbf{b}^{(n)} \) for \( n = 2, 3, 4 \):
+%         \begin{itemize}
+%             \item[\(\circ\)] \( \mathbf{b}^{(2)} \): \( 256 \)
+%             \item[\(\circ\)] \( \mathbf{b}^{(3)} \): \( 256 \)
+%             \item[\(\circ\)] \( \mathbf{b}^{(4)} \): \( 256 \)
+%         \end{itemize}
+%     \end{itemize}
+%     \item \textbf{Last Hidden Layer to Output Layer}
+%     \begin{itemize}
+%         \item Weight matrix \( \mathbf{W}^{(\text{5})} \): \( 1 \times 256 \)
+%         \item Bias vector \( \mathbf{b}^{(\text{5})} \): \( 1 \)
+%     \end{itemize}
+% \end{enumerate}
+\begin{table}[H]
+    \caption{Trainable Parameters in the Neural Network}
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|L{5cm}|p{5cm}|p{2.5cm}|p{4cm}|}
+    \hline
+    \textbf{Layer} & \textbf{Parameter} & \textbf{Dimensions} & \textbf{Total Parameters} \\
+    \hline
+    \textbf{Input to Input Layer} & Weight matrix $W^{(\text{in})}$ & $1 \times 1$ & 1 \\
+     & Bias vector $b^{(\text{in})}$ & 1 & 1 \\
+    \hline
+    \textbf{Input Layer to First Hidden Layer} & Weight matrix $W^{(1)}$ & $256 \times 1$ & 256 \\
+     & Bias vector $b^{(1)}$ & 256 & 256 \\
+    \hline
+    \textbf{Hidden Layers} & Weight matrix $W^{(2)}$ & $256 \times 256$ & 65,536 \\
+     & Weight matrix $W^{(3)}$ & $256 \times 256$ & 65,536 \\
+     & Weight matrix $W^{(4)}$ & $256 \times 256$ & 65,536 \\
+     & Bias vector $b^{(2)}$ & 256 & 256 \\
+     & Bias vector $b^{(3)}$ & 256 & 256 \\
+     & Bias vector $b^{(4)}$ & 256 & 256 \\
+    \hline
+    \textbf{Last Hidden Layer to Output Layer} & Weight matrix $W^{(5)}$ & $1 \times 256$ & 256 \\
+     & Bias vector $b^{(5)}$ & 1 & 1 \\
+    \hline
+    \textbf{Total} & & & \textbf{198,147} \\
+    \hline
+    \end{tabular}
+    }
+\end{table}
 
 The total number of trainable parameters in the neural network is 198,147.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/architecture_trainable_parameters_audio.png}
+    \caption{Architecture and Trainable Parameters for Audio Obtained from PyTorch}
+    \label{fig:audio-trainable-parameters}
+\end{figure}
 
+\autoref{fig:audio-trainable-parameters} illustrates the architecture and trainable parameters as obtained from PyTorch. Upon comparison, we observe that the figures align with the calculations presented in our table, confirming the accuracy of our manual computation. In both cases, the total number of trainable parameters in the neural network is 198,147.
 
 \subsection{Neural Network Architecture for Video}
 \begin{figure}[H]
@@ -1107,40 +1143,83 @@ The sine activation function employed in all layers except the output layer allo
 \subsubsection*{Trainable Parameters}
 The dimensions of the trainable parameters (weights and biases) are as follows:
 
-\begin{enumerate}[label=\textbf{\roman*.}]
-    \item \textbf{Input to Input Layer}
-    \begin{itemize}
-        \item Weight matrix \( \mathbf{W}^{(\text{in})} \): \( 3 \times 3 \)
-        \item Bias vector \( \mathbf{b}^{(\text{in})} \): \( 3 \)
-    \end{itemize}
-    \item \textbf{Input Layer to First Hidden Layer}
-    \begin{itemize}
-        \item Weight matrix \( \mathbf{W}^{(\text{1})} \): \( 1024 \times 3 \)
-        \item Bias vector \( \mathbf{b}^{(\text{1})} \): \( 1024 \)
-    \end{itemize}
-    \item \textbf{Hidden Layers}
-    \begin{itemize}
-        \item Weight matrices \( \mathbf{W}^{(n)} \) for \( n = 2, 3, 4 \):
-        \begin{itemize}
-            \item[\(\circ\)] \( \mathbf{W}^{(2)} \): \( 1024 \times 1024 \)
-            \item[\(\circ\)] \( \mathbf{W}^{(3)} \): \( 1024 \times 1024 \)
-            \item[\(\circ\)] \( \mathbf{W}^{(4)} \): \( 1024 \times 1024 \)
-        \end{itemize}
-        \item Bias vectors \( \mathbf{b}^{(n)} \) for \( n = 2, 3, 4 \):
-        \begin{itemize}
-            \item[\(\circ\)] \( \mathbf{b}^{(2)} \): \( 1024 \)
-            \item[\(\circ\)] \( \mathbf{b}^{(3)} \): \( 1024 \)
-            \item[\(\circ\)] \( \mathbf{b}^{(4)} \): \( 1024 \)
-        \end{itemize}
-    \end{itemize}
-    \item \textbf{Last Hidden Layer to Output Layer}
-    \begin{itemize}
-        \item Weight matrix \( \mathbf{W}^{(\text{5})} \): \( 3 \times 1024 \)
-        \item Bias vector \( \mathbf{b}^{(\text{5})} \): \( 3 \)
-    \end{itemize}
-\end{enumerate}
+
+
+% \begin{enumerate}[label=\textbf{\roman*.}]
+%     \item \textbf{Input to Input Layer}
+%     \begin{itemize}
+%         \item Weight matrix \( \mathbf{W}^{(\text{in})} \): \( 3 \times 3 \)
+%         \item Bias vector \( \mathbf{b}^{(\text{in})} \): \( 3 \)
+%     \end{itemize}
+%     \item \textbf{Input Layer to First Hidden Layer}
+%     \begin{itemize}
+%         \item Weight matrix \( \mathbf{W}^{(\text{1})} \): \( 1024 \times 3 \)
+%         \item Bias vector \( \mathbf{b}^{(\text{1})} \): \( 1024 \)
+%     \end{itemize}
+%     \item \textbf{Hidden Layers}
+%     \begin{itemize}
+%         \item Weight matrices \( \mathbf{W}^{(n)} \) for \( n = 2, 3, 4 \):
+%         \begin{itemize}
+%             \item[\(\circ\)] \( \mathbf{W}^{(2)} \): \( 1024 \times 1024 \)
+%             \item[\(\circ\)] \( \mathbf{W}^{(3)} \): \( 1024 \times 1024 \)
+%             \item[\(\circ\)] \( \mathbf{W}^{(4)} \): \( 1024 \times 1024 \)
+%         \end{itemize}
+%         \item Bias vectors \( \mathbf{b}^{(n)} \) for \( n = 2, 3, 4 \):
+%         \begin{itemize}
+%             \item[\(\circ\)] \( \mathbf{b}^{(2)} \): \( 1024 \)
+%             \item[\(\circ\)] \( \mathbf{b}^{(3)} \): \( 1024 \)
+%             \item[\(\circ\)] \( \mathbf{b}^{(4)} \): \( 1024 \)
+%         \end{itemize}
+%     \end{itemize}
+%     \item \textbf{Last Hidden Layer to Output Layer}
+%     \begin{itemize}
+%         \item Weight matrix \( \mathbf{W}^{(\text{5})} \): \( 3 \times 1024 \)
+%         \item Bias vector \( \mathbf{b}^{(\text{5})} \): \( 3 \)
+%     \end{itemize}
+% \end{enumerate}
+\begin{table}[H]
+    \caption{Trainable Parameters in the Neural Network}
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|L{5cm}|p{5cm}|p{2.5cm}|p{4cm}|}
+    \hline
+    \textbf{Layer} & \textbf{Parameter} & \textbf{Dimensions} & \textbf{Total Parameters} \\
+    \hline
+    \textbf{Input to Input Layer} & Weight matrix $W^{(\text{in})}$ & $3 \times 3$ & 9 \\
+     & Bias vector $b^{(\text{in})}$ & 3 & 3 \\
+    \hline
+    \textbf{Input Layer to First Hidden Layer} & Weight matrix $W^{(1)}$ & $1024 \times 3$ & 3,072 \\
+     & Bias vector $b^{(1)}$ & 1024 & 1,024 \\
+    \hline
+    \textbf{Hidden Layers} & Weight matrix $W^{(2)}$ & $1024 \times 1024$ & 1,048,576 \\
+     & Weight matrix $W^{(3)}$ & $1024 \times 1024$ & 1,048,576 \\
+     & Weight matrix $W^{(4)}$ & $1024 \times 1024$ & 1,048,576 \\
+     & Bias vector $b^{(2)}$ & 1024 & 1,024 \\
+     & Bias vector $b^{(3)}$ & 1024 & 1,024 \\
+     & Bias vector $b^{(4)}$ & 1024 & 1,024 \\
+    \hline
+    \textbf{Last Hidden Layer to Output Layer} & Weight matrix $W^{(5)}$ & $3 \times 1024$ & 3,072 \\
+     & Bias vector $b^{(5)}$ & 3 & 3 \\
+    \hline
+    \textbf{Total} & & & \textbf{3,155,983} \\
+    \hline
+    \end{tabular}
+    }
+
+\end{table}
+
+
 
 The total number of trainable parameters in the neural network is 3,155,983.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/architecture_trainable_parameters_video.png}
+    \caption{Architecture and Trainable Parameters for Video Obtained from PyTorch}
+    \label{fig:video-trainable-parameters}
+\end{figure}
+
+\autoref{fig:video-trainable-parameters} illustrates the architecture and trainable parameters as obtained from PyTorch. Upon comparison, we observe that the figures align with the calculations presented in our table, confirming the accuracy of our manual computation. In both cases, the total number of trainable parameters in the neural network is 3,155,983. 
 
 \subsection{Hyperparameters}
  Below is a table summarizing the key hyperparameters used in our model:
