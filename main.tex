@@ -66,7 +66,7 @@
     
 \section*{ABSTRACT}
 \addcontentsline{toc}{section}{ABSTRACT}
-    In response to the escalating demand for efficient media storage and streaming, this project explores a novel audio-video representation and compression approach using Sinusoidal Representation Network (SIREN) i.e. Implicit Neural Representation (INR) with sine activation function. We trained our model on five diverse video datasets and twelve distinct audio samples, achieving varied performance metrics across these media types. The video compression results indicated that our model could effectively compress and reconstruct videos with a reasonable balance of fidelity and compression, achieving Peak Signal-to-Noise Ratios (PSNR) ranging from 23.4656 to 29.0736, Structural Similarity Indices (SSIM) between 0.7924 and 0.8521, and Learned Perceptual Image Patch Similarity (LPIPS) scores from 0.0699 to 0.2386. Audio results varied more significantly, with PSNR values ranging from 3.0149 to 52.9438 and Log Spectral Distances (LSD) between 1.9508 and 15.9798. Notably, our model demonstrated limitations in accurately predicting high-frequency audio content, suggesting areas for future refinement. Furthermore, we implemented adaptive sampling strategies for video data, modulating the sample fraction based on temporal correlations within frames to optimize compression without sacrificing quality. These findings highlight the potential of INR-based models in multimedia compression while also delineating specific challenges in handling high-frequency components and dynamic content variations.
+    In response to the escalating demand for efficient media storage and streaming, this project explores a novel audio-video representation and compression approach using Sinusoidal Representation Network (SIREN) i.e. Implicit Neural Representation (INR) with sine activation function. We trained our model on five diverse video datasets and twelve distinct audio samples, achieving varied performance metrics across these media types. The video compression results indicated that our model could effectively compress and reconstruct videos with a reasonable balance of fidelity and compression, achieving Peak Signal-to-Noise Ratios (PSNR) ranging from 23.4656 db to 29.0736 db, Structural Similarity Indices (SSIM) between 0.7924 and 0.8521, and Learned Perceptual Image Patch Similarity (LPIPS) scores from 0.0699 to 0.2386. Audio results varied more significantly, with PSNR values ranging from 3.0149 db to 52.9438 db and Log Spectral Distances (LSD) between 1.9508 db and 15.9798 db. Notably, our model demonstrated limitations in accurately predicting high-frequency audio content, suggesting areas for future refinement. Furthermore, we implemented adaptive sampling strategies for video data, modulating the sample fraction based on temporal correlations within frames to optimize compression without sacrificing quality. These findings highlight the potential of INR-based models in multimedia compression while also delineating specific challenges in handling high-frequency components and dynamic content variations.
 
     \textit{Keywords: Implicit neural representation, Sine activation, Sinusoidal representation networks}
 
@@ -1116,7 +1116,7 @@ The total number of trainable parameters in the neural network is 198,147.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/architecture_trainable_parameters_audio.png}
-    \caption{Architecture and Trainable Parameters for Audio Obtained from PyTorch}
+    \caption{PyTorch Audio Model Architecture and Parameters}
     \label{fig:audio-trainable-parameters}
 \end{figure}
 
@@ -1215,7 +1215,7 @@ The total number of trainable parameters in the neural network is 3,155,983.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{assets/architecture_trainable_parameters_video.png}
-    \caption{Architecture and Trainable Parameters for Video Obtained from PyTorch}
+    \caption{PyTorch Video Model Architecture and Parameters}
     \label{fig:video-trainable-parameters}
 \end{figure}
 
@@ -1591,7 +1591,7 @@ In the other cases, similar issues of spectral blurring and noise introduction a
     \centering
     \begin{tabular}{|c|c|c|c|}
         \hline
-        \textbf{SN} & \textbf{File Name} & \textbf{PSNR} & \textbf{LSD} \\
+        \textbf{SN} & \textbf{File Name} & \textbf{PSNR (db)} & \textbf{LSD (db)} \\
         \hline
         1  & Audio 1 & 48.39 & 1.95  \\
         \hline
@@ -1625,7 +1625,7 @@ From the above table, we can see that Audio 1 exhibits the highest PSNR value of
 
 Conversely, Audio 4 shows a significantly lower PSNR of 3.01 dB, highlighting a substantial deviation from the original audio. This low PSNR indicates considerable distortion and poor prediction quality for this high-frequency tone. Additionally, Audio 12 has a PSNR of 23.16 dB, which is relatively low compared to other samples, pointing to noticeable discrepancies between the predicted and original signals.
 
-The LSD values provide further insight into spectral distortion. Audio 1 has the lowest LSD value of 1.95, signifying minimal spectral distortion and high prediction quality. On the other hand, Audio 4 has the highest LSD value of 14.24, indicating significant spectral distortion and poorer prediction quality. The LSD values underscore how well the model preserves spectral characteristics, with lower values indicating better performance.
+The LSD values provide further insight into spectral distortion. Audio 1 has the lowest LSD value of 1.95 db, signifying minimal spectral distortion and high prediction quality. On the other hand, Audio 4 has the highest LSD value of 14.24 db, indicating significant spectral distortion and poorer prediction quality. The LSD values underscore how well the model preserves spectral characteristics, with lower values indicating better performance.
 
 Overall, the variation in PSNR and LSD values among the different audio samples highlights the impact of audio content on prediction performance. While the model achieves high accuracy and minimal distortion for some samples, others, particularly those with complex or high-frequency content, demonstrate poorer quality.
 
@@ -1918,7 +1918,7 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
     \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
-        \textbf{SN} & \textbf{Video} & \textbf{PSNR} & \textbf{SSIM} & \textbf{LPIPS} \\
+        \textbf{SN} & \textbf{Video} & \textbf{PSNR (db)} & \textbf{SSIM} & \textbf{LPIPS} \\
         \hline
         1 & Video 1 & 29.0736 & 0.8749 & 0.0699 \\ 
         \hline
@@ -1933,7 +1933,7 @@ Overall, the variation in PSNR and LSD values among the different audio samples 
     \end{tabular}
     \label{tab:video_metrics}
 \end{table}
-In our results, Video 1 achieves the highest PSNR value of 29.0736, suggesting it retains the highest level of detail with minimal distortion. Conversely, Video 4 has the lowest PSNR value of 23.4656, indicating a higher level of noise or distortion introduced during compression.
+In our results, Video 1 achieves the highest PSNR value of 29.0736 db, suggesting it retains the highest level of detail with minimal distortion. Conversely, Video 4 has the lowest PSNR value of 23.4656 db, indicating a higher level of noise or distortion introduced during compression.
 
 Video 2 has the highest SSIM score of 0.8982, indicating that its structural content closely resembles the original. In contrast, Video 3 has the lowest SSIM score of 0.8579, suggesting a slight reduction in structural similarity compared to the other videos.
 
@@ -2528,6 +2528,26 @@ Thus, the variance is:
     \caption{Final Weights for Audio 1}
     \label{fig:final-weights-a1}
 \end{figure}
+\begin{table}[H]
+    \caption{Derivation and PyTorch Notation for Weights and Biases}
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|l|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Layer}} & \multicolumn{2}{|c|}{\textbf{Derivation Notation}} & \multicolumn{2}{|c|}{\textbf{PyTorch Notation}} \\ \hline
+    \textbf{From} & \textbf{To} & \textbf{Weights} & \textbf{Biases} & \textbf{Weights} & \textbf{Biases} \\ \hline
+    Input & Input Layer & $W_{in}$ & $b_{in}$ & \texttt{net.net.0.0.weight} & \texttt{net.net.0.0.bias} \\ \hline
+    Input Layer & Hidden 1 & $W^{(1)}$ & $b^{(1)}$ & \texttt{net.net.1.0.weight} & \texttt{net.net.1.0.bias} \\ \hline
+    Hidden 1 & Hidden 2 & $W^{(2)}$ & $b^{(2)}$ & \texttt{net.net.2.0.weight} & \texttt{net.net.2.0.bias} \\ \hline
+    Hidden 2 & Hidden 3 & $W^{(3)}$ & $b^{(3)}$ & \texttt{net.net.3.0.weight} & \texttt{net.net.3.0.bias} \\ \hline
+    Hidden 3 & Hidden 4 & $W^{(4)}$ & $b^{(4)}$ & \texttt{net.net.4.0.weight} & \texttt{net.net.4.0.bias} \\ \hline
+    Hidden 4 & Output & $W_{out}$ & $b_{out}$ & \texttt{net.net.5.0.weight} & \texttt{net.net.5.0.bias} \\ \hline
+    \end{tabular}%
+    }
+    \label{table:weights_biases}
+    \end{table}
+    
+    
 To represent the number \( 0.9146 \) in IEEE 754 single precision floating-point format:
 
 1. \textbf{Convert to Binary:}
