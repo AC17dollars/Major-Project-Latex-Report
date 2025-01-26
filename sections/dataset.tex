@@ -1,0 +1,35 @@
+\section{\MakeUppercase{Dataset Exploration}}
+
+\autoref{tab:audio_video_files} provides a summary of various audio-video files, detailing their serial numbers (SN), file names, resolution, frames per second (fps), audio sample rate,file size in \gls{mib} and video duration in seconds. All the audio-video files are stored in AVI/wav format because AVI is an uncompressed format that preserves the original, raw audio-video quality without any loss of data. Unlike compressed video formats, which reduce file size by discarding some visual information, AVI/wav files maintain the full integrity of audio-video streams.
+
+\begin{table}[H]
+    \centering
+    \caption{Video Files Characteristics}
+    \label{tab:audio_video_files}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{SN}} & \textbf{Video} & \multirow{2}{*}{\textbf{Resolution}} & \multirow{2}{*}{\textbf{FPS}} & \multicolumn{1}{c|}{\textbf{Sample}} & \multicolumn{1}{c|}{\textbf{Size}} & \multicolumn{1}{c|}{\textbf{Duration}} \\ 
+        &\textbf{File} & & & \textbf{Rate (Hz)} & \textbf{(MiB)} & \textbf{(s)} \\ 
+        \hline 
+        1 & Video 1 & \multirow{5}{*}{448 x 256} & 1 & 114688 & 1.92 & 5 \\ 
+        \cline{1-2} \cline{4-7}
+        2 & Video 2 & & 1 & 96000 & 5.33 & 10 \\ 
+        \cline{1-2} \cline{4-7}
+        3 & Video 3 & & 10 & 114688 & 6.08 & 3 \\ 
+        \cline{1-2} \cline{4-7}
+        4 & Video 4 & & 2 & 114688 & 13.6 & 25 \\ 
+        \cline{1-2} \cline{4-7}
+        5 & Video 5 & & 24 & 114688 & 12.4 & 3 \\ 
+        \hline
+    \end{tabular}
+\end{table}
+
+Videos 1 and 2 contain temporally uncorrelated frames, selected to assess the model's performance when successive frames undergo significant changes. In Video 1, the audio features a melody played on the violin, with frequency components ranging from 1.60 Hz to 4437.80 Hz, while Video 2 includes the voice of a Nepali male speaker, whose audio spans a frequency range of 0.3 Hz to 5739.9 Hz.
+
+On the other hand, Videos 3, 4, and 5 consist of temporally correlated frames and were chosen to evaluate how the model handles sequentially related data. Video 3 showcases a man dancing, accompanied by a song with audio frequencies spanning 0.1 Hz to 15537.67 Hz. Similarly, Video 4 involves people dancing with funky beats, and its audio frequency components range from 0.4 Hz to 10340.8 Hz. Video 5 presents a person delivering a speech in English, with its audio frequency range being 1.2 Hz to 10512.67 Hz.
+
+The audio sample rates are set higher to accommodate the model's need for pixel coordinates, frame indices, and audio time steps as inputs. Given that the number of pixel coordinates is typically larger than the number of audio time steps, repeating the audio time steps to match the resolution would introduce significant repetition. To minimize this repetition and improve model performance, a higher sample rate is used.
+
+
+
+\pagebreak

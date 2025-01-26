@@ -1,0 +1,51 @@
+\section{\MakeUppercase{Introduction}}
+The amount of video content generated and consumed daily is growing exponentially \cite{biteable2021} which has led to efficient video compression techniques to be increasingly vital. This project aims to explore methods of video compression using deep learning techniques and representing videos through implicit neural representation and compressing these neural networks.
+    
+    \subsection{Background}
+    Video compression is a critical technology in today's digital age. It is used in many areas like streaming services, social media platforms, cloud storage, mobile communication. Traditional compression algorithms such as H.264, H.265 have been the backbone of video compression for decades. These algorithms use techniques like \gls{dct}s and predictive coding to reduce file sizes by removing redundancies and less perceptible details. While effective, these methods face limitations in handling the increasing complexity and higher resolutions of modern media content, often resulting in a trade-off between compression efficiency and quality.
+
+    In recent years, deep learning has opened new avenues for video compression. Deep learning models like \gls{cnn} and Autoencoders have shown remarkable ability to learn intricate patterns and representations within data. These models can outperform traditional algorithms by dynamically adapting to the unique features of different videos, thereby optimizing compression in a more intelligent and flexible manner. Notable advancements include using \gls{cnn}s for feature extraction and \gls{lstm} networks for sequence learning, enabling models to handle spatial and temporal data more effectively. Additionally, hybrid models combining different neural network architectures have demonstrated enhanced performance and efficiency. 
+    
+    \gls{inr} is an  approach to encode data, such as images, \gls{3d} shapes, or audio, by using the power of neural networks. Unlike traditional methods that store data in discrete formats like pixels, \gls{inr}s utilize neural networks to learn and represent continuous functions that can generate this data. In practice, a neural network is trained to take spatial coordinates (e.g., x, y, z for \gls{3d} shapes) as input and produce the corresponding data values (such as color or density) as output. This process results in a compact, continuous, and differentiable representation of the data.
+    
+    Furthermore, the continuous nature of \gls{inr}s allows for efficient storage and manipulation of data. For instance, instead of storing a large image as a collection of pixels, the neural network function can generate any part of the image at any desired resolution, potentially saving memory and computational resources.
+    
+    \gls{inr}s are also differentiable, meaning they can be easily integrated with other neural network-based systems and optimized using gradient-based methods. This property is beneficial for tasks like optimizing 3D models for better fit with observed data, generating textures for computer graphics, and even compressing video data by learning efficient representations.
+    
+    Overall, implicit neural representations provide a powerful framework for encoding, manipulating, and generating complex data, offering numerous advantages in terms of flexibility, efficiency, and quality of the resulting representations.
+    We use the advancements of \gls{inr}s to represnt videos in terms of neural networks and compress it as well as regenerate it as required.
+    
+    \subsection{Motivation}
+    The rapid expansion of digital media consumption has created a need for more efficient compression methods. High-resolution formats, 4k and even 8k videos, and high-fidelity audio are becoming standard, which increases the demand for storage space and bandwidth. This project is motivated by the potential of deep learning and implicit neural representation to improve video compression. By using neural networks' ability to learn and optimize complex patterns, along with the precision of implicit neural representation to represent pixel and amplitude data, we aim to develop a compression model for audio-visual files. This can enhance user experience by providing high-quality media at reduced file sizes, addressing issues such as reducing data transmission costs, and improving download and upload speeds.
+    
+    \subsection{Problem Definition}
+    This project aims to address the growing challenge of efficiently managing increasing volume and complexity of digital video content. As high-resolution formats like 4k videos and high-fidelity audio become more common, the demand for effective storage and transmission solutions is increased. The large file sizes of modern video content results in increased storage costs, longer download times and high bandwidth usage. This project aims to tackle these problems through implicit neural representation to develop a compression model that can compress media files without compromising too much on quality.
+    
+    \subsection{Objectives}
+    The main objectives of our project can be summed up as:
+    \begin{itemize}
+        \item To develop an implicit neural representation model for videos with audio content
+        
+        \item To implement an efficient compression as well as encoding and decoding framework for the neural representation model
+
+    \end{itemize}
+
+    
+    \subsection{Project Scope and Applications}
+    The scopes of our project is limited to video compression with some limitations and applications of the project discussed below.
+        \subsubsection{Project Scopes}
+        This project aims to develop advanced algorithms for video compression using innovative techniques such as \gls{inr}. The primary focus lies in creating efficient methods to represent audio-video data through \gls{inr} and then compressing these representations while maintaining acceptable audio-video quality. A key objective is to build a functional prototype that demonstrates the feasibility and effectiveness of the proposed compression model.
+        
+        \subsubsection{Project Limitations}
+        While aiming for reduction in file sizes, the compression model may not achieve top-notch video quality preservation compared to uncompressed versions. The effectiveness of the model may vary depending on the complexity of the audio-video content, limiting its applicability to a specific range of video content. The computational resources required for training and deploying the model implementing \gls{inr} techniques may pose practical constraints, affecting real-time processing capabilities or scalability.
+        \subsubsection{Applications}
+        \begin{itemize}
+            \item \textbf{Streaming Services:} Enhancing the efficiency of video compression can significantly reduce bandwidth usage and improve streaming quality, benefitting platforms like Netflix, YouTube, and other online video services.
+            \item \textbf{Social Media:} Improved video compression can enable faster upload and download speeds, enhancing user experience on platforms like Instagram, Facebook etc.
+            \item \textbf{Cloud Storage:} Efficient video compression can reduce storage costs and improve access times for cloud storage providers like Google Drive, Dropbox
+            \item \textbf{Broadcasting:} Television and live broadcast services can benefit from reduced transmission costs.
+            \item \textbf{Surveillance Systems:} Compression of high-resolution surveillance footage can save storage space and facilitate faster retrieval and analysis of video data in security systems.
+        \end{itemize}
+            
+    \pagebreak
+ 
