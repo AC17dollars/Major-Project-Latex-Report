@@ -14,7 +14,7 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[angle=90, origin=c, height=0.7\textheight]{assets/Gantt-B.png}
+        \includegraphics[angle=90, origin=c, width=\linewidth]{assets/Gantt-B.png}
         \caption{Gantt Chart for Major Project Part B}
         \label{fig:gantt-b}
     \end{figure}
@@ -872,7 +872,8 @@ The discrepancy arises because the true value of \(0.9146\) cannot be exactly re
     \end{table}
 
     \item \textbf{TF32:}
-    TF32 (TensorFloat-32) is a custom precision format introduced by NVIDIA. It uses the same 8-bit exponent as FP32 but reduces the mantissa to 10 bits.
+    TF32 (TensorFloat32) is a custom numeric floating point format introduced by NVIDIA. It uses the same 8-bit exponent as FP32 but reduces the mantissa to 10 bits.
+
     \[
     \begin{array}{|c|c|c|}
         \hline
@@ -884,6 +885,8 @@ The discrepancy arises because the true value of \(0.9146\) cannot be exactly re
     \]
 
     TF32 is specifically designed to accelerate tensor computations in machine learning while maintaining sufficient precision for stable training. TF32 bridges the gap between performance and precision in deep learning. While FP32 operations are computationally expensive and FP16 lacks the precision needed for complex model training, TF32 offers a middle ground by maintaining the exponent range of FP32 and reducing the mantissa size to speed up tensor operations.
+
+    
     \textbf{Calculation of Minimum and Maximum values:} 
     \[
         \text{Value} = (-1)^{\text{sign}} \times 1.\text{Mantissa} \times 2^{\text{Exponent - 127}}
