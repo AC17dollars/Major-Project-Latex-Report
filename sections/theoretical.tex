@@ -204,7 +204,7 @@
 
     Two important methods for encoding data are Arithmetic Encoding and Range Encoding, which are widely used in various compression algorithms.
 
-    \subsubsection{Aithmetic Encoding}
+    \subsubsection{Arithmetic Encoding}
     Arithmetic Encoding is a form of entropy encoding that represents a message as a single number between 0 and 1. The key idea behind arithmetic encoding is to iteratively refine an interval to represent the entire message. Instead of encoding each symbol separately, arithmetic encoding encodes the entire message as a fraction in a range [0, 1].
 
     \begin{itemize}
@@ -234,60 +234,116 @@
 
     While Range Encoding is simpler and faster than Arithmetic Encoding in practice, it can be less efficient when dealing with very large data sets or extremely small probabilities. Despite this, it remains popular in modern compression algorithms.
 
-    \subsection{Compression Algorithms}
-    Compression algorithms utilize encoding methods such as Arithmetic and Range Encoding to reduce the size of data. These algorithms are designed to identify patterns and redundancies in data, allowing them to replace these patterns with shorter representations, resulting in space savings.
+    % \subsection{Compression Algorithms}
+    % Compression algorithms utilize encoding methods such as Arithmetic and Range Encoding to reduce the size of data. These algorithms are designed to identify patterns and redundancies in data, allowing them to replace these patterns with shorter representations, resulting in space savings.
 
-    \subsubsection{LZMA Algorithm}
-    The \gls{lzma} is a lossless data compression algorithm that employs both dictionary-based compression and range encoding. It is known for achieving very high compression ratios, making it a popular choice in formats such as 7z and xz.
+    % \subsubsection{LZMA Algorithm}
+    % The \gls{lzma} is a lossless data compression algorithm that employs both dictionary-based compression and range encoding. It is known for achieving very high compression ratios, making it a popular choice in formats such as 7z and xz.
 
-    LZMA uses a hybrid approach by combining two key techniques:
+    % LZMA uses a hybrid approach by combining two key techniques:
+    % \begin{itemize}
+    %     \item \textbf{Dictionary Compression:} \gls{lzma} maintains a sliding window (the dictionary), which stores previously seen data chunks. When encountering repeated sequences, \gls{lzma} replaces these sequences with references to their previous occurrences within the dictionary, allowing for significant compression.
+    %     \item \textbf{Range Encoding:} To efficiently encode the references and symbols, \gls{lzma} uses Range Encoding. Range Encoding is applied to compress the frequency distribution of symbols and dictionary references. This step further reduces the size of the data by encoding the information in a compact form based on the likelihood of each symbol appearing.
+    % \end{itemize}
+
+    % The following is a simplified version of the \gls{lzma} algorithm:
+    % \begin{enumerate}[label=\textbf{\roman*.}]
+    %     \item \textbf{Initialization:}
+    %     \begin{itemize}
+    %         \item Build a dictionary of size \texttt{window\_size} to store previously encountered data.
+    %         \item Set up a range encoder to start encoding the output.
+    %     \end{itemize}
+    %     \item \textbf{Input Processing:}
+    %     \begin{itemize}
+    %         \item Read a chunk of data from the input stream.
+    %         \item For each symbol, check if it exists in the dictionary.
+    %         \item If the symbol exists, output a reference to the dictionary.
+    %         \item If the symbol doesn't exist, output the symbol itself and add it to the dictionary.
+    %     \end{itemize}
+    %     \item \textbf{Range Encoding:}
+    %     \begin{itemize}
+    %         \item For each reference or symbol, use range encoding to map it to a smaller numerical range.
+    %         \item Adjust the range based on the probability distribution of the symbols and references.
+    %     \end{itemize}
+    %     \item \textbf{Finalize:}
+    %     \begin{itemize}
+    %         \item Complete the encoding and output the final compressed data stream.
+    %     \end{itemize}
+    % \end{enumerate}
+
+    % This hybrid approach makes \gls{lzma} both highly efficient and scalable, able to achieve impressive compression ratios even on large datasets.
+
+    % \subsubsection{xz}
+    % The xz compression format implements the \gls{lzma} algorithm, making use of the hybrid dictionary and range encoding approach to achieve high compression efficiency. xz is a popular compression utility used in Linux distributions and other environments that require strong compression performance.
+
+    % xz specifically implements \gls{lzma}2, a variant of the \gls{lzma} algorithm, which provides enhanced parallelism, allowing for better use of multi-core processors and increased compression speed without sacrificing compression ratio.
+
+    % Key characteristics of xz's implementation of \gls{lzma} are:
+
+    % \begin{itemize}
+    %     \item \textbf{Dictionary Management:} Similar to \gls{lzma}, xz uses a dictionary-based approach where repeated strings in the input data are replaced by references to previous occurrences. This dictionary can be large and is critical for achieving high compression ratios.
+    %     \item \textbf{Parallelization:} xz introduces the \gls{lzma}2 format, which divides the compression task into blocks. This allows multiple blocks to be compressed in parallel, making xz suitable for modern hardware with multiple processors or cores.
+    %     \item \textbf{Range Encoding:} xz uses Range Encoding, just like \gls{lzma}, to encode the dictionary references and symbols, optimizing the final compressed output.
+    % \end{itemize}
+
+    % The xz format is widely used for distributing software packages, particularly in environments where high compression ratios are important. By implementing \gls{lzma}2 with range encoding and dictionary compression, xz can achieve impressive compression ratios while maintaining high performance.
+    \subsubsection{LZMA2 Algorithm}
+    The \gls{lzma}2 algorithm is an enhanced successor to the original \gls{lzma} (Lempel-Ziv-Markov chain Algorithm). While retaining the core principles of \gls{lzma}, \gls{lzma}2 addresses several limitations and introduces critical improvements, particularly for modern hardware and large datasets. It is the algorithm used in the xz compression format and is optimized for both compression ratio and performance.
+    
+    \gls{lzma}2 combines dictionary-based compression with range encoding, similar to \gls{lzma}, but adds the following key features:
     \begin{itemize}
-        \item \textbf{Dictionary Compression:} \gls{lzma} maintains a sliding window (the dictionary), which stores previously seen data chunks. When encountering repeated sequences, \gls{lzma} replaces these sequences with references to their previous occurrences within the dictionary, allowing for significant compression.
-        \item \textbf{Range Encoding:} To efficiently encode the references and symbols, \gls{lzma} uses Range Encoding. Range Encoding is applied to compress the frequency distribution of symbols and dictionary references. This step further reduces the size of the data by encoding the information in a compact form based on the likelihood of each symbol appearing.
+        \item \textbf{Block-Based Processing:} \gls{lzma}2 divides input data into independently compressible blocks. This enables parallel processing, allowing multi-core systems to compress or decompress multiple blocks simultaneously, significantly improving speed.
+        \item \textbf{Adaptive Dictionary Management:} Unlike \gls{lzma}, which uses a single continuous dictionary, \gls{lzma}2 resets or updates the dictionary between blocks. This prevents the dictionary from becoming overly large or inefficient when processing heterogeneous data.
+        \item \textbf{Handling of Incompressible Data:} \gls{lzma}2 detects incompressible regions and stores them uncompressed, avoiding unnecessary computational overhead. This contrasts with \gls{lzma}, which would still attempt to compress such data.
+        \item \textbf{Streamable Processing:} \gls{lzma}2 supports seamless compression of continuous data streams without requiring full data availability upfront, making it suitable for real-time applications.
     \end{itemize}
-
-    The following is a simplified version of the \gls{lzma} algorithm:
+    
+    The algorithm operates as follows:
     \begin{enumerate}[label=\textbf{\roman*.}]
         \item \textbf{Initialization:}
         \begin{itemize}
-            \item Build a dictionary of size \texttt{window\_size} to store previously encountered data.
-            \item Set up a range encoder to start encoding the output.
+            \item Configure block size and thread count for parallel processing.
+            \item Initialize a range encoder and allocate dictionaries for each block.
         \end{itemize}
-        \item \textbf{Input Processing:}
+        \item \textbf{Block Processing:}
         \begin{itemize}
-            \item Read a chunk of data from the input stream.
-            \item For each symbol, check if it exists in the dictionary.
-            \item If the symbol exists, output a reference to the dictionary.
-            \item If the symbol doesn't exist, output the symbol itself and add it to the dictionary.
+            \item Split the input data into blocks (if parallelization is enabled).
+            \item For each block, apply dictionary compression:
+            \begin{itemize}
+                \item Replace repeated sequences with references to the block-specific dictionary.
+                \item Add new symbols to the dictionary dynamically.
+            \end{itemize}
         \end{itemize}
         \item \textbf{Range Encoding:}
         \begin{itemize}
-            \item For each reference or symbol, use range encoding to map it to a smaller numerical range.
-            \item Adjust the range based on the probability distribution of the symbols and references.
+            \item Encode the compressed blocks using range encoding, adjusting probabilities based on symbol frequency.
+            \item For incompressible blocks, encode raw data directly.
         \end{itemize}
-        \item \textbf{Finalize:}
+        \item \textbf{Output Finalization:}
         \begin{itemize}
-            \item Complete the encoding and output the final compressed data stream.
+            \item Combine encoded blocks into a single compressed stream.
+            \item Add metadata (e.g., block boundaries, dictionary reset flags).
         \end{itemize}
     \end{enumerate}
-
-    This hybrid approach makes \gls{lzma} both highly efficient and scalable, able to achieve impressive compression ratios even on large datasets.
-
-    \subsubsection{xz}
-    The xz compression format implements the \gls{lzma} algorithm, making use of the hybrid dictionary and range encoding approach to achieve high compression efficiency. xz is a popular compression utility used in Linux distributions and other environments that require strong compression performance.
-
-    xz specifically implements \gls{lzma}2, a variant of the \gls{lzma} algorithm, which provides enhanced parallelism, allowing for better use of multi-core processors and increased compression speed without sacrificing compression ratio.
-
-    Key characteristics of xz's implementation of \gls{lzma} are:
-
+    
+    Compared to \gls{lzma}, \gls{lzma}2 provides:
     \begin{itemize}
-        \item \textbf{Dictionary Management:} Similar to \gls{lzma}, xz uses a dictionary-based approach where repeated strings in the input data are replaced by references to previous occurrences. This dictionary can be large and is critical for achieving high compression ratios.
-        \item \textbf{Parallelization:} xz introduces the \gls{lzma}2 format, which divides the compression task into blocks. This allows multiple blocks to be compressed in parallel, making xz suitable for modern hardware with multiple processors or cores.
-        \item \textbf{Range Encoding:} xz uses Range Encoding, just like \gls{lzma}, to encode the dictionary references and symbols, optimizing the final compressed output.
+        \item \textbf{Scalability:} Efficient utilization of multi-core CPUs via parallel block compression.
+        \item \textbf{Flexibility:} Adaptive handling of mixed compressible/incompressible data.
+        \item \textbf{Resource Efficiency:} Reduced memory overhead through dictionary resets.
     \end{itemize}
-
-    The xz format is widely used for distributing software packages, particularly in environments where high compression ratios are important. By implementing \gls{lzma}2 with range encoding and dictionary compression, xz can achieve impressive compression ratios while maintaining high performance.
-
+    
+    \subsubsection{xz}
+    The xz compression format is the primary implementation of \gls{lzma}2. It leverages the algorithm's block-based design and parallelization capabilities to achieve high compression ratios while maintaining competitive speeds on modern hardware. xz is widely adopted in Linux distributions for software distribution and archival purposes.
+    
+    Key features of xz include:
+    \begin{itemize}
+        \item \textbf{Multi-Threaded Compression:} By default, xz uses \gls{lzma}2's block partitioning to distribute workloads across CPU cores.
+        \item \textbf{Configurable Block Sizes:} Users can optimize for speed or ratio by adjusting block sizes.
+        \item \textbf{Backward Compatibility:} xz supports legacy \gls{lzma} for decompression, ensuring interoperability with older systems.
+    \end{itemize}
+    
+    xz's integration of \gls{lzma}2 makes it a versatile tool for scenarios demanding both high compression efficiency and performance, such as large-scale data backups or software package distribution.
     \subsection{MPEG Audio Layer 3}
     MPEG Audio Layer 3, commonly known as MP3, is a widely used audio compression standard that reduces file size while preserving perceptual audio quality. The encoding process involves several stages that progressively transform and compress the digital audio signal into a highly efficient format.
     

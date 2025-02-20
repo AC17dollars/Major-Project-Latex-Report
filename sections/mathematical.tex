@@ -158,4 +158,41 @@ The variance \(\sigma^2\) of the distribution is derived from the expected squar
 
 These equations are fundamental to our project's analysis section and form the basis of our statistical analysis.
 
+\subsection{Mathematical Framework in LZMA2 Compression}
+LZMA2 compression builds upon the classical Lempel-Ziv (LZ) approach by integrating advanced entropy coding techniques. The major mathematical framework behind LZMA2 is the combination of dictionary-based redundancy elimination and probabilistic modeling via range encoding.
+
+\subsubsection{Dictionary-Based Compression}
+At its core, LZMA2 uses a sliding-window dictionary to identify repeated sequences in the input data. Let 
+\[
+S = \{s_1, s_2, \dots, s_N\}
+\]
+denote the input data sequence. The algorithm searches for the longest match \( s_i \dots s_{i+k} \) that has appeared previously within a dictionary window. When a match is found, it is represented as a pair:
+\begin{equation}
+    \text{match} = \{ \text{distance}, \text{length} \}
+\end{equation}
+which replaces the explicit data sequence, thereby reducing redundancy.
+
+\subsubsection{Probabilistic Modeling and Range Encoding}
+After parsing the data into literals (unmatched bytes) and match references, LZMA2 applies range encoding—a variant of arithmetic coding—to compress the sequence based on probability models. Suppose the probability of observing a symbol \( x \) is \( p(x) \). The range encoder maintains a current interval \([L, H)\) and refines it for each symbol:
+\begin{equation}
+    \begin{aligned}
+        \text{Range}_{\text{new}} &= \text{Range}_{\text{old}} \times p(x), \\
+        L_{\text{new}} &= L_{\text{old}} + \text{Range}_{\text{old}} \times C(x),
+    \end{aligned}
+\end{equation}
+where \( C(x) \) is the cumulative probability of all symbols preceding \( x \). This mechanism effectively encodes the entire input as a single number within the final interval.
+
+The probability model is updated adaptively using context modeling. Given a context, the probability \( P(x \mid \text{context}) \) is estimated by:
+\begin{equation}
+    P(x \mid \text{context}) = \frac{\text{count}(x, \text{context}) + \alpha}{\sum_{x'} \left(\text{count}(x', \text{context}) + \alpha\right)}
+\end{equation}
+where \(\text{count}(x, \text{context})\) is the frequency of symbol \(x\) within the context and \(\alpha\) is a smoothing parameter that prevents zero probabilities.
+
+\subsubsection{Integration of Dictionary Matching and Entropy Coding}
+The synergy between dictionary-based matching and range encoding is what grants LZMA2 its high compression efficiency. The encoder decides between encoding a literal or a match by estimating the compression gain:
+\begin{equation}
+    \text{Compression Gain} = \log_2\left(\frac{1}{p(\text{match or literal})}\right)
+\end{equation}
+A higher gain indicates that representing the data via a match or literal will yield a more compact encoded output. This decision process, driven by the underlying probability distributions, allows LZMA2 to balance between exploiting local redundancy (via dictionary matches) and minimizing the bit-cost (via entropy coding).
+
 \pagebreak

@@ -334,4 +334,47 @@ The following algorithms describe training the teacher and student models using 
 \end{algorithm}
 The teacher's outputs serve as ``soft targets", in addition to the ``hard targets" from the ground truth. Losses are computed for both soft and hard targets, and a weighted loss drives the student model's optimization enables the student model to mimic the teacher while retaining its own efficiency.
 
+\subsection{LZMA2 Compression of Model}
+\begin{algorithm}
+    \caption{LZMA2 Compression Algorithm}
+    \label{alg:lzma2-compression}
+    \begin{algorithmic}[1]
+    \REQUIRE input\_data, dictionary\_size, compression\_level
+    \STATE Initialize dictionary with size dictionary\_size
+    \STATE Configure compression parameters based on compression\_level
+    \STATE Initialize range encoder and output buffer
+    \STATE pos $\gets$ 0
+    \WHILE{pos $<$ len(input\_data)}
+        \STATE Determine block\_size based on remaining data and performance criteria
+        \STATE Evaluate compression gain for the current block
+        \IF{compression gain is insufficient}
+            \STATE \textbf{Set Block Type:} Uncompressed
+            \STATE Write control byte with uncompressed flag and block\_size to output buffer
+            \STATE Copy raw data block from input\_data[pos : pos+block\_size] to output buffer
+        \ELSE
+            \STATE \textbf{Set Block Type:} Compressed
+            \STATE Write control byte with compressed flag and block\_size to output buffer
+            \FOR{each position \texttt{i} in input\_data[pos : pos+block\_size]}
+                \STATE Search dictionary for the longest match for input\_data[i:]
+                \IF{match is found}
+                    \STATE Encode match length and distance using range encoder
+                    \STATE Update dictionary with matched sequence
+                    \STATE Advance \texttt{i} by match length
+                \ELSE
+                    \STATE Encode literal byte input\_data[i] using range encoder
+                    \STATE Update dictionary with literal byte
+                    \STATE Advance \texttt{i} by 1
+                \ENDIF
+            \ENDFOR
+            \STATE Append encoded block from range encoder to output buffer
+        \ENDIF
+        \STATE Update pos $\gets$ pos + block\_size
+    \ENDWHILE
+    \STATE Write end-of-stream marker to output buffer
+    \RETURN compressed\_data from output buffer
+    \end{algorithmic}
+\end{algorithm}
+
+\autoref{alg:lzma2-compression} outlines the abstract LZMA2 compression process. The algorithm begins by initializing a dictionary and configuring the compression parameters based on the desired compression level. It then iterates over the input data in blocks, dynamically deciding whether to compress a block or store it uncompressed based on the potential compression gain. For compressed blocks, the algorithm performs match searching within the dictionary, encoding matches and literal bytes via a range encoder. Finally, it writes an end-of-stream marker and returns the assembled compressed data.
+
 \pagebreak 
