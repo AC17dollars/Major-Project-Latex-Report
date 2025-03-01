@@ -485,3 +485,50 @@ In the spectrogram of Video 2 and Video 5, a slight loss of signal is noticable,
 
     These histograms visualize the distributions of weights and biases for two student models across different layers and components, such as audio and video branches, shared layers, and initial layers. The distributions are diverse, with weights generally exhibiting Gaussian-like shapes centered around zero. Meanwhile, biases show more uniformly or slightlys skewed distribution.
     \pagebreak
+
+
+\subsection{User Interface}
+
+    The developed system enables efficient video representation using Implicit Neural Representations (INR) and compresses the resulting models using quantization, knowledge distillation, and encoding. The web-based platform facilitates the entire process, from video training to compressed model transfer and inference. The results presented here demonstrate the complete workflow of video representation, compression, and reconstruction.
+    
+    \subsubsection{Video-to-INR Representation and Compression}
+    
+    The process begins with the user uploading a video to the system for INR-based representation. Once uploaded, the backend processes the video by converting it into an INR model. This INR model is then compressed using quantization and knowledge distillation techniques to reduce its size while maintaining essential features.
+    
+    \vspace{10pt}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{assets/website/training_process.png}
+        \caption{Video uploaded for INR representation and compression}
+        \label{fig:video_upload}
+    \end{figure}
+    
+    \subsubsection{Compressed INR Model Transfer and Storage}
+    
+    After compression, the INR model is available for transfer or storage. The system provides a peer-to-peer model transfer mechanism using WebRTC, allowing users to share compressed INR models efficiently within the same network. This minimizes dependency on external storage and ensures fast transmission.
+    
+    \vspace{10pt}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{assets/website/sending_model.png}
+        \caption{Compressed INR model being transferred in the network}
+        \label{fig:model_transfer}
+    \end{figure}
+    
+    \subsubsection{Model Inference and Video Reconstruction}
+    
+    Once the compressed INR model is received, it undergoes inference to reconstruct the original video. The system uses a trained model to generate the video representation, aiming to retain visual quality despite the compression. The reconstructed video is then played within the web interface.
+    
+    \vspace{10pt}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{assets/website/inferened_result.png}
+        \caption{Inference of the INR model to reconstruct the video}
+        \label{fig:model_inference}
+    \end{figure}
+    
+    The final step in the process is the playback of the reconstructed video. Users can view the inferred video directly on the web platform, comparing it with the original input to evaluate the quality preservation after compression and inference. 
+    
+    
+    The results demonstrate the system's ability to efficiently represent, compress, transfer, and reconstruct videos using INR models. The integration of WebRTC for model transfer and FastAPI for inference enables real-time processing and low-latency video retrieval. The compressed INR models significantly reduce storage and bandwidth requirements while maintaining video quality, making this approach highly effective for scalable video representation and compression.
+    

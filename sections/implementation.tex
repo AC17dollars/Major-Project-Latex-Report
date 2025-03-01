@@ -377,6 +377,94 @@ The teacher's outputs serve as ``soft targets", in addition to the ``hard target
 
 \autoref{alg:lzma2-compression} outlines the abstract LZMA2 compression process. The algorithm begins by initializing a dictionary and configuring the compression parameters based on the desired compression level. It then iterates over the input data in blocks, dynamically deciding whether to compress a block or store it uncompressed based on the potential compression gain. For compressed blocks, the algorithm performs match searching within the dictionary, encoding matches and literal bytes via a range encoder. Finally, it writes an end-of-stream marker and returns the assembled compressed data.
 
+\pagebreak
+
+\subsection{Website Development}
+
+The website serves as the primary interface for users to interact with the system, allowing them to upload videos, train INR models, perform inference, and transfer videos or trained models to other users within the same network. The development of the website involved the following key techniques:
+
+\begin{itemize}
+    \item Client-Server Architecture: The frontend communicates with the backend using HTTP requests for model training and inference while using WebRTC and WebSockets for peer-to-peer file transfers.
+    \item Real-Time Communication: WebRTC is used for direct peer-to-peer transfer of trained INR models and videos between users in the same network, reducing the dependency on a central server.
+    \item Interactive and Responsive UI: The frontend is built using modern web development technologies, ensuring a seamless user experience for managing video uploads, model training, and inference.
+    \item Efficient Model Processing: The backend, developed using FastAPI, handles INR model training and inference efficiently using Python subprocess execution to run deep learning scripts.
+\end{itemize}
+
+\subsubsection{Frontend Technologies}
+
+The frontend of the website is designed to ensure usability, responsiveness, and seamless interaction between users. The key technologies used are:
+
+\begin{itemize}
+    \item HTML, CSS, and JavaScript: These form the core structure and styling of the website.
+    \item Tailwind CSS: Used for rapid UI development and maintaining a clean and responsive design.
+    \item WebSockets: Facilitates real-time communication with the backend for managing WebRTC connections and signaling.
+    \item WebRTC API: Enables real-time, peer-to-peer file transfers without requiring an intermediary server.
+    \item UUID-based Client Identification: Ensures unique client identification for WebRTC connections.
+\end{itemize}
+
+\subsubsection{Backend Technologies}
+
+The backend of the system is implemented using FastAPI, a high-performance web framework for building APIs in Python. The backend handles the following responsibilities:
+
+\begin{itemize}
+    \item Model Training and Inference: The backend processes videos by running INR model training scripts and returning trained models.
+    \item File Storage Management: Uploaded videos and trained INR models are structured in organized directories for efficient retrieval.
+    \item WebSocket Communication for Signaling: The backend manages WebRTC connection establishment by relaying signaling messages between users.
+    \item Real-Time Client Tracking: It maintains an active list of connected users and dynamically updates the user interface to reflect available clients for file transfers.
+\end{itemize}
+
+\subsubsection{WebRTC for Real-Time Communication}
+
+WebRTC (Web Real-Time Communication) is a core component of the system that enables direct peer-to-peer communication. It allows users within the same network to transfer trained INR models and videos efficiently without routing data through a central server.
+
+\paragraph{WebRTC Architecture}
+
+The system follows a structured WebRTC connection flow:
+
+\begin{enumerate}
+    \item Client Discovery and Connection Establishment: Users are identified via a WebSocket connection, which is used to establish initial contact.
+    \item Signaling via WebSockets: WebRTC requires an external signaling mechanism to exchange metadata (such as session descriptions and ICE candidates). WebSockets are used for this purpose.
+    \item Peer-to-Peer Data Transmission: Once a connection is established, file transfers occur directly between users over WebRTC's Data Channel.
+    \item Low-Latency Data Transfer: The use of WebRTC minimizes latency and maximizes transfer speed by avoiding cloud-based storage or intermediary servers.
+\end{enumerate}
+
+\paragraph{ICE Server Configuration}
+
+To facilitate NAT traversal and allow direct communication between peers, WebRTC requires an ICE (Interactive Connectivity Establishment) server. The system employs a public STUN (Session Traversal Utilities for NAT) server to ensure connection establishment across different network configurations.
+
+\paragraph{WebRTC and WebSockets Integration}
+
+WebRTC connections rely on WebSockets for signaling before peer-to-peer communication can be established. The integration follows these steps:
+
+\begin{itemize}
+    \item A user requesting a file transfer sends an offer via WebSocket.
+    \item The receiving user replies with an answer, establishing the connection.
+    \item ICE candidates (network details) are exchanged to finalize the connection.
+    \item Once established, the file transfer occurs directly between peers over the WebRTC Data Channel.
+\end{itemize}
+
+\subsubsection{Backend Implementation Using FastAPI}
+
+The backend is designed to handle INR model training, inference requests, and WebRTC signaling efficiently. It includes the following components:
+
+\paragraph{WebSocket Management}
+
+The backend manages WebSocket connections to enable real-time client communication and WebRTC session initiation. It maintains an updated list of connected users and their available models for transfer.
+
+\paragraph{Model Training and Inference Pipeline}
+
+When a user uploads a video for training, the backend performs the following steps:
+
+\begin{enumerate}
+    \item Storage: The uploaded video is stored in a designated directory.
+    \item Processing: A Python subprocess executes the INR model training script on the uploaded video.
+    \item Model Generation: The trained model is saved and made available for inference or peer-to-peer transfer.
+    \item Inference Support: Users can submit trained models for inference, generating reconstructed video representations.
+\end{enumerate}
+
+\paragraph{File Management and API Endpoints}
+
+The backend provides API endpoints to manage file uploads, inference execution, and retrieving processed results. It ensures efficient file handling, secure storage, and dynamic retrieval of trained INR models.
 
 \pagebreak
 \subsection{UML Diagrams}
@@ -423,3 +511,4 @@ The diagram is divided into three primary areas:
     \item \textbf{File Transfer Related Use Cases:} This area includes initiating the model transfer, accepting or declining the transfer, and transferring the model via \gls{webrtc}.
 \end{itemize}
 \pagebreak 
+
