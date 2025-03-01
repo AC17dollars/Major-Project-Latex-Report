@@ -1,4 +1,4 @@
-\documentclass[]{ioereport}
+\documentclass[draft]{ioereport}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{booktabs}
@@ -7,11 +7,12 @@
 \usepackage{array}
 \usepackage{adjustbox}
 \usepackage{tabularx}
+\usepackage{subcaption}
 \providecommand*{\algorithmautorefname}{Algorithm}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 
-\includeonly{sections/declaration, sections/certificate, sections/acknowledgement, sections/abstract, sections/introduction, sections/literature, sections/feasibility, sections/theoretical, sections/mathematical, sections/methodology, sections/dataset, sections/implementation, sections/results, sections/appendix}
+% \includeonly{sections/declaration, sections/certificate, sections/acknowledgement, sections/abstract, sections/introduction, sections/literature, sections/feasibility, sections/theoretical, sections/mathematical, sections/methodology, sections/dataset, sections/implementation, sections/results, sections/futureenhancement, sections/appendix}
 
 % \includeonly{sections/results}
 
@@ -63,10 +64,7 @@
 \include{sections/dataset}
 \include{sections/implementation}
 \include{sections/results}
-
-\section{\MakeUppercase{Remaining Tasks}}
-The remaining tasks for the project involve applying knowledge distillation to the models of the three remaining videos and implementing quantization on the corresponding student models. Knowledge distillation will focus on transferring knowledge from the teacher models to the student models for these specific videos. The other three videos could not be trained earlier due to their larger size, which caused the student models to struggle in properly representing the videos.
-Additionally, quantization will be applied to the student models corresponding to these three videos. Knowledge Distallation and Quantization for the first two videos has already been completed, and now the focus is on applying it to the remaining models. By addressing the challenges in knowledge distillation and completing the quantization process for these three videos, the project will meet its objectives of creating models for all videos in the dataset.
+\include{sections/futureenhancement}
 \pagebreak
 
 % Appendix Section
