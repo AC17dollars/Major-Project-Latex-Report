@@ -377,4 +377,49 @@ The teacher's outputs serve as ``soft targets", in addition to the ``hard target
 
 \autoref{alg:lzma2-compression} outlines the abstract LZMA2 compression process. The algorithm begins by initializing a dictionary and configuring the compression parameters based on the desired compression level. It then iterates over the input data in blocks, dynamically deciding whether to compress a block or store it uncompressed based on the potential compression gain. For compressed blocks, the algorithm performs match searching within the dictionary, encoding matches and literal bytes via a range encoder. Finally, it writes an end-of-stream marker and returns the assembled compressed data.
 
+
+\pagebreak
+\subsection{UML Diagrams}
+To better visualize and understand the workflow and interactions within the application, the following \gls{uml} diagrams illustrate the key processes involved in model training, inference, and file transfer.
+\subsubsection{Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/website/training_seq.png}
+    \caption{Sequence Diagram for Training the Model}
+    \label{fig:training-seq}
+\end{figure}
+\autoref{fig:training-seq} illustrates the sequence of steps involved in the training of the model. It begins when the user selects and uploads a training video through the browser. The browser sends the video file to the server, which then preprocesses the video and trains the \gls{siren} model on it. Once the model is trained, it is saved and a download URL is provided back to the user through the browser. The user can then download the trained model.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/website/transfer_seq.png}
+    \caption{Sequence Diagram for the File Transfer}
+    \label{fig:transfer-seq}
+\end{figure}
+\autoref{fig:transfer-seq} shows the process of transferring the trained model from one user to another. The first user selects a model for sharing, and the browser sends a transfer request to the server, including the model's metadata. The server forwards the request to the second user's browser, which prompts them to accept or decline the transfer. If accepted, the model file is transferred over a \gls{webrtc} connection; if declined, the first user is notified. This process includes scenarios for both accepting and declining the transfer.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/website/inference_seq.png}
+    \caption{Sequence Diagram for Inferencing the Model}
+    \label{fig:inference-seq}
+\end{figure}
+\autoref{fig:inference-seq} shows the process where the user uploads a trained model file to the server for inference. The server inferences the trained \gls{siren} model, generates the output video, and stores it. The server then sends the URL of the output video back to the browser, where the user can view the video player and click ``Play Video" to stream the video from the server.
+
+\subsubsection{Usecase Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{assets/website/usecase.png}
+    \caption{Usecase Diagram}
+    \label{fig:usecase}
+\end{figure}
+\autoref{fig:usecase} illustrates the use case diagram for the \gls{siren} model application. It defines the interactions between two actors, User A and User B, with various use cases related to model training, inference, and file transfer.
+
+The diagram is divided into three primary areas:
+
+\begin{itemize}
+    \item \textbf{Model Training Related Use Cases:} This includes uploading the training video, training the \gls{siren} model, and downloading the trained model.
+    \item \textbf{Model Inference Related Use Cases:} This section involves uploading the trained model, generating the output video, and viewing the output video.
+    \item \textbf{File Transfer Related Use Cases:} This area includes initiating the model transfer, accepting or declining the transfer, and transferring the model via \gls{webrtc}.
+\end{itemize}
 \pagebreak 
