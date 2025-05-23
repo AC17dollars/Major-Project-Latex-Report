@@ -1,3 +1,4 @@
-build/
+build/*
+!build/main.pdf
 .DS_Store
 */.DS_Store
